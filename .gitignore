@@ -7,10 +7,16 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Node
 node_modules
 dist
 dist-ssr
 *.local
+
+# Environment variables
+.env
+.env.local
+.env.*.local
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +28,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Mac system files
+__MACOSX/
+
+# Windows system files
+Thumbs.db
