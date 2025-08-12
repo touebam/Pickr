@@ -5,19 +5,11 @@
   border:1px solid rgb(82, 82, 82) ;
   position: relative;
   overflow: hidden;
-  flex-basis: 280px;
+  flex-basis: 300px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  max-height:5000px;
-  transition:all 10s ;
-}
-
-.movie-card:hover {/*
-  transform: translateY(-5px);
-  cursor: pointer;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);*/
-  max-height: 50000px ;
+  max-width: 470px;
 }
 
 .movie-poster {
@@ -98,6 +90,25 @@
   box-shadow: 0 0 20px 20px rgb(26, 26, 26);
 }
 
+.providers-list {
+  display: flex;
+  align-items: center;
+}
+.detail-title {
+  font-weight: bold;
+}
+
+.detail-content {
+  margin-left: 5px;
+  font-size: smaller;
+  display: inline-flex;
+  gap: 5px;
+}
+
+.provider-icon {
+  width: 50px;
+  border-radius: 8px;
+}
 .movie-title {
   font-size: 18px;
   font-weight: 600;

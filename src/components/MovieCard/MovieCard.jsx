@@ -93,13 +93,37 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
         </div>
 
         <div className="hidden">
-          {movie.genre_ids.length>0 && (<div>Genres : {getGenreNames(movie.genre_ids, allGenres)}</div>)}
-          {movie.overview && (<div>Description : {movie.overview}</div>)}
-          {movie.release_date && (<div>Date : {new Date(movie.release_date).getFullYear()}</div>)}
-          {details && (<div>Durée : {formatDuration(details.runtime)}</div>)}
-          <div>
-            Streaming :{" "}
-            {details?.providers?.AD?.flatrate ? (
+          {movie.genre_ids.length>0 && 
+          (
+            <div>
+              <span className="detail-title">Genres :</span> 
+              <span className="detail-content">{getGenreNames(movie.genre_ids, allGenres)}</span>
+            </div>
+          )}
+          {movie.overview && 
+          (
+            <div>
+              <span className="detail-title">Description :</span> 
+              <span className="detail-content">{movie.overview}</span>
+            </div>
+          )}
+          {movie.release_date && 
+          (
+            <div>
+              <span className="detail-title">Date :</span> 
+              <span className="detail-content">{new Date(movie.release_date).getFullYear()}</span>
+            </div>
+          )}
+          {details && details.runtime>0 &&
+          (
+            <div>
+              <span className="detail-title">Durée :</span> 
+              <span className="detail-content">{formatDuration(details.runtime)}</span>
+            </div>
+          )}
+          <div className="providers-list">
+            <span className="detail-title">Streaming :</span>{" "}
+            <span className="detail-content">{details?.providers?.AD?.flatrate ? (
               details.providers.AD.flatrate.map((provider) => (
                 <img
                   className="provider-icon"
@@ -110,8 +134,8 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
                 />
               ))
             ) : (
-              <span>Non disponible en France</span>
-            )}
+              <>Non disponible en France</>
+            )}</span>
           </div>
         </div>
       </div>

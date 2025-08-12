@@ -13,7 +13,7 @@ function App() {
       const genresData = await getGenres();
       setGenres(genresData);
 
-      const results = await searchMovies("human centipede");
+      const results = await searchMovies("mission impossible");
       setMovies(results);
     }
     fetchData();
