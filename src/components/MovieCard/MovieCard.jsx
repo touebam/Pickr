@@ -34,7 +34,6 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
       const data = await fetchDetailsWithCache(movie.id);
       setDetails(data);
     }
-    console.log(details) ;
   };
 
   const handleMouseLeave = () => {

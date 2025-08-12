@@ -47,10 +47,8 @@ export default function MovieForm({ genres, providers, onSearch }) {
       releaseYear
     };
     
-    console.log('Critères de recherche:', searchCriteria);
     const movies = await getMovies(searchCriteria);
-    console.log(movies);
-    onSearch(movies);
+    onSearch(movies, searchCriteria);
   };
 
   return (

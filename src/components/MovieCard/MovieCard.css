@@ -132,26 +132,9 @@
 
 .movie-rating {
   display: flex;
-  gap: 3px;
   justify-content: center;
-}
-
-.star {
-  font-size: 16px;
-}
-
-.star.filled {
-  color: #f39c12;
-}
-
-.star.empty {
-  color: #f0f0f0;
 }
 
 .movie-details {
   overflow: hidden;
 }
-/*
-.movie-rating svg {
-  fill: #f39c12; 
-}*/

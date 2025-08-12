@@ -29,9 +29,20 @@ export async function getGenres() {
   }
 }
 
-export async function getMovies(searchCriteria) {
+export async function getMovies(searchCriteria, page = 1) {
+  console.log(page) ;
   try {
-    const queryParams = new URLSearchParams({
+    // Fonction pour mélanger un tableau
+    const shuffleArray = (array) => {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    };
+
+    // Génération des paramètres 
+    const baseParams = new URLSearchParams({
       api_key: API_KEY,
       watch_region: "FR",
       'vote_average.gte': searchCriteria.rating[0],
@@ -40,34 +51,45 @@ export async function getMovies(searchCriteria) {
       'with_runtime.lte': searchCriteria.duration[1],
       'primary_release_date.gte': `${searchCriteria.releaseYear[0]}-01-01`,
       'primary_release_date.lte': `${searchCriteria.releaseYear[1]}-12-31`,
-      sort_by: "popularity.desc",
-      page: 1
+      sort_by: "popularity.desc"
     });
-
     if (searchCriteria.genres.length > 0) {
-      queryParams.append("with_genres", searchCriteria.genres.join("|"));
+      baseParams.append("with_genres", searchCriteria.genres.join("|"));
     }
-
     if (searchCriteria.providers.length > 0) {
-      queryParams.append("with_watch_providers", searchCriteria.providers.join("|"));
+      baseParams.append("with_watch_providers", searchCriteria.providers.join("|"));
     }
 
-    const response = await fetch(`${BASE_URL}/discover/movie?${queryParams}`);
-    
-    if (!response.ok) {
-      throw new Error(`Erreur API: ${response.status}`);
-    }
+    // On réalise deux requête car TMDb ne permet pas d'augmenter le nombre de résultats par requête
+    // Requête page 1
+    const paramsPage1 = new URLSearchParams(baseParams);
+    paramsPage1.append("page", page);
 
-    const data = await response.json();
-    console.log("Résultats filtrés:", data.results);
+    const res1 = await fetch(`${BASE_URL}/discover/movie?${paramsPage1}`);
+    if (!res1.ok) throw new Error(`Erreur API (page 1): ${res1.status}`);
+    const data1 = await res1.json();
 
-    return data.results;
+    // Requête page 2
+    const paramsPage2 = new URLSearchParams(baseParams);
+    paramsPage2.append("page", page+1);
+
+    const res2 = await fetch(`${BASE_URL}/discover/movie?${paramsPage2}`);
+    if (!res2.ok) throw new Error(`Erreur API (page 2): ${res2.status}`);
+    const data2 = await res2.json();
+
+    // Fusion et mélange
+    const combinedResults = [...data1.results, ...data2.results];
+    const shuffledResults = shuffleArray(combinedResults);
+
+    console.log("Résultats filtrés et mélangés:", shuffledResults);
+
+    return shuffledResults;
+
   } catch (error) {
     console.error("Erreur lors de la recherche:", error);
     return [];
   }
 }
-
 
 
 export async function getProviders() {

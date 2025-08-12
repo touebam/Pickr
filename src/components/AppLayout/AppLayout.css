@@ -19,4 +19,5 @@
     flex-grow: 1;
     padding: 16px;
     overflow-y: auto;
+    scroll-behavior: smooth;
 }
