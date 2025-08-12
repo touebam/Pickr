@@ -22,11 +22,58 @@ export async function getGenres() {
       throw new Error("Erreur lors de la récupération des genres");
     }
     const data = await response.json();
-    return data.genres; // tableau [{id: xx, name: "Action"}, ...]
+    return data.genres; 
   } catch (error) {
     console.error(error);
     return [];
   }
+}
+
+export async function getProviders() {
+  const wantedProviders = [
+    "Apple TV",
+    "Netflix",
+    "Amazon Prime Video",
+    "YouTube",
+    "Crunchyroll",
+    "Disney plus",
+    "Canal+",
+    "Molotov TV"
+  ];
+
+  try {
+    const response = await fetch(`${BASE_URL}/watch/providers/movie?api_key=${API_KEY}&language=fr-FR`);
+    if (!response.ok) {
+      throw new Error("Erreur lors de la récupération des plateformes de streaming");
+    }
+    const data = await response.json();
+
+    const matchedProviders = data.results.filter(provider =>
+      wantedProviders.some(wp => provider.provider_name.toLowerCase().includes(wp.toLowerCase()))
+    );
+    const uniqueProviders = filterClosestProviders(matchedProviders, wantedProviders);
+    
+    return uniqueProviders;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+function filterClosestProviders(providers, wantedProviders) {
+  const map = new Map();
+
+  providers.forEach(provider => {
+    const match = wantedProviders.find(wp => provider.provider_name.toLowerCase().includes(wp.toLowerCase()));
+
+    if (match) {
+      if (!map.has(match) || provider.provider_name.length < map.get(match).provider_name.length) {
+        map.set(match, provider);
+      }
+    }
+  });
+
+  return Array.from(map.values());
 }
 
 export async function getMovieDetails(movieId) {

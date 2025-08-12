@@ -1,0 +1,60 @@
+.movie-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.slider-container {
+    display:flex ;
+}
+.slider-container.duree {
+    margin-top: 18px;
+}
+.slider-container h3 {
+    text-wrap: nowrap;
+}
+.MuiSlider-root {
+    --MARGIN-HORI: 20px;
+    margin: 18px var(--MARGIN-HORI);
+    width: calc(100% - 2 * var(--MARGIN-HORI)) !important;
+    margin-bottom: 0;
+}
+
+.MuiSlider-valueLabelOpen {
+    line-height: 1.2 !important;
+    font-size: 12px !important;
+    background-image: unset !important;
+    background-position: unset !important;
+    background-size: unset !important;
+    background-repeat: unset !important;
+    background-attachment: unset !important;
+    background-origin: unset !important;
+    background-clip: unset !important;
+    padding: 0px !important;
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 50% 50% 50% 0px !important;
+    background-color: #1976d2 !important;
+    transform-origin: left bottom !important;
+    transform: translate(50%, -75%) rotate(-45deg) !important;
+}
+
+.date .MuiSlider-valueLabelOpen {
+    width: 32px !important;
+    height: 32px !important;
+}
+
+.MuiSlider-valueLabelOpen .MuiSlider-valueLabelCircle {
+    transform: rotate(45deg) !important;
+}
+.MuiSlider-valueLabelOpen::before {
+    display: none !important;
+}
+
+.form-container {
+    flex-grow: 1;
+}
+.form-buttons {
+    display:flex ;
+    justify-content: space-between;
+}

@@ -1,26 +1,11 @@
 import './MovieCard.css';
 import { useState } from "react";
+import Rating from '@mui/material/Rating';
 
 function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
   const [details, setDetails] = useState(null);
   const [isHovering, setIsHovering] = useState(false);
-
-  // Générer les étoiles en fonction de la note
-  const generateStars = (rating) => {
-    const normalizedRating = Math.round(rating / 2);
-    const stars = [];
-    
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
-        <span key={i} className={i <= normalizedRating ? "star filled" : "star empty"}>
-          ★
-        </span>
-      );
-    }
-    
-    return stars;
-  };
 
   // Formatter la durée
   const formatDuration = (minutes) => {
@@ -89,7 +74,20 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
       <div className="movie-details">
         <h3 className="movie-title">{movie.title}</h3>
         <div className="movie-rating">
-          {generateStars(movie.vote_average)}
+          <Rating
+            value={movie.vote_average/2}
+            precision={0.5}
+            readOnly
+            size="small"
+            sx={{
+              '& .MuiRating-iconEmpty': {
+                color: '#757575ff',
+              },
+              '& .MuiRating-iconFilled': {
+                color: '#ffc107',
+              }
+            }}
+          />
         </div>
 
         <div className="hidden">
@@ -100,13 +98,20 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
               <span className="detail-content">{getGenreNames(movie.genre_ids, allGenres)}</span>
             </div>
           )}
-          {movie.overview && 
-          (
+          {(details && details.overview) ? 
             <div>
               <span className="detail-title">Description :</span> 
-              <span className="detail-content">{movie.overview}</span>
+              <span className="detail-content">{details.overview /* description en français */}</span>
             </div>
-          )}
+           : 
+            (movie.overview) ?
+            <div>
+              <span className="detail-title">Description :</span> 
+              <span className="detail-content">{movie.overview /* description en anglais */}</span>
+            </div>
+            :
+            <></>
+          }
           {movie.release_date && 
           (
             <div>

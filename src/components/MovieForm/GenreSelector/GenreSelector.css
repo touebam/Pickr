@@ -1,0 +1,40 @@
+.genre-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.genre-label {
+  cursor: pointer;
+}
+
+.genre-checkbox {
+  display: none;
+}
+
+.genre-button {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid rgb(150, 150, 150);
+  color: white;
+  transition: all 0.2s ease-in-out;
+  user-select: none;
+}
+
+.genre-button:hover {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.genre-button.selected {
+  background-color: #7c3aed;
+  border-color: #7c3aed;
+}
+
+.genre-button.selected:hover {
+  background-color: #6d28d9;
+  border-color: #6d28d9;
+}
