@@ -17,7 +17,7 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
 
   // Récupérer les noms des genres
   const getGenreNames = (genreIds, allGenres) => {
-    if (!genreIds || !allGenres.length) return "";
+    if (!genreIds || !allGenres?.length) return "";
     return genreIds
       .map(id => {
         const genre = allGenres.find(g => g.id === id);

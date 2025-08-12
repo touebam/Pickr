@@ -29,6 +29,20 @@ export async function getGenres() {
   }
 }
 
+export async function getTrends() {
+  try {
+    const response = await fetch(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}&language=fr-FR`);
+    if (!response.ok) {
+      throw new Error("Erreur lors de la récupération des tendances");
+    }
+    const data = await response.json();
+    return data.results; 
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
 export async function getMovies(searchCriteria, page = 1) {
   try {
     // Fonction pour mélanger un tableau
@@ -43,6 +57,7 @@ export async function getMovies(searchCriteria, page = 1) {
     // Génération des paramètres 
     const baseParams = new URLSearchParams({
       api_key: API_KEY,
+      language:'fr-FR',
       watch_region: "FR",
       'vote_average.gte': searchCriteria.rating[0],
       'vote_average.lte': searchCriteria.rating[1],

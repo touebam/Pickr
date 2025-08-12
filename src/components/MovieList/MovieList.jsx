@@ -1,5 +1,5 @@
 import './MovieList.css';
-import MovieCard from "./MovieCard/MovieCard";
+import MovieCard from "../MovieCard/MovieCard";
 import { useEffect, useRef } from "react";
 
 function MovieList({ movies, genres, fetchDetailsWithCache, onEndReached }) {

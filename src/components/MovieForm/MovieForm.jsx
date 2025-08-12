@@ -1,13 +1,15 @@
 import './MovieForm.css';
 import { useState } from 'react';
 import Slider from '@mui/material/Slider';
+import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import GenreSelector from './GenreSelector/GenreSelector';
 import ProviderSelector from './ProviderSelector/ProviderSelector';
-import { Refresh, Search } from '@mui/icons-material';
+import { Refresh, Search, Menu } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import { getMovies } from '../../api/tmdb';
+import logo from '../../assets/logo/logo.png';
 
 const currentYear = new Date().getFullYear();
 
@@ -48,12 +50,20 @@ export default function MovieForm({ genres, providers, onSearch }) {
     };
     
     const movies = await getMovies(searchCriteria);
-    console.log(movies.length)
     onSearch(movies, searchCriteria);
   };
 
   return (
     <div className="movie-form">
+      <div className="form-header">
+        <div className="app-logo">
+          <img src={logo} alt="Logo Pickr"/>
+          <h1>Pickr</h1>
+        </div>
+        <IconButton className="menu-button" aria-label="delete" size="large">
+          <Menu />
+        </IconButton>
+      </div>
       <div className="form-container">
         <h3>Genres :</h3>
         <GenreSelector 

@@ -1,12 +1,14 @@
 import { useEffect, useState, useRef } from 'react';
 import MovieForm from '../MovieForm/MovieForm';
 import MovieList from '../MovieList/MovieList';
-import { getGenres, searchMovies, getMovieDetails, getWatchProviders, getProviders, getMovies } from '../../api/tmdb';
+import { getGenres, getMovieDetails, getWatchProviders, getProviders, getMovies, getTrends } from '../../api/tmdb';
 import './AppLayout.css';
+import HeroSection from '../HeroSection/HeroSection';
 
 export default function AppLayout() {
   const [movies, setMovies] = useState([]);
   const [genres, setGenres] = useState([]);
+  const [trends, setTrends] = useState([]);
   const [providers, setProviders] = useState([]);
   const [movieDetailsCache, setMovieDetailsCache] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,6 +22,9 @@ export default function AppLayout() {
 
       const providersData = await getProviders();
       setProviders(providersData);
+
+      const trendsData = await getTrends();
+      setTrends(trendsData);
     }
     fetchData();
   }, []);
@@ -80,17 +85,16 @@ export default function AppLayout() {
               />
         </div>
         <div className="app-layout__right">
-            {movies?.length>0 ? 
+          {movies?.length>0 ? 
             <MovieList 
               movies={movies} 
               genres={genres} 
               fetchDetailsWithCache={fetchDetailsWithCache}
               onEndReached={handleEndReached}
             />
-            :
-            <div>Accueil</div>
-            }
-            
+          :
+            <HeroSection trends={trends} />
+          }
         </div>
     </div>
   );

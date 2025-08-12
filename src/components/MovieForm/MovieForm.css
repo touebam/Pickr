@@ -58,3 +58,51 @@
     display:flex ;
     justify-content: space-between;
 }
+
+
+.form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form-header .MuiButton-icon {
+    margin: 0!important;
+}
+
+.menu-button {
+    border-radius: 8px !important;
+}
+.menu-button:hover {
+    background: rgb(31, 31, 31) !important;
+}
+
+.menu-button svg {
+    color: rgb(150, 150, 150);
+}
+
+.app-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-left:6px
+}
+
+.app-logo img {
+    width: 50px;
+}
+
+.app-logo h1 {
+    font-size: 2em;
+    margin: 8px 0;
+}
+
+
+@media screen and (max-width: 850px) {
+    .movie-form {
+        height: fit-content;
+    }
+    .form-buttons, .form-container {
+        display: none;
+    }
+}

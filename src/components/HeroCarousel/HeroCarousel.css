@@ -1,0 +1,36 @@
+.cards-carousel {
+    margin: auto;
+    position: relative;
+    display: grid;
+    place-items: center;
+    mask-image: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 1) 10%,
+        rgba(0, 0, 0, 1) 90%,
+        rgba(0, 0, 0, 0)
+    );
+    width: 100%;
+}
+
+.cards-container {
+    display: flex;
+    justify-content: space-between;
+    width: calc(340px * 40);
+    animation: scroll 60s linear infinite;  
+}
+
+.cards-container .movie-card {
+    flex-shrink: 0;
+    flex-grow: 0;
+    pointer-events: none;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0); 
+    }
+    100% { 
+        transform: translateX(calc(-340px * 20)); 
+    }
+}
