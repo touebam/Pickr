@@ -14,10 +14,12 @@
 }
 
 .cards-container {
+    --CARD-SIZE:340px ;
     display: flex;
     justify-content: space-between;
-    width: calc(340px * 40);
+    width: calc(var(--CARD-SIZE) * 40);
     animation: scroll 60s linear infinite;  
+    padding: 5px;
 }
 
 .cards-container .movie-card {
@@ -31,6 +33,18 @@
         transform: translateX(0); 
     }
     100% { 
-        transform: translateX(calc(-340px * 20)); 
+        transform: translateX(calc(var(--CARD-SIZE) * -20)); 
+    }
+}
+
+
+
+@media screen and (max-width: 850px) {
+    .cards-carousel .movie-poster {
+      min-height: auto;
+      max-height: 50vh;
+    }
+    .cards-carousel .movie-card {
+        width: 50vw;
     }
 }

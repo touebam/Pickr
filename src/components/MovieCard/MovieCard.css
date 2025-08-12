@@ -1,9 +1,9 @@
 .movie-card {
   padding: 10px;
   position: relative;
-  overflow: hidden;
   flex-basis: 300px;
   flex-grow: 1;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   max-width: 470px;
@@ -137,4 +137,16 @@
 
 .movie-details {
   overflow: hidden;
+}
+
+@media screen and (max-width: 850px) {
+    .movie-card {
+      border-radius: 12px;
+    }
+}
+
+@media screen and (max-height: 850px) {
+    .movie-poster {
+      min-height: auto;
+    }
 }

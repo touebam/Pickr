@@ -5,3 +5,13 @@
     width: 100%;
     height: fit-content;
 }
+
+@media screen and (max-width: 650px) {
+    .movie-list {
+        grid-template-columns: auto;
+        gap: 12px;
+    }
+    .movie-card {
+        max-width: 95% !important;
+    }
+}

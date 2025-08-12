@@ -24,6 +24,13 @@
 }
 
 
+.app-layout__left:has(.movie-form:not(.open)) {
+    position: absolute;
+    z-index: 9;
+    background: rgb(37 37 37 / 97%);
+    border:1px solid rgb(85 85 85 / 30%);
+}
+
 @media screen and (max-width: 850px) {
     .app-layout {
         flex-direction: column;
@@ -31,6 +38,17 @@
     .app-layout__left  {
         flex-grow: 0;
         flex-basis: auto;
-        padding:8px 4px ;
+        padding: 4px;
+        margin: 8px;
+        border-radius: 8px;
+        position: absolute;
+        z-index: 9;
+        right: 6px;
+        top: 0;
+        background: rgb(37 37 37 / 97%);
+        border:1px solid rgb(85 85 85 / 30%);
+    }
+    .app-layout__right  {
+        padding: 8px 4px;
     }
 }

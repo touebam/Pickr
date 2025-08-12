@@ -53,14 +53,24 @@ export default function MovieForm({ genres, providers, onSearch }) {
     onSearch(movies, searchCriteria);
   };
 
+  const toggleMovieForm = () => {
+    const form = document.querySelector(".movie-form");
+    form?.classList.toggle("open");
+  };
+
   return (
-    <div className="movie-form">
+    <div className="movie-form open">
       <div className="form-header">
         <div className="app-logo">
           <img src={logo} alt="Logo Pickr"/>
           <h1>Pickr</h1>
         </div>
-        <IconButton className="menu-button" aria-label="delete" size="large">
+        <IconButton 
+          className="menu-button" 
+          aria-label="delete" 
+          size="large"
+          onClick={toggleMovieForm}
+        >
           <Menu />
         </IconButton>
       </div>
