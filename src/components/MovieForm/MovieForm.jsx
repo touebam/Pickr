@@ -48,6 +48,7 @@ export default function MovieForm({ genres, providers, onSearch }) {
     };
     
     const movies = await getMovies(searchCriteria);
+    console.log(movies.length)
     onSearch(movies, searchCriteria);
   };
 

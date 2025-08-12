@@ -30,7 +30,6 @@ export async function getGenres() {
 }
 
 export async function getMovies(searchCriteria, page = 1) {
-  console.log(page) ;
   try {
     // Fonction pour mélanger un tableau
     const shuffleArray = (array) => {
@@ -51,7 +50,8 @@ export async function getMovies(searchCriteria, page = 1) {
       'with_runtime.lte': searchCriteria.duration[1],
       'primary_release_date.gte': `${searchCriteria.releaseYear[0]}-01-01`,
       'primary_release_date.lte': `${searchCriteria.releaseYear[1]}-12-31`,
-      sort_by: "popularity.desc"
+      sort_by: "popularity.desc",
+      page: page
     });
     if (searchCriteria.genres.length > 0) {
       baseParams.append("with_genres", searchCriteria.genres.join("|"));
@@ -60,29 +60,12 @@ export async function getMovies(searchCriteria, page = 1) {
       baseParams.append("with_watch_providers", searchCriteria.providers.join("|"));
     }
 
-    // On réalise deux requête car TMDb ne permet pas d'augmenter le nombre de résultats par requête
-    // Requête page 1
-    const paramsPage1 = new URLSearchParams(baseParams);
-    paramsPage1.append("page", page);
+    const res = await fetch(`${BASE_URL}/discover/movie?${baseParams}`);
+    if (!res.ok) throw new Error(`Erreur API : ${res.status}`);
+    const data = await res.json();
 
-    const res1 = await fetch(`${BASE_URL}/discover/movie?${paramsPage1}`);
-    if (!res1.ok) throw new Error(`Erreur API (page 1): ${res1.status}`);
-    const data1 = await res1.json();
-
-    // Requête page 2
-    const paramsPage2 = new URLSearchParams(baseParams);
-    paramsPage2.append("page", page+1);
-
-    const res2 = await fetch(`${BASE_URL}/discover/movie?${paramsPage2}`);
-    if (!res2.ok) throw new Error(`Erreur API (page 2): ${res2.status}`);
-    const data2 = await res2.json();
-
-    // Fusion et mélange
-    const combinedResults = [...data1.results, ...data2.results];
-    const shuffledResults = shuffleArray(combinedResults);
-
+    const shuffledResults = shuffleArray(data.results);
     console.log("Résultats filtrés et mélangés:", shuffledResults);
-
     return shuffledResults;
 
   } catch (error) {

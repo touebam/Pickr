@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import MovieForm from '../MovieForm/MovieForm';
 import MovieList from '../MovieList/MovieList';
-import { getGenres, searchMovies, getMovieDetails, getWatchProviders, getProviders } from '../../api/tmdb';
+import { getGenres, searchMovies, getMovieDetails, getWatchProviders, getProviders, getMovies } from '../../api/tmdb';
 import './AppLayout.css';
-import { getMovies } from '../../api/tmdb';
 
 export default function AppLayout() {
   const [movies, setMovies] = useState([]);
@@ -12,6 +11,7 @@ export default function AppLayout() {
   const [movieDetailsCache, setMovieDetailsCache] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [searchCriteria, setSearchCriteria] = useState(null);
+  const movieIds = useRef(new Set()); 
 
   useEffect(() => {
     async function fetchData() {
@@ -33,17 +33,23 @@ export default function AppLayout() {
     const providers = await getWatchProviders(movieId);
 
     const fullDetails = { ...details, providers };
-    
     setMovieDetailsCache(prev => ({ ...prev, [movieId]: fullDetails }));
-
     return fullDetails;
   }
 
-  // Recherche lancée depuis bouton MovieForm
+  // Recherche initiale lancée depuis MovieForm
   async function handleSearch(moviesList, criteria) {
-    setMovies(moviesList);
+    movieIds.current.clear();
+    const uniqueMovies = moviesList.filter(movie => {
+      if (movieIds.current.has(movie.id)) return false;
+      movieIds.current.add(movie.id);
+      return true;
+    });
+
+    setMovies(uniqueMovies);
     setSearchCriteria(criteria);
     setCurrentPage(1);
+
     const movieListContainer=document.querySelector('.app-layout__right') ;
     movieListContainer.scrollTop=0 ;
   }
@@ -51,9 +57,16 @@ export default function AppLayout() {
   // Recherche lancée depuis scroll MovieList
   async function handleEndReached() {
     if (!searchCriteria) return; 
-    const nextPage = currentPage + 2;
+    const nextPage = currentPage + 1;
     const newMovies = await getMovies(searchCriteria, nextPage );
-    setMovies(prev => [...prev, ...newMovies]);
+
+    const uniqueNewMovies = newMovies.filter(movie => {
+      if (movieIds.current.has(movie.id)) return false;
+      movieIds.current.add(movie.id);
+      return true;
+    });
+
+    setMovies(prev => [...prev, ...uniqueNewMovies]);
     setCurrentPage(nextPage);
   }
 
@@ -62,18 +75,22 @@ export default function AppLayout() {
         <div className="app-layout__left">
             <MovieForm 
               genres={genres} 
-              providers={providers} 
-              xonSearch={setMovies}
+              providers={providers}
               onSearch={(moviesList, criteria) => handleSearch(moviesList, criteria)}
               />
         </div>
         <div className="app-layout__right">
+            {movies?.length>0 ? 
             <MovieList 
               movies={movies} 
               genres={genres} 
               fetchDetailsWithCache={fetchDetailsWithCache}
               onEndReached={handleEndReached}
             />
+            :
+            <div>Accueil</div>
+            }
+            
         </div>
     </div>
   );
