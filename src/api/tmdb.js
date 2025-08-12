@@ -29,6 +29,47 @@ export async function getGenres() {
   }
 }
 
+export async function getMovies(searchCriteria) {
+  try {
+    const queryParams = new URLSearchParams({
+      api_key: API_KEY,
+      watch_region: "FR",
+      'vote_average.gte': searchCriteria.rating[0],
+      'vote_average.lte': searchCriteria.rating[1],
+      'with_runtime.gte': searchCriteria.duration[0],
+      'with_runtime.lte': searchCriteria.duration[1],
+      'primary_release_date.gte': `${searchCriteria.releaseYear[0]}-01-01`,
+      'primary_release_date.lte': `${searchCriteria.releaseYear[1]}-12-31`,
+      sort_by: "popularity.desc",
+      page: 1
+    });
+
+    if (searchCriteria.genres.length > 0) {
+      queryParams.append("with_genres", searchCriteria.genres.join("|"));
+    }
+
+    if (searchCriteria.providers.length > 0) {
+      queryParams.append("with_watch_providers", searchCriteria.providers.join("|"));
+    }
+
+    const response = await fetch(`${BASE_URL}/discover/movie?${queryParams}`);
+    
+    if (!response.ok) {
+      throw new Error(`Erreur API: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Résultats filtrés:", data.results);
+
+    return data.results;
+  } catch (error) {
+    console.error("Erreur lors de la recherche:", error);
+    return [];
+  }
+}
+
+
+
 export async function getProviders() {
   const wantedProviders = [
     "Apple TV",

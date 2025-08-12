@@ -7,6 +7,7 @@ import GenreSelector from './GenreSelector/GenreSelector';
 import ProviderSelector from './ProviderSelector/ProviderSelector';
 import { Refresh, Search } from '@mui/icons-material';
 import { Button } from '@mui/material';
+import { getMovies } from '../../api/tmdb';
 
 const currentYear = new Date().getFullYear();
 
@@ -19,7 +20,7 @@ const DEFAULT_VALUES = {
   releaseYear: [2000, currentYear]
 };
 
-export default function MovieForm({ genres, providers }) {
+export default function MovieForm({ genres, providers, onSearch }) {
   // États pour tous les contrôles du formulaire
   const [selectedGenres, setSelectedGenres] = useState(DEFAULT_VALUES.selectedGenres);
   const [selectedProviders, setSelectedProviders] = useState(DEFAULT_VALUES.selectedProviders);
@@ -34,12 +35,10 @@ export default function MovieForm({ genres, providers }) {
     setDuration(DEFAULT_VALUES.duration);
     setRating(DEFAULT_VALUES.rating);
     setReleaseYear(DEFAULT_VALUES.releaseYear);
-    
-    console.log('Formulaire réinitialisé');
   };
 
   // Fonction pour gérer la recherche
-  const handleSearch = () => {
+  async function handleSearch() {
     const searchCriteria = {
       genres: selectedGenres,
       providers: selectedProviders,
@@ -49,6 +48,9 @@ export default function MovieForm({ genres, providers }) {
     };
     
     console.log('Critères de recherche:', searchCriteria);
+    const movies = await getMovies(searchCriteria);
+    console.log(movies);
+    onSearch(movies);
   };
 
   return (

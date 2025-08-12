@@ -14,9 +14,9 @@ export default function AppLayout() {
     async function fetchData() {
       const genresData = await getGenres();
       setGenres(genresData);
-
+/*
       const results = await searchMovies("mission impossible");
-      setMovies(results);
+      setMovies(results);*/
 
       const providersData = await getProviders();
       setProviders(providersData);
@@ -43,7 +43,7 @@ export default function AppLayout() {
   return (
     <div className="app-layout">
         <div className="app-layout__left">
-            <MovieForm genres={genres} providers={providers} />
+            <MovieForm genres={genres} providers={providers} onSearch={setMovies}/>
         </div>
         <div className="app-layout__right">
             <MovieList movies={movies} genres={genres} fetchDetailsWithCache={fetchDetailsWithCache} />
