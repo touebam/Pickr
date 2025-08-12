@@ -1,0 +1,139 @@
+.movie-card {
+  background: transparent;
+  border-radius: 16px;
+  padding: 10px;
+  border:1px solid rgb(82, 82, 82) ;
+  position: relative;
+  overflow: hidden;
+  flex-basis: 280px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  max-height:5000px;
+  transition:all 10s ;
+}
+
+.movie-card:hover {/*
+  transform: translateY(-5px);
+  cursor: pointer;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);*/
+  max-height: 50000px ;
+}
+
+.movie-poster {
+  width: 100%;
+  min-height: 520px;
+  padding:5% 0 ;
+  border-radius: 15px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 0;
+}
+
+
+.images-container {
+  position: relative;
+  display: flex;
+  width: 90%;
+  height: 100%;
+}
+
+.poster-image {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.no-poster {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 14px;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.blured {
+  position: absolute;
+  filter:blur(25px) ;
+  z-index: 1;
+  height: 100%;
+  transition: all .5s;
+  opacity: 1;
+}
+
+.movie-details .hidden {
+  max-height: 0;
+  transition: all 0s;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.movie-card:hover .hidden {
+  max-height: 500px;
+  transition: all .8s;
+}
+
+.movie-card:hover .movie-details {
+  position: absolute;
+  width: 100%;
+  box-sizing: border-box;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  padding: 8px;
+  background: rgb(26, 26, 26);
+  box-shadow: 0 0 20px 20px rgb(26, 26, 26);
+}
+
+.movie-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  margin-top: 5px;
+  margin-bottom: 0;
+  text-align: center;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.movie-icon {
+    background: center/cover no-repeat url('../../assets/icons/movie_icon.svg');
+    width:80px ;
+    aspect-ratio: 1;
+}
+
+.movie-rating {
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+}
+
+.star {
+  font-size: 16px;
+}
+
+.star.filled {
+  color: #f39c12;
+}
+
+.star.empty {
+  color: #f0f0f0;
+}
+
+.movie-details {
+  overflow: hidden;
+}
