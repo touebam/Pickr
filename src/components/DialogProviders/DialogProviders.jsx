@@ -11,7 +11,7 @@ function MovieCard({ movie, filteredProviders, handleClose, open }) {
         sx={{
             '& .MuiDialog-paper': {
             width: '80%',
-            maxWidth: '1200px',
+            maxWidth: '700px',
             }
         }}
     >
@@ -22,22 +22,16 @@ function MovieCard({ movie, filteredProviders, handleClose, open }) {
                 
                 <div className="providers-stats">
                     <div className="stat">
-                    <span className="stat-number free-stat">
-                        {filteredProviders.filter(p => p.free?.length > 0).length}
-                    </span>
-                    <span className="stat-label">Pays avec accès gratuit</span>
+                        <span className="stat-number free-stat">
+                            {filteredProviders.filter(p => p.free?.length > 0).length}
+                        </span>
+                        <span className="stat-label">Pays avec accès gratuit</span>
                     </div>
                     <div className="stat">
-                    <span className="stat-number ads-stat">
-                        {filteredProviders.filter(p => p.ads?.length > 0).length}
-                    </span>
-                    <span className="stat-label">Pays avec publicités</span>
-                    </div>
-                    <div className="stat">
-                    <span className="stat-number flatrate-stat">
-                        {filteredProviders.filter(p => p.flatrate?.length > 0).length}
-                    </span>
-                    <span className="stat-label">Pays avec abonnement</span>
+                        <span className="stat-number flatrate-stat">
+                            {filteredProviders.filter(p => p.flatrate?.length > 0).length}
+                        </span>
+                        <span className="stat-label">Pays avec abonnement</span>
                     </div>
                 </div>
             </div>
@@ -49,7 +43,6 @@ function MovieCard({ movie, filteredProviders, handleClose, open }) {
                         <tr>
                             <th className="country-header">Pays</th>
                             <th className="providers-header-cell free-header">Gratuit</th>
-                            <th className="providers-header-cell ads-header">Avec publicités</th>
                             <th className="providers-header-cell flatrate-header">Abonnement</th>
                         </tr>
                         </thead>
@@ -57,6 +50,7 @@ function MovieCard({ movie, filteredProviders, handleClose, open }) {
                         {filteredProviders.map((provider) => (
                             <tr key={provider.country} className="provider-row">
                             <td className="country-cell">
+                                <span className="country-code">{provider.countryCode}</span>
                                 <span className="country-name">{provider.country}</span>
                             </td>
                             
@@ -77,25 +71,7 @@ function MovieCard({ movie, filteredProviders, handleClose, open }) {
                                 <span className="no-providers">Aucun</span>
                                 )}
                             </td>
-                            
-                            <td className="providers-cell ads-cell">
-                                {provider.ads?.length > 0 ? (
-                                <div className="providers-list">
-                                    {provider.ads.map((providerEl) => (
-                                    <img
-                                        className="provider-icon"
-                                        key={providerEl.provider_id}
-                                        src={`https://image.tmdb.org/t/p/original${providerEl.logo_path}`}
-                                        alt={providerEl.provider_name}
-                                        title={providerEl.provider_name}
-                                    />
-                                    ))}
-                                </div>
-                                ) : (
-                                <span className="no-providers">Aucun</span>
-                                )}
-                            </td>
-                            
+
                             <td className="providers-cell flatrate-cell">
                                 {provider.flatrate?.length > 0 ? (
                                 <div className="providers-list">

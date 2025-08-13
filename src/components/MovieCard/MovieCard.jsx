@@ -4,7 +4,7 @@ import DialogProviders from "../DialogProviders/DialogProviders";
 import Rating from '@mui/material/Rating';
 import EastIcon from '@mui/icons-material/East';
 import { countryNames } from './countryNames';
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import { Button } from "@mui/material";
 
 function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
@@ -16,22 +16,19 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
   
   const handleOpen = () => {
     const filtered = Object.entries(details.providers)
-      .filter(([country, data]) => 
+      .filter(([country, data]) =>
         data.flatrate?.length > 0 || data.ads?.length > 0
       )
       .map(([country, data]) => ({
-        country: countryNames[country] || country, // fallback si inconnu
-        free: data.free || [],
-        ads: data.ads || [],
+        country: countryNames[country] || country,
+        countryCode: country,
+        free: (data.free || []).concat(data.ads || []),
         flatrate: data.flatrate || []
       }));
 
     setFilteredProviders(filtered);
-    
+    console.log(filtered)
     setOpenDialog(true);
-    console.log(details.providers) ;
-    console.log(filtered) ;
-    console.log(filteredProviders) ;
   };
   const handleClose = () => {
     setOpenDialog(false);
@@ -180,7 +177,7 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
                 Autres disponibilités
               </Button>
             </div>
-            
+
             <DialogProviders 
               movie={movie} 
               filteredProviders={filteredProviders} 

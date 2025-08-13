@@ -12,10 +12,6 @@
     color: white;
 }
 
-.providers-header {
-  margin-bottom: 24px;
-}
-
 .providers-subtitle {
   text-align: center;
   color: #a1a1a1;
@@ -55,18 +51,22 @@
   color: #16a34a;
 }
 
-.ads-stat {
-  color: #f59e0b;
-}
-
 .flatrate-stat {
   color: #2563eb;
 }
 
+.MuiDialogContent-root {
+    display:flex ;
+    flex-direction: column;
+    padding-bottom: 0 !important;
+}
 .providers-table-container {
   max-height: 500px;
+  height: fit-content;
+  flex-grow: 1;
   overflow: hidden auto;
   border-radius: 8px;
+  margin-top: 16px;
 }
 
 .providers-table {
@@ -91,20 +91,16 @@
 }
 
 .country-header {
-  width: 25%;
+  width: 33%;
 }
 
 .providers-header-cell {
-  width: 25%;
+  width: 33%;
   text-align: center;
 }
 
 .free-header {
   color: #16a34a;
-}
-
-.ads-header {
-  color: #f59e0b;
 }
 
 .flatrate-header {
@@ -126,9 +122,20 @@
 
 .country-cell {
   font-weight: 500;
+  display:flex ;
+  gap:8px ;
   color: #c5c5c5;
 }
-
+.country-code {
+    color: #a1a1a1;
+    font-size: small;
+}
+.country-code:before {
+    content: '(';
+}
+.country-code:after {
+    content: ')';
+}
 .country-name {
   display: block;
 }
@@ -141,11 +148,6 @@
 .free-cell {
   border-left: 3px solid #16a34a;
 }
-
-.ads-cell {
-  border-left: 3px solid #f59e0b;
-}
-
 .flatrate-cell {
   border-left: 3px solid #2563eb;
 }
@@ -171,111 +173,58 @@
 }
 
 @media screen and (max-width: 850px) {
-  .providers-stats {
-    flex-direction: column;
-    gap: 12px;
-  }
-  .stat {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap:12px ;
-    flex-direction: row-reverse;
-  }
-  
+    .movie-dialog h2 {
+        font-size: 1.15rem;
+    }
 
-    .country-header,
+    .providers-stats {
+        flex-direction: column;
+        gap: 12px;
+    }
+    .stat {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap:12px ;
+        flex-direction: row-reverse;
+    }
+  
+    .country-header {
+        width: 20%;
+    }
+
     .providers-header-cell {
-        min-width: 10px;
+        width: 40%;
     }
     
-    .providers-table thead th,
-    .country-cell {
+    .providers-table thead th{
         font-size: small;
     }
+    
+    .country-cell {
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        height:32px ;
+        margin-right: 5px;
+    }
+    .country-code {
+        color: #c5c5c5;
+        display:none ;
+    }
+    .country-code:before,
+    .country-code:after {
+        content:'' ;
+    }
+    .country-name {
+        font-size: smaller;
+        position: absolute;
+        text-wrap: nowrap;
+        text-align: left;
+        left: 8px;
+    }
 }
-/*
-@media (max-width: 1024px) {
-  .providers-stats {
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  .stat {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap:12px ;
-    flex-direction: row-reverse;
-  }
-  
-  .stat-number {
-    font-size: 18px;
-    margin-bottom: 0;
-  }
-  
-  .providers-table-container {
-    max-height: 400px;
-  }
-  
-  .providers-table thead th {
-    padding: 8px 12px;
-    font-size: 12px;
-  }
-  
-  .providers-table td {
-    padding: 8px 12px;
-  }
-  
-  .country-header {
-    min-width: 140px;
-  }
-  
-  .providers-header-cell {
-    min-width: 120px;
-  }
-  
-  .providers-cell .provider-icon {
-    width: 28px;
-    height: 28px;
-  }
-}
-
-@media (max-width: 768px) {
-  .providers-table-container {
-    max-height: 350px;
-  }
-  
-  .providers-table {
-    font-size: 12px;
-  }
-  
-  .providers-table thead th {
-    padding: 6px 8px;
-  }
-  
-  .providers-table td {
-    padding: 8px;
-  }
-  
-  .country-header {
-    min-width: 120px;
-  }
-  
-  .providers-header-cell {
-    min-width: 100px;
-    font-size: 11px;
-  }
-  
-  .providers-cell .provider-icon {
-    width: 24px;
-    height: 24px;
-  }
-  
-  .providers-cell .providers-list {
-    gap: 4px;
-  }
-}*/
 
 .providers-table-container::-webkit-scrollbar {
   width: 8px;
