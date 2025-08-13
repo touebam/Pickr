@@ -1,11 +1,41 @@
 import './MovieCard.css';
 import { useState } from "react";
+import DialogProviders from "../DialogProviders/DialogProviders";
 import Rating from '@mui/material/Rating';
+import EastIcon from '@mui/icons-material/East';
+import { countryNames } from './countryNames';
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 
 function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
   const [details, setDetails] = useState(null);
   const [isHovering, setIsHovering] = useState(false);
+  const [open, setOpenDialog] = useState(false);
+  const [filteredProviders, setFilteredProviders] = useState([]);
+
+  
+  const handleOpen = () => {
+    const filtered = Object.entries(details.providers)
+      .filter(([country, data]) => 
+        data.flatrate?.length > 0 || data.ads?.length > 0
+      )
+      .map(([country, data]) => ({
+        country: countryNames[country] || country, // fallback si inconnu
+        free: data.free || [],
+        ads: data.ads || [],
+        flatrate: data.flatrate || []
+      }));
+
+    setFilteredProviders(filtered);
+    
+    setOpenDialog(true);
+    console.log(details.providers) ;
+    console.log(filtered) ;
+    console.log(filteredProviders) ;
+  };
+  const handleClose = () => {
+    setOpenDialog(false);
+  };
 
   // Formatter la durée
   const formatDuration = (minutes) => {
@@ -39,6 +69,7 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
   const handleMouseLeave = () => {
     setIsHovering(false);
   };
+
 
   return (
     <div 
@@ -127,8 +158,8 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
           )}
           <div className="providers-list">
             <span className="detail-title">Streaming :</span>{" "}
-            <span className="detail-content">{details?.providers?.AD?.flatrate ? (
-              details.providers.AD.flatrate.map((provider) => (
+            <span className="detail-content">{details?.providers?.FR?.flatrate ? (
+              details.providers.FR.flatrate.map((provider) => (
                 <img
                   className="provider-icon"
                   key={provider.provider_id}
@@ -140,6 +171,22 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
             ) : (
               <>Non disponible en France</>
             )}</span>
+            <div className='provider-button-container'>
+              <Button
+                endIcon={<EastIcon />}
+                variant="contained" 
+                onClick={handleOpen}
+              >
+                Autres disponibilités
+              </Button>
+            </div>
+            
+            <DialogProviders 
+              movie={movie} 
+              filteredProviders={filteredProviders} 
+              handleClose={handleClose} 
+              open={open} 
+            />
           </div>
         </div>
       </div>

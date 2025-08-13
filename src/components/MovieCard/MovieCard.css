@@ -96,9 +96,12 @@
 .providers-list {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+
 }
 .detail-title {
   font-weight: bold;
+  text-wrap: nowrap;
 }
 
 .detail-content {
@@ -139,6 +142,46 @@
   overflow: hidden;
 }
 
+.provider-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 8px 5px;
+}
+.movie-dialog {
+}
+.movie-dialog .provider-country {
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.movie-dialog .countries-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.movie-dialog .countries-list .country-container .provider-icon {
+  width: 30px;
+}
+/*
+.movie-dialog .free-container {
+  background: blue;
+}
+.movie-dialog .ads-container {
+  background: green;
+}
+.movie-dialog .flatrate-container {
+  background: red;
+}*/
+
+.movie-dialog .free-container,
+.movie-dialog .ads-container,
+.movie-dialog .flatrate-container {
+  border: 1px solid rgb(141, 141, 141);
+  display: flex;
+  gap: 4px;
+  width: fit-content;
+}
 @media screen and (max-width: 850px) {
     .movie-card {
       border-radius: 12px;

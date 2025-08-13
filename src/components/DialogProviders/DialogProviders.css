@@ -1,0 +1,296 @@
+.MuiDialog-container > div {
+    background: rgba(37, 37, 37, 0.96);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.movie-dialog h2 {
+    text-align: center;
+    padding-bottom: 0;
+    color: white;
+}
+
+.providers-header {
+  margin-bottom: 24px;
+}
+
+.providers-subtitle {
+  text-align: center;
+  color: #a1a1a1;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.providers-stats {
+  width: fit-content;
+  margin: auto;
+  gap: 24px;
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 24px;
+  background: #3d3d3d;
+  border-radius: 8px;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 24px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #a1a1a1;
+  font-weight: 500;
+}
+
+.free-stat {
+  color: #16a34a;
+}
+
+.ads-stat {
+  color: #f59e0b;
+}
+
+.flatrate-stat {
+  color: #2563eb;
+}
+
+.providers-table-container {
+  max-height: 500px;
+  overflow: hidden auto;
+  border-radius: 8px;
+}
+
+.providers-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgb(34, 34, 34);
+  font-size: 14px;
+}
+
+.providers-table thead tr {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.providers-table thead th {
+  background: #2c2c2c;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #ffffff;
+  text-align: center;
+}
+
+.country-header {
+  width: 25%;
+}
+
+.providers-header-cell {
+  width: 25%;
+  text-align: center;
+}
+
+.free-header {
+  color: #16a34a;
+}
+
+.ads-header {
+  color: #f59e0b;
+}
+
+.flatrate-header {
+  color: #2563eb;
+}
+
+.provider-row:nth-child(even) {
+  background-color: #272727;
+}
+
+.provider-row:last-child {
+  border-bottom: none;
+}
+
+.providers-table td {
+  padding: 4px 8px;
+  vertical-align: middle;
+}
+
+.country-cell {
+  font-weight: 500;
+  color: #c5c5c5;
+}
+
+.country-name {
+  display: block;
+}
+
+.providers-cell {
+  text-align: center;
+  position: relative;
+}
+
+.free-cell {
+  border-left: 3px solid #16a34a;
+}
+
+.ads-cell {
+  border-left: 3px solid #f59e0b;
+}
+
+.flatrate-cell {
+  border-left: 3px solid #2563eb;
+}
+
+.providers-cell .providers-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.providers-cell .provider-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.no-providers {
+  color: #919191;
+  font-style: italic;
+  font-size: 12px;
+}
+
+@media screen and (max-width: 850px) {
+  .providers-stats {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap:12px ;
+    flex-direction: row-reverse;
+  }
+  
+
+    .country-header,
+    .providers-header-cell {
+        min-width: 10px;
+    }
+    
+    .providers-table thead th,
+    .country-cell {
+        font-size: small;
+    }
+}
+/*
+@media (max-width: 1024px) {
+  .providers-stats {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap:12px ;
+    flex-direction: row-reverse;
+  }
+  
+  .stat-number {
+    font-size: 18px;
+    margin-bottom: 0;
+  }
+  
+  .providers-table-container {
+    max-height: 400px;
+  }
+  
+  .providers-table thead th {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  
+  .providers-table td {
+    padding: 8px 12px;
+  }
+  
+  .country-header {
+    min-width: 140px;
+  }
+  
+  .providers-header-cell {
+    min-width: 120px;
+  }
+  
+  .providers-cell .provider-icon {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .providers-table-container {
+    max-height: 350px;
+  }
+  
+  .providers-table {
+    font-size: 12px;
+  }
+  
+  .providers-table thead th {
+    padding: 6px 8px;
+  }
+  
+  .providers-table td {
+    padding: 8px;
+  }
+  
+  .country-header {
+    min-width: 120px;
+  }
+  
+  .providers-header-cell {
+    min-width: 100px;
+    font-size: 11px;
+  }
+  
+  .providers-cell .provider-icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .providers-cell .providers-list {
+    gap: 4px;
+  }
+}*/
+
+.providers-table-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.providers-table-container::-webkit-scrollbar-track {
+  background: #3f3f3f;
+  border-radius: 4px;
+}
+
+.providers-table-container::-webkit-scrollbar-thumb {
+  background: #1d1d1d;
+  border-radius: 4px;
+}
+
+.providers-table-container::-webkit-scrollbar-thumb:hover {
+  background: #131313;
+}
