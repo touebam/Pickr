@@ -71,7 +71,7 @@
 }
 
 .form-header .MuiButton-icon {
-    margin: 0!important;
+    margin: 0 !important;
 }
 
 .menu-button {
@@ -90,7 +90,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    padding-left:6px
+    padding-left: 6px;
 }
 
 .app-logo img {
@@ -107,9 +107,14 @@
 .movie-form:not(.open) .form-container {
     display: none;
 }
+
 @media screen and (max-width: 850px) {
     .movie-form.open {
-        height: 600px;
+        height: fit-content;
+        max-height: 90vh;
+    }
+    .movie-form.open .form-container {
+        height: fit-content;
     }
     .movie-form {
         height: fit-content;

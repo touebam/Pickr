@@ -39,7 +39,7 @@ footer p {
 }
 @media screen and (max-height: 850px) {
     .hero-section h1 {
-        display:none ;
+        font-size: 2em;
     }
 }
 

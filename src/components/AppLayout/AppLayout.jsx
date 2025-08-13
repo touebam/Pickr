@@ -57,6 +57,13 @@ export default function AppLayout() {
 
     const movieListContainer=document.querySelector('.app-layout__right') ;
     movieListContainer.scrollTop=0 ;
+    
+    if (window.innerWidth < 850) {
+      const form = document.querySelector('.movie-form');
+      if (form) {
+        form.classList.remove('open');
+      }
+    }
   }
 
   // Recherche lancée depuis scroll MovieList

@@ -1,5 +1,5 @@
 import './MovieForm.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Slider from '@mui/material/Slider';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
@@ -29,6 +29,7 @@ export default function MovieForm({ genres, providers, onSearch }) {
   const [duration, setDuration] = useState(DEFAULT_VALUES.duration);
   const [rating, setRating] = useState(DEFAULT_VALUES.rating);
   const [releaseYear, setReleaseYear] = useState(DEFAULT_VALUES.releaseYear);
+  const [isOpen, setIsOpen] = useState(window.innerWidth > 850);
 
   // Fonction pour réinitialiser tous les champs
   const handleReset = () => {
@@ -58,8 +59,25 @@ export default function MovieForm({ genres, providers, onSearch }) {
     form?.classList.toggle("open");
   };
 
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 850) {
+        setIsOpen(true);
+      } else {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
-    <div className="movie-form open">
+    <div className={`movie-form ${isOpen ? "open" : ""}`}>
       <div className="form-header">
         <div className="app-logo">
           <img src={logo} alt="Logo Pickr"/>
@@ -117,7 +135,7 @@ export default function MovieForm({ genres, providers, onSearch }) {
           <MenuItem value={30}>Thirty</MenuItem>
         </Select>*/}
         
-        <h3>Plateformes de streaming :</h3>
+        <h3>Plateformes :</h3>
         <ProviderSelector 
           providers={providers}
           selectedProviders={selectedProviders}
