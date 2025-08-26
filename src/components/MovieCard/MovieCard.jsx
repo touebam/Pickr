@@ -1,5 +1,5 @@
 import './MovieCard.css';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DialogProviders from "../DialogProviders/DialogProviders";
 import Rating from '@mui/material/Rating';
 import EastIcon from '@mui/icons-material/East';
@@ -13,7 +13,8 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
   const [open, setOpenDialog] = useState(false);
   const [filteredProviders, setFilteredProviders] = useState([]);
 
-  
+  const isMobile = window.matchMedia("(hover: none)").matches;
+
   const handleOpen = () => {
     const filtered = Object.entries(details.providers)
       .filter(([country, data]) =>
@@ -74,7 +75,7 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
 
   return (
     <div 
-      className={`movie-card ${isActive ? "active" : ""}`}
+      className={`movie-card ${isMobile ? "mobile" : ""} ${isActive ? "active" : ""}`}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
     >

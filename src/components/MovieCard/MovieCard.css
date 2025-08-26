@@ -78,13 +78,13 @@
 }
 
 .movie-card.active .hidden,
-.movie-card:hover .hidden {
+.movie-card:not(.mobile):hover .hidden {
   max-height: 500px;
   transition: all .8s;
 }
 
 .movie-card.active .movie-details,
-.movie-card:hover .movie-details {
+.movie-card:not(.mobile):hover .movie-details {
   position: absolute;
   width: 100%;
   box-sizing: border-box;
