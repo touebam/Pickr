@@ -57,7 +57,7 @@ export async function getMovies(searchCriteria, page = 1) {
     // Génération des paramètres 
     const baseParams = new URLSearchParams({
       api_key: API_KEY,
-      language:'fr-FR',
+      language: 'fr-FR',
       watch_region: "FR",
       'vote_average.gte': searchCriteria.rating[0],
       'vote_average.lte': searchCriteria.rating[1],

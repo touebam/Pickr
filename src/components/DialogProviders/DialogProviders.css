@@ -211,18 +211,14 @@
     }
     .country-code {
         color: #c5c5c5;
-        display:none ;
+        font-size: smaller;
     }
     .country-code:before,
     .country-code:after {
         content:'' ;
     }
     .country-name {
-        font-size: smaller;
-        position: absolute;
-        text-wrap: nowrap;
-        text-align: left;
-        left: 8px;
+        display:none ;
     }
 }
 

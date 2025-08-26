@@ -1,5 +1,6 @@
 import './DialogProviders.css';
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import "flag-icons/css/flag-icons.min.css";
 
 function MovieCard({ movie, filteredProviders, handleClose, open }) {
     return (
@@ -50,6 +51,7 @@ function MovieCard({ movie, filteredProviders, handleClose, open }) {
                         {filteredProviders.map((provider) => (
                             <tr key={provider.country} className="provider-row">
                             <td className="country-cell">
+                                <span className={`fi fi-${provider.countryCode.toLowerCase()}`} title={provider.country}></span>
                                 <span className="country-code">{provider.countryCode}</span>
                                 <span className="country-name">{provider.country}</span>
                             </td>

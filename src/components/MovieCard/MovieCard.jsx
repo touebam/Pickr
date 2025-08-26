@@ -9,7 +9,7 @@ import { Button } from "@mui/material";
 function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
   const [details, setDetails] = useState(null);
-  const [isHovering, setIsHovering] = useState(false);
+  const [isActive, setIsActive] = useState(false);
   const [open, setOpenDialog] = useState(false);
   const [filteredProviders, setFilteredProviders] = useState([]);
 
@@ -27,9 +27,9 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
       }));
 
     setFilteredProviders(filtered);
-    console.log(filtered)
     setOpenDialog(true);
   };
+
   const handleClose = () => {
     setOpenDialog(false);
   };
@@ -54,25 +54,28 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
       .join(", ");
   };
 
+  const handleMouseEnter = () => {
+    loadDetails();
+  };
+
   // Charger les détails au hover
-  const handleMouseEnter = async () => {
-    setIsHovering(true);
+  const loadDetails = async () => {
     if (!details) {
       const data = await fetchDetailsWithCache(movie.id);
       setDetails(data);
     }
-  };
+  } 
 
-  const handleMouseLeave = () => {
-    setIsHovering(false);
+  const handleClick = () => {
+    loadDetails();
+    setIsActive(!isActive);
   };
-
 
   return (
     <div 
-      className="movie-card"
+      className={`movie-card ${isActive ? "active" : ""}`}
+      onClick={handleClick}
       onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
       <div className="movie-poster">
           {movie.poster_path ? (
@@ -126,13 +129,13 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
             </div>
           )}
           {(details && details.overview) ? 
-            <div>
+            <div className='overview-container'>
               <span className="detail-title">Description :</span> 
               <span className="detail-content">{details.overview /* description en français */}</span>
             </div>
            : 
             (movie.overview) ?
-            <div>
+            <div className='overview-container'>
               <span className="detail-title">Description :</span> 
               <span className="detail-content">{movie.overview /* description en anglais */}</span>
             </div>
