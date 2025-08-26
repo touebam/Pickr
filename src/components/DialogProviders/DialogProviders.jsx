@@ -60,13 +60,18 @@ function MovieCard({ movie, filteredProviders, handleClose, open }) {
                                 {provider.free?.length > 0 ? (
                                 <div className="providers-list">
                                     {provider.free.map((providerEl) => (
-                                    <img
-                                        className="provider-icon"
+                                    <a
                                         key={providerEl.provider_id}
-                                        src={`https://image.tmdb.org/t/p/original${providerEl.logo_path}`}
-                                        alt={providerEl.provider_name}
-                                        title={providerEl.provider_name}
-                                    />
+                                        href={`https://www.google.com/search?q=${encodeURIComponent(movie.title + " " + providerEl.provider_name)}`}
+                                        target='_blank'
+                                    >
+                                        <img
+                                            className="provider-icon"
+                                            src={`https://image.tmdb.org/t/p/original${providerEl.logo_path}`}
+                                            alt={providerEl.provider_name}
+                                            title={providerEl.provider_name}
+                                        />
+                                    </a>
                                     ))}
                                 </div>
                                 ) : (
@@ -78,13 +83,19 @@ function MovieCard({ movie, filteredProviders, handleClose, open }) {
                                 {provider.flatrate?.length > 0 ? (
                                 <div className="providers-list">
                                     {provider.flatrate.map((providerEl) => (
-                                    <img
-                                        className="provider-icon"
+                                    <a
                                         key={providerEl.provider_id}
-                                        src={`https://image.tmdb.org/t/p/original${providerEl.logo_path}`}
-                                        alt={providerEl.provider_name}
-                                        title={providerEl.provider_name}
-                                    />
+                                        href={`https://www.google.com/search?q=${encodeURIComponent(movie.title + " " + providerEl.provider_name)}`}
+                                        target='_blank'
+                                    >
+                                        <img
+                                            className="provider-icon"
+                                            key={providerEl.provider_id}
+                                            src={`https://image.tmdb.org/t/p/original${providerEl.logo_path}`}
+                                            alt={providerEl.provider_name}
+                                            title={providerEl.provider_name}
+                                        />
+                                    </a>
                                     ))}
                                 </div>
                                 ) : (

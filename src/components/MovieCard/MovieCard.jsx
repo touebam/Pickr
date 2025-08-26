@@ -62,6 +62,7 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
   const loadDetails = async () => {
     if (!details) {
       const data = await fetchDetailsWithCache(movie.id);
+      console.log(data)
       setDetails(data);
     }
   } 
@@ -160,13 +161,18 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
             <span className="detail-title">Streaming :</span>{" "}
             <span className="detail-content">{details?.providers?.FR?.flatrate ? (
               details.providers.FR.flatrate.map((provider) => (
-                <img
-                  className="provider-icon"
+                <a
                   key={provider.provider_id}
-                  src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-                  alt={provider.provider_name}
-                  title={provider.provider_name}
-                />
+                  href={`https://www.google.com/search?q=${encodeURIComponent(movie.title + " " + provider.provider_name)}`}
+                  target='_blank'
+                >
+                  <img
+                    className="provider-icon"
+                    src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                    alt={provider.provider_name}
+                    title={provider.provider_name}
+                  />
+                </a>
               ))
             ) : (
               <>Non disponible en France</>
