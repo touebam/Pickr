@@ -1,19 +1,7 @@
+import * as Utils from "../utils/utils.js";
+
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = import.meta.env.VITE_TMDB_BASE_URL;
-
-export async function searchMovies(query) {
-  try {
-    const response = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}`);
-    if (!response.ok) {
-      throw new Error("Erreur lors de l'appel à l'API TMDb");
-    }
-    const data = await response.json();
-    return data.results;
-  } catch (error) {
-    console.error("Erreur API:", error);
-    return [];
-  }
-}
 
 export async function getGenres() {
   try {
@@ -43,7 +31,7 @@ export async function getTrends() {
   }
 }
 
-export async function getMovies(searchCriteria, page = 1) {
+export async function discoverMovies(searchCriteria, page = 1) {
   try {
     // Fonction pour mélanger un tableau
     const shuffleArray = (array) => {
@@ -89,6 +77,70 @@ export async function getMovies(searchCriteria, page = 1) {
   }
 }
 
+export async function searchMovies(searchQuery) {
+  try {
+    // Retirer les films trop méconnus 
+    function filterMovies(movies) {
+      return movies.filter(m =>
+        m.vote_count >= 10
+      );
+    }
+
+    const params = new URLSearchParams({
+      api_key: API_KEY,
+      language: 'fr-FR',
+      query: searchQuery
+    });
+
+    // Recherche par titre
+    const movieRes = await fetch(`${BASE_URL}/search/movie?${params}`);
+    if (!movieRes.ok) throw new Error(`Erreur API (movie search) : ${movieRes.status}`);
+    const movieData = await movieRes.json();
+    const filteredMovieData = filterMovies(movieData.results);
+
+    // Recherche des acteurs/réalisateurs
+    const personRes = await fetch(`${BASE_URL}/search/person?${params}`);
+    if (!personRes.ok) throw new Error(`Erreur API (person search) : ${personRes.status}`);
+    const personData = await personRes.json();
+
+    let personMovies = [];
+    if (personData.results?.length > 0) {
+      const peopleParams = new URLSearchParams({
+        api_key: API_KEY,
+        language: 'fr-FR',
+        with_people: personData.results.map(p => p.id).join('|'),
+        'vote_count.gte': 10,
+      });
+
+      const peopleMoviesRes = await fetch(`${BASE_URL}/discover/movie?${peopleParams}`);
+      if (peopleMoviesRes.ok) {
+        const peopleMoviesData = await peopleMoviesRes.json();
+        personMovies = filterMovies(peopleMoviesData.results);
+      }
+    }
+
+    // Tri des films par similarité titre/recherche 
+    const scoredMovieData = filteredMovieData.map(movie => {
+      const similarity = Utils.textSimilarity(movie.title, searchQuery);
+      return { movie, score: similarity };
+    });
+    const sortedByTitle = scoredMovieData
+      .sort((a, b) => b.score - a.score)
+      .map(x => x.movie);
+
+    // Fusion sans doublons
+    const uniquePersonMovies = personMovies.filter(
+      m => !sortedByTitle.some(sm => sm.id === m.id)
+    );
+
+    const finalMovies = [...sortedByTitle, ...uniquePersonMovies];
+    return finalMovies;
+
+  } catch (error) {
+    console.error("Erreur lors de la recherche:", error);
+    return [];
+  }
+}
 
 export async function getProviders() {
   const wantedProviders = [
@@ -112,29 +164,13 @@ export async function getProviders() {
     const matchedProviders = data.results.filter(provider =>
       wantedProviders.some(wp => provider.provider_name.toLowerCase().includes(wp.toLowerCase()))
     );
-    const uniqueProviders = filterClosestProviders(matchedProviders, wantedProviders);
+    const uniqueProviders = Utils.filterClosestProviders(matchedProviders, wantedProviders);
     
     return uniqueProviders;
   } catch (error) {
     console.error(error);
     return [];
   }
-}
-
-function filterClosestProviders(providers, wantedProviders) {
-  const map = new Map();
-
-  providers.forEach(provider => {
-    const match = wantedProviders.find(wp => provider.provider_name.toLowerCase().includes(wp.toLowerCase()));
-
-    if (match) {
-      if (!map.has(match) || provider.provider_name.length < map.get(match).provider_name.length) {
-        map.set(match, provider);
-      }
-    }
-  });
-
-  return Array.from(map.values());
 }
 
 export async function getMovieDetails(movieId) {

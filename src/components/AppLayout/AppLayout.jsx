@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import MovieForm from '../MovieForm/MovieForm';
 import MovieList from '../MovieList/MovieList';
-import { getGenres, getMovieDetails, getWatchProviders, getProviders, getMovies, getTrends } from '../../api/tmdb';
+import { getGenres, getMovieDetails, getWatchProviders, getProviders, discoverMovies, getTrends } from '../../api/tmdb';
 import './AppLayout.css';
 import HeroSection from '../HeroSection/HeroSection';
 
@@ -55,8 +55,8 @@ export default function AppLayout() {
     setSearchCriteria(criteria);
     setCurrentPage(1);
 
-    const movieListContainer=document.querySelector('.app-layout__right') ;
-    movieListContainer.scrollTop=0 ;
+    const movieListContainer = document.querySelector('.app-layout__right');
+    movieListContainer.scrollTop = 0;
     
     if (window.innerWidth < 850) {
       const form = document.querySelector('.movie-form');
@@ -68,9 +68,11 @@ export default function AppLayout() {
 
   // Recherche lancée depuis scroll MovieList
   async function handleEndReached() {
-    if (!searchCriteria) return; 
+    const discoveryContainer = document.querySelector('.app-layout__left .discover');
+    if (!searchCriteria || !discoveryContainer) return; 
+
     const nextPage = currentPage + 1;
-    const newMovies = await getMovies(searchCriteria, nextPage );
+    const newMovies = await discoverMovies(searchCriteria, nextPage );
 
     const uniqueNewMovies = newMovies.filter(movie => {
       if (movieIds.current.has(movie.id)) return false;

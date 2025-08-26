@@ -3,7 +3,6 @@
     flex-direction: column;
     height: 100%;
 }
-
 .slider-container {
     display:flex ;
 }
@@ -55,9 +54,14 @@
     flex-grow: 1;
     height: 10px;
     overflow: hidden auto;
-    margin: 10px 0;
+    margin-bottom: 10px;
     padding-left: 10px;
 }
+
+.form-container h3 {
+    margin: 15px 0;
+}
+
 .form-buttons {
     display:flex ;
     justify-content: space-between;
@@ -103,6 +107,7 @@
 }
 
 
+.movie-form:not(.open) .form-tabs, 
 .movie-form:not(.open) .form-buttons, 
 .movie-form:not(.open) .form-container {
     display: none;
@@ -125,4 +130,22 @@
     .form-header h1 {
         font-size: 1.5em;
     }
+}
+
+.MuiTabs-root {
+    margin-top: 5px;
+}
+.MuiTabs-root .Mui-selected,
+.MuiTabs-root .MuiTabs-indicator {
+    color: #007AFF;
+}
+.MuiTabs-root button {
+    color: white;
+    outline: none;
+    border-radius: 10px 10px 0 0;
+    padding:4px 12px;
+}
+.MuiTabs-root .MuiTabs-list {
+    justify-content: center;
+    gap:4px
 }
