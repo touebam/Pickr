@@ -13,7 +13,7 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
   const [open, setOpenDialog] = useState(false);
   const [filteredProviders, setFilteredProviders] = useState([]);
 
-  const isMobile = window.matchMedia("(hover: none)").matches;
+  const isMobile = (window.innerWidth <= 850);
 
   const handleOpen = () => {
     const filtered = Object.entries(details.providers)
