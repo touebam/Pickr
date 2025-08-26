@@ -4,7 +4,7 @@ import DialogProviders from "../DialogProviders/DialogProviders";
 import Rating from '@mui/material/Rating';
 import EastIcon from '@mui/icons-material/East';
 import { countryNames } from './countryNames';
-import { Button } from "@mui/material";
+import { Button } from "@mui/material"; 
 
 function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
