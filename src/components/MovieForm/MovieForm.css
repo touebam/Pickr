@@ -3,20 +3,48 @@
     flex-direction: column;
     height: 100%;
 }
+
+.movie-form .form-container-header {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+}
+.movie-form .form-container-header select {
+    height: fit-content;
+}
 .slider-container {
     display:flex ;
 }
 .slider-container.duree {
-    margin-top: 18px;
+    margin-top: var(--space-4);
 }
-.slider-container h3 {
+h3 {
     text-wrap: nowrap;
 }
+
+.form-buttons .MuiButtonBase-root:first-child {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+.form-buttons .MuiButtonBase-root:first-child:hover {
+    border-color: var(--color-primary-200);
+    color: var(--color-primary-200);
+}
+
+.form-buttons .MuiButtonBase-root:last-child {
+    background-color: var(--color-primary) !important;
+}
+.form-buttons .MuiButtonBase-root:last-child:hover {
+    background-color: var(--color-primary-400) !important;
+}
+
+
 .MuiSlider-root {
-    --MARGIN-HORI: 20px;
-    margin: 18px var(--MARGIN-HORI);
-    width: calc(100% - 2 * var(--MARGIN-HORI)) !important;
+    --margin-hori: 20px;
+    margin: var(--space-4) var(--margin-hori);
+    width: calc(100% - 2 * var(--margin-hori)) !important;
     margin-bottom: 0;
+    color: var(--color-primary) !important;
 }
 
 .MuiSlider-valueLabelOpen {
@@ -33,9 +61,17 @@
     width: 28px !important;
     height: 28px !important;
     border-radius: 50% 50% 50% 0px !important;
-    background-color: #1976d2 !important;
+    background-color: var(--color-primary) !important;
     transform-origin: left bottom !important;
     transform: translate(50%, -75%) rotate(-45deg) !important;
+    cursor: grab;
+}
+.MuiSlider-valueLabelOpen:hover {
+    background-color: var(--color-primary-400) !important;
+}
+.MuiSlider-thumb:focus-within,
+.MuiSlider-thumb:has(:hover) {
+    z-index: 9;
 }
 
 .date .MuiSlider-valueLabelOpen {
@@ -54,12 +90,12 @@
     flex-grow: 1;
     height: 10px;
     overflow: hidden auto;
-    margin-bottom: 10px;
-    padding-left: 10px;
+    margin-bottom: var(--space-2);
+    padding: 0 var(--space-2);
 }
 
 .form-container h3 {
-    margin: 15px 0;
+    margin: var(--space-4) 0;
 }
 
 .form-buttons {
@@ -69,7 +105,7 @@
 
 .form-header {
     display: flex;
-    gap:15px ;
+    gap: var(--space-4);
     align-items: center;
     justify-content: space-between;
 }
@@ -79,22 +115,23 @@
 }
 
 .menu-button {
-    border-radius: 8px !important;
+    border-radius: var(--radius-md) !important;
     outline: none !important;
+    transition: all var(--transition-fast) !important;
 }
 .menu-button:hover {
-    background: rgb(31, 31, 31) !important;
+    background: var(--color-gray-700) !important;
 }
 
 .menu-button svg {
-    color: rgb(150, 150, 150);
+    color: var(--color-gray-500);
 }
 
 .app-logo {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding-left: 6px;
+    gap: var(--space-2);
+    padding-left: var(--space-1);
 }
 
 .app-logo img {
@@ -103,7 +140,7 @@
 
 .app-logo h1 {
     font-size: 2em;
-    margin: 8px 0;
+    margin: var(--space-2) 0;
 }
 
 
@@ -133,19 +170,77 @@
 }
 
 .MuiTabs-root {
-    margin-top: 5px;
+    margin-top: var(--space-1);
 }
-.MuiTabs-root .Mui-selected,
+
+.MuiTabs-root .Mui-selected {
+    color: var(--color-primary) !important;
+}
 .MuiTabs-root .MuiTabs-indicator {
-    color: #007AFF;
+    background-color: var(--color-primary) !important;
 }
 .MuiTabs-root button {
-    color: white;
+    color: var(--color-gray-50);
     outline: none;
-    border-radius: 10px 10px 0 0;
-    padding:4px 12px;
+    border-radius: var(--radius-md);
+    padding: var(--space-1) var(--space-3);
 }
 .MuiTabs-root .MuiTabs-list {
     justify-content: center;
-    gap:4px
+    gap: var(--space-1);
+}
+
+.genre-operator-dropdown {
+    background-color: var(--color-gray-700);
+    border: 1px solid var(--color-gray-600);
+    border-radius: var(--radius-md);
+    color: var(--color-gray-50);
+    padding: var(--space-2) var(--space-3);
+    font-size: 14px;
+    cursor: pointer;
+    min-width: 200px;
+    transition: all var(--transition-fast);
+    width: 100%;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+    background-size: 1rem;
+}
+
+.genre-operator-dropdown:hover {
+    border-color: var(--color-primary);
+    background-color: var(--color-gray-600);
+}
+
+.genre-operator-dropdown:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.genre-operator-dropdown option {
+    background-color: var(--color-gray-700);
+    color: var(--color-gray-50);
+    padding: var(--space-2);
+}
+
+.search-textfield .MuiOutlinedInput-root {
+    color: var(--color-gray-50);
+}
+
+.search-textfield .MuiOutlinedInput-root fieldset {
+    border-color: var(--color-gray-600);
+    transition: all var(--transition-fast);
+}
+
+.search-textfield .MuiOutlinedInput-root:hover fieldset {
+    border-color: var(--color-gray-500);
+}
+
+.search-textfield .MuiOutlinedInput-root.Mui-focused fieldset {
+    border-color: var(--color-primary);
 }

@@ -19,7 +19,7 @@
     justify-content: space-between;
     width: calc(var(--CARD-SIZE) * 40);
     animation: scroll 60s linear infinite;  
-    padding: 5px;
+    padding: var(--space-1);
 }
 
 .cards-container .movie-card {

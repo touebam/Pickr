@@ -1,5 +1,5 @@
 .movie-card {
-  padding: 10px;
+  padding: var(--space-3);
   position: relative;
   flex-basis: 300px;
   flex-grow: 1;
@@ -7,20 +7,20 @@
   display: flex;
   flex-direction: column;
   max-width: 470px;
-  background: rgba(37, 37, 37, 0.2);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  background: var(--color-gray-900);
+  border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--color-gray-600);
 }
 
 
 .movie-poster {
   width: 100%;
-  min-height: 520px;
-  padding:5% 0 ;
-  border-radius: 15px;
+  min-height: 500px; /* 520 ? */
+  padding:var(--space-3) 0 ;
+  border-radius: var(--radius-lg);
   position: relative;
   display: flex;
   align-items: center;
@@ -39,25 +39,23 @@
 .poster-image {
   width: 100%;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   position: relative;
   z-index: 2;
-  transition: transform 0.3s ease;
 }
 
 .no-poster {
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, #667eea, #764ba2);
-  border-radius: 10px;
+  background: linear-gradient(45deg, var(--color-primary-100), var(--color-secondary-100));
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--color-gray-50);
   font-size: 14px;
   position: relative;
   z-index: 2;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 .blured {
@@ -65,7 +63,6 @@
   filter:blur(25px) ;
   z-index: 1;
   height: 100%;
-  transition: all .5s;
   opacity: 1;
 }
 
@@ -74,13 +71,13 @@
   transition: all 0s;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: var(--space-1);
 }
 
 .movie-card.active .hidden,
 .movie-card:not(.mobile):hover .hidden {
   max-height: 500px;
-  transition: all .8s;
+  transition: all var(--transition-slow);
 }
 
 .movie-card.active .movie-details,
@@ -91,9 +88,9 @@
   bottom: 0;
   left: 0;
   z-index: 3;
-  padding: 8px;
-  background: rgb(26, 26, 26);
-  box-shadow: 0 0 20px 20px rgb(26, 26, 26);
+  padding: var(--space-2);
+  background: var(--color-gray-900);
+  box-shadow: 0 0 20px 20px var(--color-gray-900);
 }
 
 .providers-list {
@@ -108,10 +105,10 @@
 }
 
 .detail-content {
-  margin-left: 5px;
+  margin-left: var(--space-1);
   font-size: smaller;
   display: inline-flex;
-  gap: 5px;
+  gap: var(--space-1);
 }
 
 .overview-container .detail-content {
@@ -121,13 +118,13 @@
 
 .provider-icon {
   width: 50px;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
 }
 .movie-title {
   font-size: 18px;
   font-weight: 600;
-  color: white;
-  margin-top: 5px;
+  color: var(--color-gray-50);
+  margin-top: var(--space-1);
   margin-bottom: 0;
   text-align: center;
   text-wrap: nowrap;
@@ -150,43 +147,36 @@
   overflow: hidden;
 }
 
+.movie-card .MuiButtonBase-root {
+  background-color: var(--color-primary) !important;
+}
+.movie-card .MuiButtonBase-root:hover {
+  background-color: var(--color-primary-400) !important;
+}
+
+
 .provider-button-container {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 8px 5px;
+  padding: var(--space-2) var(--space-1);
 }
 
-.movie-dialog .provider-country {
-  text-wrap: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-.movie-dialog .countries-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-}
-
-.movie-dialog .countries-list .country-container .provider-icon {
-  width: 30px;
-}
-
-.movie-dialog .free-container,
-.movie-dialog .ads-container,
-.movie-dialog .flatrate-container {
-  border: 1px solid rgb(141, 141, 141);
-  display: flex;
-  gap: 4px;
-  width: fit-content;
-}
 @media screen and (max-width: 850px) {
-    .movie-card {
-      border-radius: 12px;
-    }
+  .movie-card {
+    border-radius: var(--radius-md);
+  }
 }
 
 @media screen and (max-height: 850px) {
-    .movie-poster {
-      min-height: auto;
-    }
+  .movie-poster {
+    min-height: auto;
+  }
+}
+
+.MuiRating-iconEmpty {
+  color: var(--color-star-empty) !important;
+}
+.MuiRating-iconFilled {
+  color: var(--color-star-plain) !important;
 }

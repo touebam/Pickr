@@ -26,7 +26,7 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
         free: (data.free || []).concat(data.ads || []),
         flatrate: data.flatrate || []
       }));
-
+     
     setFilteredProviders(filtered);
     setOpenDialog(true);
   };
@@ -63,14 +63,16 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
   const loadDetails = async () => {
     if (!details) {
       const data = await fetchDetailsWithCache(movie.id);
-      console.log(data)
       setDetails(data);
     }
   } 
 
-  const handleClick = () => {
-    loadDetails();
-    setIsActive(!isActive);
+  const handleClick = (event) => {
+    if (event.target.closest('.movie-card'))
+    {
+      loadDetails();
+      setIsActive(!isActive);
+    }
   };
 
   return (
@@ -111,14 +113,6 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
             precision={0.5}
             readOnly
             size="small"
-            sx={{
-              '& .MuiRating-iconEmpty': {
-                color: '#757575ff',
-              },
-              '& .MuiRating-iconFilled': {
-                color: '#ffc107',
-              }
-            }}
           />
         </div>
 

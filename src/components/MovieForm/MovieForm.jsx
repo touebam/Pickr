@@ -47,12 +47,14 @@ export default function MovieForm({ genres, providers, onSearch }) {
   };
 
   async function handleDiscover() {
+    const genreOperatorValue = document.querySelector('.genre-operator-dropdown').value;
     const searchCriteria = {
       genres: selectedGenres,
       providers: selectedProviders,
       duration,
       rating,
-      releaseYear
+      releaseYear,
+      genreOperator: genreOperatorValue
     };
     
     const movies = await discoverMovies(searchCriteria);
@@ -112,7 +114,15 @@ export default function MovieForm({ genres, providers, onSearch }) {
       
       {activeTab === 0 ? (
         <div className="form-container discover">
-          <h3>Genres :</h3>
+          <div className='form-container-header'>
+            <h3>Genres :</h3>
+            <select 
+              className="genre-operator-dropdown" 
+            >
+              <option value=",">Tous les genres sélectionnés</option>
+              <option value="|">Au moins un genre sélectionné</option>
+            </select>
+          </div>
           <GenreSelector 
             genres={genres}
             selectedGenres={selectedGenres}
@@ -170,28 +180,7 @@ export default function MovieForm({ genres, providers, onSearch }) {
             placeholder="Rechercher un film, acteur, réalisateur..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            sx={{
-              mb: 3,
-              '& .MuiOutlinedInput-root': {
-                color: 'white',
-                '& fieldset': {
-                  borderColor: 'rgba(255, 255, 255, 0.23)',
-                },
-                '&:hover fieldset': {
-                  borderColor: 'rgba(255, 255, 255, 0.5)',
-                },
-                '&.Mui-focused fieldset': {
-                  borderColor: '#007AFF',
-                }
-              },
-              '& .MuiInputLabel-root': {
-                color: 'rgba(255, 255, 255, 0.7)',
-              },
-              '& .MuiOutlinedInput-input::placeholder': {
-                color: 'rgba(255, 255, 255, 0.5)',
-                opacity: 1
-              }
-            }}
+            className="search-textfield"
           />
           
         </div>

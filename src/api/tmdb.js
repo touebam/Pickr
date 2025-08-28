@@ -57,7 +57,7 @@ export async function discoverMovies(searchCriteria, page = 1) {
       page: page
     });
     if (searchCriteria.genres.length > 0) {
-      baseParams.append("with_genres", searchCriteria.genres.join("|"));
+      baseParams.append("with_genres", searchCriteria.genres.join(searchCriteria.genreOperator));
     }
     if (searchCriteria.providers.length > 0) {
       baseParams.append("with_watch_providers", searchCriteria.providers.join("|"));
@@ -68,7 +68,6 @@ export async function discoverMovies(searchCriteria, page = 1) {
     const data = await res.json();
 
     const shuffledResults = shuffleArray(data.results);
-    console.log("Résultats filtrés et mélangés:", shuffledResults);
     return shuffledResults;
 
   } catch (error) {
@@ -82,7 +81,7 @@ export async function searchMovies(searchQuery) {
     // Retirer les films trop méconnus 
     function filterMovies(movies) {
       return movies.filter(m =>
-        m.vote_count >= 10
+        m.vote_count >= 0
       );
     }
 

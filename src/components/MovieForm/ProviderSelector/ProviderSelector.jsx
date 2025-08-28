@@ -38,9 +38,6 @@ const ProviderSelector = ({ providers, selectedProviders, onProviderChange }) =>
                 e.target.nextSibling.style.display = 'flex';
               }}
             />
-            <div className="platform-name-fallback" style={{display: 'none'}}>
-              {provider.provider_name}
-            </div>
           </div>
         </label>
       ))}
