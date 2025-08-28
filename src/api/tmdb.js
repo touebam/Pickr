@@ -81,7 +81,7 @@ export async function searchMovies(searchQuery) {
     // Retirer les films trop méconnus 
     function filterMovies(movies) {
       return movies.filter(m =>
-        m.vote_count >= 0
+        m.vote_count >= 10
       );
     }
 

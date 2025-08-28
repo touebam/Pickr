@@ -1,6 +1,5 @@
 .MuiDialog-container > div {
   background: var(--color-gray-900);
-  opacity:.97;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-xl);
   backdrop-filter: blur(5px);
@@ -17,7 +16,7 @@
 .providers-subtitle {
   text-align: center;
   color: var(--color-gray-400);
-  font-size: 14px;
+  font-size: var(--text-sm);
   margin-bottom: var(--space-4);
 }
 
@@ -38,13 +37,13 @@
 
 .stat-number {
   display: block;
-  font-size: 24px;
+  font-size: var(--text-2xl);
   font-weight: bold;
   line-height: 24px;
 }
 
 .stat-label {
-  font-size: 12px;
+  font-size: var(--text-xs);
   color: var(--color-gray-300);
   font-weight: 500;
 }
@@ -75,7 +74,7 @@
   width: 100%;
   border-collapse: collapse;
   background: var(--color-gray-800);
-  font-size: 14px;
+  font-size: var(--text-sm);
 }
 
 .providers-table thead tr {
@@ -117,13 +116,16 @@
 
 .country-cell {
   font-weight: 500;
-  display:flex ;
-  gap: var(--space-2);
   color: var(--color-gray-300);
+}
+.country-cell > div {
+  display:flex ;
+  align-items: center;
+  gap: var(--space-2);
 }
 .country-code {
   color: var(--color-gray-400);
-  font-size: small;
+  font-size: var(--text-xs);
 }
 .country-code:before {
   content: '(';
@@ -164,12 +166,12 @@
 .no-providers {
   color: var(--color-gray-400);
   font-style: italic;
-  font-size: 12px;
+  font-size: var(--text-xs);
 }
 
 @media screen and (max-width: 850px) {
   .movie-dialog h2 {
-    font-size: 1.15rem;
+    font-size: var(--text-lg);
   }
 
   .providers-stats {
@@ -193,7 +195,7 @@
   }
   
   .providers-table thead th{
-    font-size: small;
+    font-size: var(--text-xs);
   }
   
   .country-cell {
@@ -206,7 +208,6 @@
   }
   .country-code {
     color: var(--color-gray-300);
-    font-size: smaller;
   }
   .country-code:before,
   .country-code:after {

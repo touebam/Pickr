@@ -51,9 +51,11 @@ function MovieCard({ movie, filteredProviders, handleClose, open }) {
                         {filteredProviders.map((provider) => (
                             <tr key={provider.country} className="provider-row">
                             <td className="country-cell">
-                                <span className={`fi fi-${provider.countryCode.toLowerCase()}`} title={provider.country}></span>
-                                <span className="country-code">{provider.countryCode}</span>
-                                <span className="country-name">{provider.country}</span>
+                                <div>
+                                    <span className={`fi fi-${provider.countryCode.toLowerCase()}`} title={provider.country}></span>
+                                    <span className="country-code">{provider.countryCode}</span>
+                                    <span className="country-name">{provider.country}</span>
+                                </div>
                             </td>
                             
                             <td className="providers-cell free-cell">

@@ -49,7 +49,7 @@ h3 {
 
 .MuiSlider-valueLabelOpen {
     line-height: 1.2 !important;
-    font-size: 12px !important;
+    font-size: var(--text-xs) !important;
     background-image: unset !important;
     background-position: unset !important;
     background-size: unset !important;
@@ -139,7 +139,7 @@ h3 {
 }
 
 .app-logo h1 {
-    font-size: 2em;
+    font-size: var(--text-3xl);
     margin: var(--space-2) 0;
 }
 
@@ -165,7 +165,7 @@ h3 {
         width: 35px;
     }
     .form-header h1 {
-        font-size: 1.5em;
+        font-size: var(--text-2xl);
     }
 }
 
@@ -196,7 +196,7 @@ h3 {
     border-radius: var(--radius-md);
     color: var(--color-gray-50);
     padding: var(--space-2) var(--space-3);
-    font-size: 14px;
+    font-size: var(--text-sm);
     cursor: pointer;
     min-width: 200px;
     transition: all var(--transition-fast);

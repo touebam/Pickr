@@ -19,7 +19,7 @@
   justify-content: center;
   padding: var(--space-1) ;
   border-radius: var(--radius-md);
-  font-size: 14px;
+  font-size: var(--text-sm);
   font-weight: 500;
   border: 1px solid var(--color-gray-600);
   color: var(--color-gray-50);
@@ -32,9 +32,11 @@
   overflow: hidden;
 }
 
-.genre-button:hover {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
+@media (hover: hover) and (pointer: fine) {
+  .genre-button:hover {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
 }
 
 .genre-button.selected {
