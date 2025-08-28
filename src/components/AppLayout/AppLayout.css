@@ -19,7 +19,7 @@
 .app-layout__right {
     flex-grow: 1;
     padding: var(--space-3);
-    padding-left: 0;
+    padding-left: var(--space-1);
     overflow: hidden auto;
     scroll-behavior: smooth;
 }

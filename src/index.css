@@ -17,7 +17,6 @@
   --color-primary-200: #5291f8;
   --color-primary: #3b82f6;
   --color-primary-400: #2768d1;
-  --color-primary-500: #184ea3;
 
   --color-secondary-100: #9760f8;
   --color-secondary: #7c3aed;
@@ -95,6 +94,16 @@ h1 {
 @media (prefers-color-scheme: light) {
   :root {
     --color-gray-900: #f9fafb;
-    --color-gray-50: #141414;
+    --color-gray-800:rgb(247, 247, 247);
+    --color-gray-700:rgb(238, 238, 238);
+    --color-gray-600:rgb(212, 212, 212);
+    --color-gray-500:rgb(196, 196, 196);
+    --color-gray-300:rgb(75, 75, 75);
+    --color-gray-50: #333333;
+
+    --color-primary: #71a8ff;
+    --color-primary-400: #5897fd;
+    --color-secondary: #bf9bfd;
+    --color-secondary-500: #b184ff;
   }
 }
