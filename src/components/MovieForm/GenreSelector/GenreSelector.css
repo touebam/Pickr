@@ -14,9 +14,7 @@
 }
 
 .genre-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   padding: var(--space-1) ;
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
@@ -28,6 +26,7 @@
   width: 100%;
   box-sizing: border-box;
   text-wrap: nowrap;
+  white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }

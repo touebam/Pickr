@@ -189,6 +189,7 @@ h3 {
 .MuiTabs-root .MuiTabs-list {
     justify-content: center;
     gap: var(--space-1);
+    height: 100% !important;
 }
 
 .genre-operator-dropdown {
@@ -244,7 +245,6 @@ h3 {
 .MuiTabs-root,
 .MuiTabs-root .MuiTabs-scroller {
     min-height: auto !important;
-    height: fit-content !important;
 }
 
 .MuiTabs-root {
@@ -260,10 +260,10 @@ h3 {
 .MuiTabs-root button,
 .MuiTabs-root button.Mui-selected {
     z-index: 1;
-    padding: var(--space-1) !important;
-    min-height: 30px;
+    padding: var(--space-2) var(--space-1) !important;
     width: 10px;
     flex-grow: 1;
+    min-height: auto;
 }
 
 .MuiTabs-root button.Mui-selected {
