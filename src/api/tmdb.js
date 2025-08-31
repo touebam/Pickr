@@ -86,7 +86,7 @@ export async function discoverMovies(searchCriteria, page = 1) {
     const res = await fetch(`${BASE_URL}/discover/${searchCriteria.type}?${baseParams}`);
     if (!res.ok) throw new Error(`Erreur API : ${res.status}`);
     const data = await res.json();
-
+    
     const transformedResults = transformTMDBData(data.results, searchCriteria.type);
     const shuffledResults = shuffleArray(transformedResults);
     return shuffledResults;
@@ -194,7 +194,7 @@ export async function getProviders() {
   }
 }
 
-export async function getMovieDetails(movieId, type = "tv") {
+export async function getMovieDetails(movieId, type = "movie") {
   try {
     const response = await fetch(`${BASE_URL}/${type}/${movieId}?api_key=${API_KEY}&language=fr-FR`);
     if (!response.ok) {
@@ -208,7 +208,7 @@ export async function getMovieDetails(movieId, type = "tv") {
   }
 }
 
-export async function getWatchProviders(movieId, type = "tv") {
+export async function getWatchProviders(movieId, type = "movie") {
   try {
     const response = await fetch(`${BASE_URL}/${type}/${movieId}/watch/providers?api_key=${API_KEY}`);
     if (!response.ok) {
@@ -221,3 +221,24 @@ export async function getWatchProviders(movieId, type = "tv") {
     return {};
   }
 }
+
+export async function getMovieTrailer(movieId, type = "movie") {
+  try {
+    const response = await fetch(`${BASE_URL}/${type}/${movieId}/videos?api_key=${API_KEY}&language=fr-FR`);
+    if (!response.ok) {
+      throw new Error("Erreur lors de la récupération des vidéos");
+    }
+    const data = await response.json();
+    console.log(data.results.filter(video => 
+      video.type === 'Trailer' && 
+      video.site === 'YouTube'
+    ))
+    return data.results.filter(video => 
+      video.type === 'Trailer' && 
+      video.site === 'YouTube'
+    );
+  } catch (error) {
+    console.error(error);
+    return {};
+  }
+};

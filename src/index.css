@@ -68,10 +68,10 @@
   --radius-lg: 1rem;     /* 16px */
   --radius-full: 9999px; /* cercle complet */
 
-  --shadow-sm: 0 0 2px var(--color-primary);
-  --shadow-md: 0 0 4px var(--color-primary);
-  --shadow-lg: 0 0 8px var(--color-primary);
-  --shadow-xl: 0 0 16px var(--color-primary);
+  --shadow-sm: 0 0 2px var(--color-primary-500);
+  --shadow-md: 0 0 4px var(--color-primary-500);
+  --shadow-lg: 0 0 8px var(--color-primary-500);
+  --shadow-xl: 0 0 16px var(--color-primary-500);
 
   --transition-fast: 200ms ease-in-out;
   --transition-medium: 500ms ease-in-out;

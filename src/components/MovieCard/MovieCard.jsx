@@ -4,35 +4,44 @@ import DialogProviders from "../DialogProviders/DialogProviders";
 import Rating from '@mui/material/Rating';
 import EastIcon from '@mui/icons-material/East';
 import { countryNames } from './countryNames';
-import { Button } from "@mui/material"; 
+import { Button, IconButton } from "@mui/material"; 
+import { LiveTv, FavoriteBorder, TurnedInNot } from '@mui/icons-material';
+import DialogTrailer from '../DialogTrailer/DialogTrailer';
 
 function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
   const [details, setDetails] = useState(null);
   const [isActive, setIsActive] = useState(false);
-  const [open, setOpenDialog] = useState(false);
+  const [openDialogProvider, setOpenDialogProvider] = useState(false);
+  const [openDialogTrailer, setOpenDialogTrailer] = useState(false);
   const [filteredProviders, setFilteredProviders] = useState([]);
 
   const isMobile = (window.innerWidth <= 850);
 
-  const handleOpen = () => {
-    const filtered = Object.entries(details.providers)
-      .filter(([country, data]) =>
-        data.flatrate?.length > 0 || data.ads?.length > 0
-      )
-      .map(([country, data]) => ({
-        country: countryNames[country] || country,
-        countryCode: country,
-        free: (data.free || []).concat(data.ads || []),
-        flatrate: data.flatrate || []
-      }));
-     
-    setFilteredProviders(filtered);
-    setOpenDialog(true);
+  const handleOpen = (type = "provider") => {
+    if (type === "provider")
+    {
+      const filtered = Object.entries(details.providers)
+        .filter(([country, data]) =>
+          data.flatrate?.length > 0 || data.ads?.length > 0
+        )
+        .map(([country, data]) => ({
+          country: countryNames[country] || country,
+          countryCode: country,
+          free: (data.free || []).concat(data.ads || []),
+          flatrate: data.flatrate || []
+        }));
+      
+      setFilteredProviders(filtered);
+      setOpenDialogProvider(true);
+    }
+    else
+      setOpenDialogTrailer(true);
   };
 
   const handleClose = () => {
-    setOpenDialog(false);
+    setOpenDialogProvider(false);
+    setOpenDialogTrailer(false);
   };
 
   // Formatter la durée
@@ -74,6 +83,10 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
     }
   };
 
+  const handleTrailerClick = (event) => {
+    handleOpen('trailer') ;
+    console.log(details)
+  };
   return (
     <div 
       className={`movie-card ${isMobile ? "mobile" : ""} ${isActive ? "active" : ""}`}
@@ -102,7 +115,29 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
               <div className="no-poster blured"></div>
             </div>
           )}
-
+          <div className='card-buttons'>
+            <IconButton 
+              className="trailer-button"
+              title='Voir la bande annonce'
+              onClick={handleTrailerClick}
+            >
+              <LiveTv />
+            </IconButton>
+            <IconButton 
+              className="trailer-button"
+              title='Voir la bande annonce'
+              onClick={handleTrailerClick}
+            >
+              <FavoriteBorder />
+            </IconButton>
+            <IconButton 
+              className="trailer-button"
+              title='Voir la bande annonce'
+              onClick={handleTrailerClick}
+            >
+              <TurnedInNot />
+            </IconButton>
+          </div>
       </div>
       <div className="movie-details">
         <h3 className="movie-title">{movie.title}</h3>
@@ -175,7 +210,7 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
               <Button
                 endIcon={<EastIcon />}
                 variant="contained" 
-                onClick={handleOpen}
+                onClick={() => handleOpen("provider")}
               >
                 Autres disponibilités
               </Button>
@@ -185,7 +220,13 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
               movie={movie} 
               filteredProviders={filteredProviders} 
               handleClose={handleClose} 
-              open={open} 
+              open={openDialogProvider} 
+            />
+            <DialogTrailer 
+              movie={movie} 
+              details={details}
+              handleClose={handleClose} 
+              open={openDialogTrailer} 
             />
           </div>
         </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import MovieForm from '../MovieForm/MovieForm';
 import MovieList from '../MovieList/MovieList';
-import { getTVGenres, getMovieGenres, getMovieDetails, getWatchProviders, getProviders, discoverMovies, getTrends } from '../../api/tmdb';
+import { getTVGenres, getMovieGenres, getMovieTrailer, getMovieDetails, getWatchProviders, getProviders, discoverMovies, getTrends } from '../../api/tmdb';
 import './AppLayout.css';
 import HeroSection from '../HeroSection/HeroSection';
 import { Snackbar, Alert } from '@mui/material';
@@ -50,10 +50,13 @@ export default function AppLayout() {
       return movieDetailsCache[movieId];
     }
     const type = activeType === 0 ? 'movie' : 'tv';
-    const details = await getMovieDetails(movieId, type);
-    const providers = await getWatchProviders(movieId, type);
+    const [details, providers, trailer] = await Promise.all([
+      getMovieDetails(movieId, type),
+      getWatchProviders(movieId, type),
+      getMovieTrailer(movieId, type),
+    ]);
 
-    const fullDetails = { ...details, providers };
+    const fullDetails = { ...details, providers, trailer };
     setMovieDetailsCache(prev => ({ ...prev, [movieId]: fullDetails }));
     return fullDetails;
   }

@@ -2,7 +2,7 @@ import './DialogProviders.css';
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import "flag-icons/css/flag-icons.min.css";
 
-function MovieCard({ movie, filteredProviders, handleClose, open }) {
+function DialogProviders({ movie, filteredProviders, handleClose, open }) {
     return (
     <Dialog 
         className="movie-dialog" 
@@ -118,4 +118,4 @@ function MovieCard({ movie, filteredProviders, handleClose, open }) {
     );
 }
 
-export default MovieCard;
+export default DialogProviders;
