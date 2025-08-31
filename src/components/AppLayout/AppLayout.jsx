@@ -1,14 +1,14 @@
 import { useEffect, useState, useRef } from 'react';
 import MovieForm from '../MovieForm/MovieForm';
 import MovieList from '../MovieList/MovieList';
-import { getGenres, getMovieDetails, getWatchProviders, getProviders, discoverMovies, getTrends } from '../../api/tmdb';
+import { getTVGenres, getMovieGenres, getMovieDetails, getWatchProviders, getProviders, discoverMovies, getTrends } from '../../api/tmdb';
 import './AppLayout.css';
 import HeroSection from '../HeroSection/HeroSection';
 import { Snackbar, Alert } from '@mui/material';
 
 export default function AppLayout() {
   const [movies, setMovies] = useState([]);
-  const [genres, setGenres] = useState([]);
+  const [genres, setGenres] = useState({movie:[], tv:[]});
   const [trends, setTrends] = useState([]);
   const [providers, setProviders] = useState([]);
   const [movieDetailsCache, setMovieDetailsCache] = useState({});
@@ -18,6 +18,7 @@ export default function AppLayout() {
   const [openNoResultsToast, setOpenNoResultsToast] = useState(false);
   const [openEndOfListToast, setOpenEndOfListToast] = useState(false);
   const [scrollEnd, setScrollEnd] = useState(false);
+  const [activeType, setActiveType] = useState(0);
 
   // Fermer le toast
   const handleCloseToast = (event, reason) => {
@@ -30,8 +31,9 @@ export default function AppLayout() {
 
   useEffect(() => {
     async function fetchData() {
-      const genresData = await getGenres();
-      setGenres(genresData);
+      const movieGenresData = await getMovieGenres();
+      const tvGenresData = await getTVGenres();
+      setGenres({movie:movieGenresData, tv:tvGenresData});
 
       const providersData = await getProviders();
       setProviders(providersData);
@@ -47,8 +49,9 @@ export default function AppLayout() {
     if (movieDetailsCache[movieId]) {
       return movieDetailsCache[movieId];
     }
-    const details = await getMovieDetails(movieId);
-    const providers = await getWatchProviders(movieId);
+    const type = activeType === 0 ? 'movie' : 'tv';
+    const details = await getMovieDetails(movieId, type);
+    const providers = await getWatchProviders(movieId, type);
 
     const fullDetails = { ...details, providers };
     setMovieDetailsCache(prev => ({ ...prev, [movieId]: fullDetails }));
@@ -84,7 +87,6 @@ export default function AppLayout() {
 
   // Recherche lancée depuis scroll MovieList
   async function handleEndReached() {
-    console.log("ok")
     if (!scrollEnd) {
       const discoveryContainer = document.querySelector('.app-layout__left .discover');
       if (!searchCriteria || !discoveryContainer) return; 
@@ -114,6 +116,8 @@ export default function AppLayout() {
               genres={genres} 
               providers={providers}
               onSearch={(moviesList, criteria) => handleSearch(moviesList, criteria)}
+              activeType={activeType}
+              setActiveType={setActiveType}
               />
         </div>
         <div className="app-layout__right">

@@ -45,11 +45,10 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
 
   // Récupérer les noms des genres
   const getGenreNames = (genreIds, allGenres) => {
-    if (!genreIds || !allGenres?.length) return "";
+    if (!genreIds || !allGenres || !allGenres.movie?.length || !allGenres.tv?.length) return "";
     return genreIds
       .map(id => {
-        const genre = allGenres.find(g => g.id === id);
-        return genre ? genre.name : "";
+        return allGenres[movie.type === "movie" ? 'movie' : 'tv'].find(g => g.id === id).name || "";
       })
       .filter(name => name)
       .join(", ");
@@ -109,7 +108,7 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
         <h3 className="movie-title">{movie.title}</h3>
         <div className="movie-rating">
           <Rating
-            value={movie.vote_average/2}
+            value={movie.rating/2}
             precision={0.5}
             readOnly
             size="small"

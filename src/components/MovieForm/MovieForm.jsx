@@ -13,7 +13,7 @@ const currentYear = new Date().getFullYear();
 
 // Valeurs par défaut
 const DEFAULT_VALUES = {
-  selectedGenres: [],
+  selectedGenres: {movie: [], tv: []},
   selectedProviders: [],
   duration: [60, 180],
   rating: [7, 10],
@@ -21,7 +21,7 @@ const DEFAULT_VALUES = {
   searchQuery: ''
 };
 
-export default function MovieForm({ genres, providers, onSearch }) {
+export default function MovieForm({ genres, providers, onSearch, activeType, setActiveType }) {
   const [selectedGenres, setSelectedGenres] = useState(DEFAULT_VALUES.selectedGenres);
   const [selectedProviders, setSelectedProviders] = useState(DEFAULT_VALUES.selectedProviders);
   const [duration, setDuration] = useState(DEFAULT_VALUES.duration);
@@ -30,6 +30,11 @@ export default function MovieForm({ genres, providers, onSearch }) {
   const [searchQuery, setSearchQuery] = useState(DEFAULT_VALUES.searchQuery);
   const [isOpen, setIsOpen] = useState(window.innerWidth > 850);
   const [activeTab, setActiveTab] = useState(0);
+
+  // Fonction pour changer de type
+  const handleTypeChange = (event, newValue) => {
+    setActiveType(newValue);
+  };
 
   // Fonction pour changer d'onglet
   const handleTabChange = (event, newValue) => {
@@ -46,17 +51,25 @@ export default function MovieForm({ genres, providers, onSearch }) {
     setSearchQuery(DEFAULT_VALUES.searchQuery);
   };
 
+  const handleGenreChange = (newGenres) => {
+    setSelectedGenres(prev => ({
+      ...prev,
+      [activeType === 0 ? 'movie' : 'tv']: newGenres
+    }));
+  };
+
   async function handleDiscover() {
     const genreOperatorValue = document.querySelector('.genre-operator-dropdown').value;
     const searchCriteria = {
-      genres: selectedGenres,
+      genres: activeType === 0 ? selectedGenres.movie : selectedGenres.tv,
       providers: selectedProviders,
       duration,
       rating,
       releaseYear,
-      genreOperator: genreOperatorValue
+      genreOperator: genreOperatorValue,
+      type: activeType === 0 ? "movie" : "tv"
     };
-    
+
     const movies = await discoverMovies(searchCriteria);
     onSearch(movies, searchCriteria);
   };
@@ -104,6 +117,14 @@ export default function MovieForm({ genres, providers, onSearch }) {
       </div>
 
       <Tabs 
+        className='type-tabs'
+        value={activeType} 
+        onChange={handleTypeChange}
+      >
+        <Tab label="Films" />
+        <Tab label="Séries" />
+      </Tabs>
+      <Tabs 
         className='form-tabs'
         value={activeTab} 
         onChange={handleTabChange}
@@ -124,9 +145,9 @@ export default function MovieForm({ genres, providers, onSearch }) {
             </select>
           </div>
           <GenreSelector 
-            genres={genres}
-            selectedGenres={selectedGenres}
-            onGenreChange={setSelectedGenres}
+            genres={activeType === 0 ? genres.movie : genres.tv}
+            selectedGenres={selectedGenres[activeType === 0 ? 'movie' : 'tv']}
+            onGenreChange={handleGenreChange}
           />
           
           <div className="slider-container duree">
@@ -140,7 +161,7 @@ export default function MovieForm({ genres, providers, onSearch }) {
             />
           </div>
           
-          <div className="slider-container">
+          <div className="slider-container note">
             <h3>Note :</h3>
             <Slider
               value={rating}

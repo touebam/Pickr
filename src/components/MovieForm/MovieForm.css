@@ -15,8 +15,9 @@
 .slider-container {
     display:flex ;
 }
+:root:has(.type-tabs .Mui-selected:last-child) .slider-container.note,
 .slider-container.duree {
-    margin-top: var(--space-4);
+    margin-top: var(--space-5);
 }
 h3 {
     text-wrap: nowrap;
@@ -35,7 +36,7 @@ h3 {
     background-color: var(--color-primary) !important;
 }
 .form-buttons .MuiButtonBase-root:last-child:hover {
-    background-color: var(--color-primary-400) !important;
+    background-color: var(--color-primary-500) !important;
 }
 
 
@@ -67,7 +68,7 @@ h3 {
     cursor: grab;
 }
 .MuiSlider-valueLabelOpen:hover {
-    background-color: var(--color-primary-400) !important;
+    background-color: var(--color-primary-500) !important;
 }
 .MuiSlider-thumb:focus-within,
 .MuiSlider-thumb:has(:hover) {
@@ -143,8 +144,8 @@ h3 {
     margin: var(--space-2) 0;
 }
 
-
 .movie-form:not(.open) .form-tabs, 
+.movie-form:not(.open) .type-tabs,
 .movie-form:not(.open) .form-buttons, 
 .movie-form:not(.open) .form-container {
     display: none;
@@ -192,7 +193,7 @@ h3 {
 
 .genre-operator-dropdown {
     background-color: var(--color-gray-700);
-    border: 1px solid var(--color-gray-600);
+    border: none;
     border-radius: var(--radius-md);
     color: var(--color-gray-50);
     padding: var(--space-2) var(--space-3);
@@ -201,6 +202,7 @@ h3 {
     min-width: 200px;
     transition: all var(--transition-fast);
     width: 100%;
+    outline: none;
 
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -213,13 +215,7 @@ h3 {
 }
 
 .genre-operator-dropdown:hover {
-    border-color: var(--color-primary);
     background-color: var(--color-gray-600);
-}
-
-.genre-operator-dropdown:focus {
-    outline: none;
-    border-color: var(--color-primary);
 }
 
 .genre-operator-dropdown option {
@@ -243,4 +239,55 @@ h3 {
 
 .search-textfield .MuiOutlinedInput-root.Mui-focused fieldset {
     border-color: var(--color-primary);
+}
+
+.MuiTabs-root,
+.MuiTabs-root .MuiTabs-scroller {
+    min-height: auto !important;
+    height: fit-content !important;
+}
+
+.MuiTabs-root {
+    background-color: var(--color-gray-700);
+    width: fit-content;
+    padding: var(--space-1);
+    border-radius: var(--radius-md);
+    margin-top: var(--space-3);
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+.MuiTabs-root button,
+.MuiTabs-root button.Mui-selected {
+    z-index: 1;
+    padding: var(--space-1) !important;
+    min-height: 30px;
+    width: 10px;
+    flex-grow: 1;
+}
+
+.MuiTabs-root button.Mui-selected {
+    color: var(--color-gray-100) !important;
+}
+
+.MuiTabs-root .MuiTabs-indicator {
+    background-color: var(--color-primary) !important;
+    height: 100%;
+    border-radius: var(--radius-md);
+    z-index: 0;
+}
+
+.form-tabs button.Mui-selected {
+    color: var(--color-primary-100) !important;
+}
+.form-tabs .MuiTabs-indicator {
+    background-color: var(--color-gray-600) !important;
+}
+
+
+:root:has(.type-tabs .Mui-selected:last-child) .genre-container {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+}
+:root:has(.type-tabs .Mui-selected:last-child) .slider-container.duree {
+    display: none;
 }

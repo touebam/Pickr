@@ -1,13 +1,27 @@
 import * as Utils from "../utils/utils.js";
+import { transformTMDBData } from '../utils/dataTransform';
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = import.meta.env.VITE_TMDB_BASE_URL;
 
-export async function getGenres() {
+export async function getMovieGenres() {
   try {
     const response = await fetch(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}&language=fr-FR`);
     if (!response.ok) {
-      throw new Error("Erreur lors de la récupération des genres");
+      throw new Error("Erreur lors de la récupération des genres (movie)");
+    }
+    const data = await response.json();
+    return data.genres; 
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+export async function getTVGenres() {
+  try {
+    const response = await fetch(`${BASE_URL}/genre/tv/list?api_key=${API_KEY}&language=fr-FR`);
+    if (!response.ok) {
+      throw new Error("Erreur lors de la récupération des genres (tv)");
     }
     const data = await response.json();
     return data.genres; 
@@ -24,7 +38,8 @@ export async function getTrends() {
       throw new Error("Erreur lors de la récupération des tendances");
     }
     const data = await response.json();
-    return data.results; 
+    const transformedResults = transformTMDBData(data.results);
+    return transformedResults; 
   } catch (error) {
     console.error(error);
     return [];
@@ -41,21 +56,26 @@ export async function discoverMovies(searchCriteria, page = 1) {
       }
       return array;
     };
-
     // Génération des paramètres 
     const baseParams = new URLSearchParams({
       api_key: API_KEY,
-      language: 'fr-FR',
+      language: "fr-FR",
       watch_region: "FR",
-      'vote_average.gte': searchCriteria.rating[0],
-      'vote_average.lte': searchCriteria.rating[1],
-      'with_runtime.gte': searchCriteria.duration[0],
-      'with_runtime.lte': searchCriteria.duration[1],
-      'primary_release_date.gte': `${searchCriteria.releaseYear[0]}-01-01`,
-      'primary_release_date.lte': `${searchCriteria.releaseYear[1]}-12-31`,
+      "vote_average.gte": searchCriteria.rating[0],
+      "vote_average.lte": searchCriteria.rating[1],
       sort_by: "popularity.desc",
-      page: page
+      page: page,
     });
+    if (searchCriteria.type === "movie") {
+      baseParams.append("primary_release_date.gte", `${searchCriteria.releaseYear[0]}-01-01`);
+      baseParams.append("primary_release_date.lte", `${searchCriteria.releaseYear[1]}-12-31`);
+      baseParams.append("with_runtime.gte", searchCriteria.duration[0]);
+      baseParams.append("with_runtime.lte", searchCriteria.duration[1]);
+    } else if (searchCriteria.type === "tv") {
+      baseParams.append("first_air_date.gte", `${searchCriteria.releaseYear[0]}-01-01`);
+      baseParams.append("first_air_date.lte", `${searchCriteria.releaseYear[1]}-12-31`);
+    }
+    
     if (searchCriteria.genres.length > 0) {
       baseParams.append("with_genres", searchCriteria.genres.join(searchCriteria.genreOperator));
     }
@@ -63,11 +83,12 @@ export async function discoverMovies(searchCriteria, page = 1) {
       baseParams.append("with_watch_providers", searchCriteria.providers.join("|"));
     }
 
-    const res = await fetch(`${BASE_URL}/discover/movie?${baseParams}`);
+    const res = await fetch(`${BASE_URL}/discover/${searchCriteria.type}?${baseParams}`);
     if (!res.ok) throw new Error(`Erreur API : ${res.status}`);
     const data = await res.json();
 
-    const shuffledResults = shuffleArray(data.results);
+    const transformedResults = transformTMDBData(data.results, searchCriteria.type);
+    const shuffledResults = shuffleArray(transformedResults);
     return shuffledResults;
 
   } catch (error) {
@@ -76,7 +97,7 @@ export async function discoverMovies(searchCriteria, page = 1) {
   }
 }
 
-export async function searchMovies(searchQuery) {
+export async function searchMovies(searchQuery, type = "movie") {
   try {
     // Retirer les films trop méconnus 
     function filterMovies(movies) {
@@ -92,7 +113,7 @@ export async function searchMovies(searchQuery) {
     });
 
     // Recherche par titre
-    const movieRes = await fetch(`${BASE_URL}/search/movie?${params}`);
+    const movieRes = await fetch(`${BASE_URL}/search/${type}?${params}`);
     if (!movieRes.ok) throw new Error(`Erreur API (movie search) : ${movieRes.status}`);
     const movieData = await movieRes.json();
     const filteredMovieData = filterMovies(movieData.results);
@@ -111,7 +132,7 @@ export async function searchMovies(searchQuery) {
         'vote_count.gte': 10,
       });
 
-      const peopleMoviesRes = await fetch(`${BASE_URL}/discover/movie?${peopleParams}`);
+      const peopleMoviesRes = await fetch(`${BASE_URL}/discover/${type}?${peopleParams}`);
       if (peopleMoviesRes.ok) {
         const peopleMoviesData = await peopleMoviesRes.json();
         personMovies = filterMovies(peopleMoviesData.results);
@@ -133,7 +154,8 @@ export async function searchMovies(searchQuery) {
     );
 
     const finalMovies = [...sortedByTitle, ...uniquePersonMovies];
-    return finalMovies;
+    const transformedResults = transformTMDBData(finalMovies, type);
+    return transformedResults;
 
   } catch (error) {
     console.error("Erreur lors de la recherche:", error);
@@ -172,9 +194,9 @@ export async function getProviders() {
   }
 }
 
-export async function getMovieDetails(movieId) {
+export async function getMovieDetails(movieId, type = "tv") {
   try {
-    const response = await fetch(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&language=fr-FR`);
+    const response = await fetch(`${BASE_URL}/${type}/${movieId}?api_key=${API_KEY}&language=fr-FR`);
     if (!response.ok) {
       throw new Error("Erreur lors de la récupération des détails du film");
     }
@@ -186,9 +208,9 @@ export async function getMovieDetails(movieId) {
   }
 }
 
-export async function getWatchProviders(movieId) {
+export async function getWatchProviders(movieId, type = "tv") {
   try {
-    const response = await fetch(`${BASE_URL}/movie/${movieId}/watch/providers?api_key=${API_KEY}`);
+    const response = await fetch(`${BASE_URL}/${type}/${movieId}/watch/providers?api_key=${API_KEY}`);
     if (!response.ok) {
       throw new Error("Erreur lors de la récupération des plateformes");
     }

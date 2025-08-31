@@ -34,22 +34,20 @@
 
 @media (hover: hover) and (pointer: fine) {
   .genre-button:hover {
-    background-color: var(--color-primary);
-    border-color: var(--color-primary);
+    background-color: var(--color-secondary-500);
+    border-color: var(--color-secondary-500);
   }
 }
 
 .genre-button.selected {
-  background-color: var(--color-secondary);
-  border-color: var(--color-secondary);
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
 }
 
 .genre-button.selected:hover {
-  background-color: var(--color-secondary-500);
-  border-color: var(--color-secondary-500);
+  background-color: var(--color-primary-500);
+  border-color: var(--color-primary-500);
 }
-
-
 
 @media screen and (max-width: 850px) {
   .genre-grid .genre-container {

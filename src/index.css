@@ -16,7 +16,7 @@
   --color-primary-100: #6d9eec;
   --color-primary-200: #5291f8;
   --color-primary: #3b82f6;
-  --color-primary-400: #2768d1;
+  --color-primary-500: #2768d1;
 
   --color-secondary-100: #9760f8;
   --color-secondary: #7c3aed;
@@ -68,14 +68,25 @@
   --radius-lg: 1rem;     /* 16px */
   --radius-full: 9999px; /* cercle complet */
 
-  --shadow-sm: 0 0 2px var(--color-gray-600);
-  --shadow-md: 0 0 4px var(--color-gray-600);
-  --shadow-lg: 0 0 8px var(--color-gray-600);
-  --shadow-xl: 0 0 16px var(--color-gray-600);
+  --shadow-sm: 0 0 2px var(--color-primary);
+  --shadow-md: 0 0 4px var(--color-primary);
+  --shadow-lg: 0 0 8px var(--color-primary);
+  --shadow-xl: 0 0 16px var(--color-primary);
 
   --transition-fast: 200ms ease-in-out;
   --transition-medium: 500ms ease-in-out;
   --transition-slow: 800ms ease-in-out;
+}
+
+:root:has(.type-tabs .Mui-selected:last-child) {
+  --color-primary-100: #9760f8;
+  --color-primary-200: #864aee;
+  --color-primary: #7c3aed;
+  --color-primary-500: #6d28d9;
+  
+  --color-secondary-100: #6d9eec;
+  --color-secondary: #3b82f6;
+  --color-secondary-500: #2768d1;
 }
 
 body {
@@ -91,6 +102,7 @@ h1 {
   line-height: 1.1;
 }
 
+
 @media (prefers-color-scheme: light) {
   :root {
     --color-gray-900: #f9fafb;
@@ -102,7 +114,7 @@ h1 {
     --color-gray-50: #333333;
 
     --color-primary: #71a8ff;
-    --color-primary-400: #5897fd;
+    --color-primary-500: #5897fd;
     --color-secondary: #bf9bfd;
     --color-secondary-500: #b184ff;
   }
