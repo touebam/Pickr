@@ -74,7 +74,7 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
     onSearch(movies, searchCriteria);
   };
 
-  async function handleSearch() {
+  async function handleSearchx() {
     const movies = await searchMovies(searchQuery);
     onSearch(movies);
   };
@@ -227,7 +227,7 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
           <Button 
             variant="contained" 
             endIcon={<Search />}
-            onClick={handleSearch}
+            onClick={handleSearchx}
           >
             Rechercher
           </Button>

@@ -21,20 +21,22 @@ function DialogProviders({ movie, filteredProviders, handleClose, open }) {
             <div className="providers-header">
                 <div className="providers-subtitle">{filteredProviders.length} pays disponibles</div>
                 
-                <div className="providers-stats">
-                    <div className="stat">
-                        <span className="stat-number free-stat">
-                            {filteredProviders.filter(p => p.free?.length > 0).length}
-                        </span>
-                        <span className="stat-label">Pays avec accès gratuit</span>
+                {filteredProviders.length>0 &&
+                    <div className="providers-stats">
+                        <div className="stat">
+                            <span className="stat-number free-stat">
+                                {filteredProviders.filter(p => p.free?.length > 0).length}
+                            </span>
+                            <span className="stat-label">Pays avec accès gratuit</span>
+                        </div>
+                        <div className="stat">
+                            <span className="stat-number flatrate-stat">
+                                {filteredProviders.filter(p => p.flatrate?.length > 0).length}
+                            </span>
+                            <span className="stat-label">Pays avec abonnement</span>
+                        </div>
                     </div>
-                    <div className="stat">
-                        <span className="stat-number flatrate-stat">
-                            {filteredProviders.filter(p => p.flatrate?.length > 0).length}
-                        </span>
-                        <span className="stat-label">Pays avec abonnement</span>
-                    </div>
-                </div>
+                }
             </div>
 
             <div className="providers-table-container">

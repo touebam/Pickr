@@ -5,10 +5,11 @@ import Rating from '@mui/material/Rating';
 import EastIcon from '@mui/icons-material/East';
 import { countryNames } from './countryNames';
 import { Button, IconButton } from "@mui/material"; 
-import { LiveTv, FavoriteBorder, TurnedInNot } from '@mui/icons-material';
+import { LiveTv, FavoriteBorder, Send, Search } from '@mui/icons-material';
 import DialogTrailer from '../DialogTrailer/DialogTrailer';
+import { getSimilarMovies } from '../../api/tmdb';
 
-function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
+function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
   const [details, setDetails] = useState(null);
   const [isActive, setIsActive] = useState(false);
@@ -83,9 +84,13 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
     }
   };
 
+  const handleSimilarClick = async (event) => {
+    const movies = await getSimilarMovies(movie.id, movie.type);
+    onSearch(movies, movie.id);
+  }
+
   const handleTrailerClick = (event) => {
     handleOpen('trailer') ;
-    console.log(details)
   };
   return (
     <div 
@@ -117,26 +122,31 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache }) {
           )}
           <div className='card-buttons'>
             <IconButton 
-              className="trailer-button"
+              className="card-button"
               title='Voir la bande annonce'
               onClick={handleTrailerClick}
             >
               <LiveTv />
             </IconButton>
+            {/*<IconButton 
+              className="card-button"
+              title={`${movie.type === "movie" ? "Films" : "Séries"} similaires`}
+              onClick={handleSimilarClick}
+            >
+              <Search />
+            </IconButton>
             <IconButton 
-              className="trailer-button"
-              title='Voir la bande annonce'
-              onClick={handleTrailerClick}
+              className="card-button"
+              title='Ajouter aux favoris'
             >
               <FavoriteBorder />
             </IconButton>
             <IconButton 
-              className="trailer-button"
-              title='Voir la bande annonce'
-              onClick={handleTrailerClick}
+              className="card-button"
+              title='Partager'
             >
-              <TurnedInNot />
-            </IconButton>
+              <Send />
+            </IconButton>*/}
           </div>
       </div>
       <div className="movie-details">

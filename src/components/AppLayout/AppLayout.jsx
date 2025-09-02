@@ -14,6 +14,7 @@ export default function AppLayout() {
   const [movieDetailsCache, setMovieDetailsCache] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [searchCriteria, setSearchCriteria] = useState(null);
+  const [movieId, setMovieId] = useState(null);
   const movieIds = useRef(new Set()); 
   const [openNoResultsToast, setOpenNoResultsToast] = useState(false);
   const [openEndOfListToast, setOpenEndOfListToast] = useState(false);
@@ -130,6 +131,7 @@ export default function AppLayout() {
               genres={genres} 
               fetchDetailsWithCache={fetchDetailsWithCache}
               onEndReached={handleEndReached}
+              onSearch={(moviesList, movieId) => handleSearch(moviesList, movieId)}
             />
           :
             <HeroSection trends={trends} />

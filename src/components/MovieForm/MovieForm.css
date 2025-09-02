@@ -172,6 +172,7 @@ h3 {
 
 .MuiTabs-root {
     margin-top: var(--space-1);
+    flex-shrink: 0;
 }
 
 .MuiTabs-root .Mui-selected {

@@ -17,6 +17,7 @@
 }
 .trailer-link:hover {
     color: var(--color-gray-100);
+    background-color: var(--color-gray-700);
 }
 .trailer-title {
     text-wrap: nowrap;
@@ -29,7 +30,7 @@
     .trailer-title {
         font-size: var(--text-xs);
     }
-    .trailer-link > span:not(.trailer-title) {
+    .trailer-link .year {
         display: none;
     }
 }

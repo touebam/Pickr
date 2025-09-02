@@ -201,7 +201,7 @@
   opacity: 1;
   pointer-events: all;
 }
-.trailer-button {
+.card-button {
   background-color: transparent !important;
   color: white !important;
   transition: all var(--transition-fast);
@@ -209,6 +209,6 @@
   border: 1px solid var(--color-gray-600) !important;
 }
 
-.trailer-button:hover {
+.card-button:hover {
   background-color: rgba(7, 7, 7, 0.75) !important
 }

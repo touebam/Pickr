@@ -97,6 +97,25 @@ export async function discoverMovies(searchCriteria, page = 1) {
   }
 }
 
+export async function getSimilarMovies(movieId, type = "movie") {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/${type}/${movieId}/similar?api_key=${API_KEY}&language=fr-FR`
+    );
+
+    if (!response.ok) {
+      throw new Error("Erreur lors de la récupération des films similaires");
+    }
+
+    const data = await response.json();
+    const transformedResults = transformTMDBData(data.results, type);
+    return transformedResults; 
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
 export async function searchMovies(searchQuery, type = "movie") {
   try {
     // Retirer les films trop méconnus 
@@ -229,10 +248,6 @@ export async function getMovieTrailer(movieId, type = "movie") {
       throw new Error("Erreur lors de la récupération des vidéos");
     }
     const data = await response.json();
-    console.log(data.results.filter(video => 
-      video.type === 'Trailer' && 
-      video.site === 'YouTube'
-    ))
     return data.results.filter(video => 
       video.type === 'Trailer' && 
       video.site === 'YouTube'

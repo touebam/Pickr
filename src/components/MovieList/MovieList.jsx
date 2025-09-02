@@ -2,7 +2,7 @@ import './MovieList.css';
 import MovieCard from "../MovieCard/MovieCard";
 import { useEffect, useRef } from "react";
 
-function MovieList({ movies, genres, fetchDetailsWithCache, onEndReached }) {
+function MovieList({ movies, genres, fetchDetailsWithCache, onEndReached, onSearch }) {
   const sentinelRef = useRef(null);
 
   useEffect(() => {
@@ -27,12 +27,13 @@ function MovieList({ movies, genres, fetchDetailsWithCache, onEndReached }) {
   return (
     <div className="movie-list">
       {movies.map((movie) => (
-          <MovieCard 
-              key={movie.id} 
-              movie={movie} 
-              allGenres={genres}
-              fetchDetailsWithCache={fetchDetailsWithCache}
-          />
+        <MovieCard 
+            key={movie.id} 
+            movie={movie} 
+            allGenres={genres}
+            fetchDetailsWithCache={fetchDetailsWithCache}
+            onSearch={onSearch}
+        />
       ))}
       <div ref={sentinelRef} style={{ height: "1px" }}></div>
     </div>
