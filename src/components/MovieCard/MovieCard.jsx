@@ -7,7 +7,7 @@ import { countryNames } from './countryNames';
 import { Button, IconButton } from "@mui/material"; 
 import { LiveTv, FavoriteBorder, Send, Search } from '@mui/icons-material';
 import DialogTrailer from '../DialogTrailer/DialogTrailer';
-import { getSimilarMovies } from '../../api/tmdb';
+//import { getSimilarMovies } from '../../api/tmdb';
 
 function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
@@ -84,10 +84,10 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
     }
   };
 
-  const handleSimilarClick = async (event) => {
+  /*const handleSimilarClick = async (event) => {
     const movies = await getSimilarMovies(movie.id, movie.type);
     onSearch(movies, movie.id);
-  }
+  }*/
 
   const handleTrailerClick = (event) => {
     handleOpen('trailer') ;

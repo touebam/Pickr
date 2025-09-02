@@ -87,6 +87,7 @@ export async function discoverMovies(searchCriteria, page = 1) {
   }
 }
 
+/*
 export async function getSimilarMovies(movieId, type = "movie") {
   try {
     console.count('appel')
@@ -105,7 +106,7 @@ export async function getSimilarMovies(movieId, type = "movie") {
     console.error(error);
     return [];
   }
-}
+}*/
 
 export async function searchMovies(searchQuery, type = "movie") {
   try {
@@ -176,82 +177,62 @@ export async function searchMovies(searchQuery, type = "movie") {
   }
 }
 
-export async function getProviders() {
-  const wantedProviders = [
-    "Apple TV",
-    "Netflix",
-    "Amazon Prime Video",
-    "YouTube",
-    "Crunchyroll",
-    "Disney plus",
-    "Canal+",
-    "Molotov TV"
-  ];
+export async function getMovieDatas(movieId, type = "movie") {
+  const storageKey = `${type}_${movieId}`;
+  const cachedData = localStorage.getItem(storageKey);
+
+  if (cachedData) {
+    return JSON.parse(cachedData);
+  }
 
   try {
-    console.count('appel')
-    const response = await fetch(`${BASE_URL}/watch/providers/movie?api_key=${API_KEY}&language=fr-FR`);
-    if (!response.ok) {
-      throw new Error("Erreur lors de la récupération des plateformes de streaming");
-    }
-    const data = await response.json();
+    console.count("appel");
+    // Détails
+    const detailsResp = await fetch(`${BASE_URL}/${type}/${movieId}?api_key=${API_KEY}&language=fr-FR`);
+    const detailsData = detailsResp.ok ? await detailsResp.json() : {};
+    const details = {
+      runtime: detailsData.runtime,
+      overview: detailsData.overview
+    };
 
-    const matchedProviders = data.results.filter(provider =>
-      wantedProviders.some(wp => provider.provider_name.toLowerCase().includes(wp.toLowerCase()))
-    );
-    const uniqueProviders = Utils.filterClosestProviders(matchedProviders, wantedProviders);
-    
-    return uniqueProviders;
+
+    console.count("appel");
+    // Plateformes
+    const providersResp = await fetch(`${BASE_URL}/${type}/${movieId}/watch/providers?api_key=${API_KEY}`);
+    const providersRaw = providersResp.ok ? (await providersResp.json()).results || {} : {};
+    const providers = {};
+
+    Object.entries(providersRaw).forEach(([countryCode, countryData]) => {
+      const { flatrate, free } = countryData;
+      if ((flatrate && flatrate.length) || (free && free.length)) {
+        providers[countryCode] = {};
+        if (flatrate && flatrate.length) providers[countryCode].flatrate = flatrate;
+        if (free && free.length) providers[countryCode].free = free;
+      }
+    });
+
+    console.count("appel");
+    // Trailers
+    const trailerResp = await fetch(`${BASE_URL}/${type}/${movieId}/videos?api_key=${API_KEY}&language=fr-FR`);
+    const trailerRaw = trailerResp.ok ? (await trailerResp.json()).results : [];
+    const trailers = trailerRaw
+      .filter(video => video.type === "Trailer" && video.site === "YouTube")
+      .map(video => ({
+        id: video.id,
+        key: video.key,
+        name: video.name,
+        published_at: video.published_at
+      }));
+
+    const combinedData = { details, providers, trailers };
+    localStorage.setItem(storageKey, JSON.stringify(combinedData));
+    return combinedData;
   } catch (error) {
     console.error(error);
-    return [];
+    return {
+      details: {},
+      providers: {},
+      trailers: []
+    };
   }
 }
-
-export async function getMovieDetails(movieId, type = "movie") {
-  try {
-    console.count('appel')
-    const response = await fetch(`${BASE_URL}/${type}/${movieId}?api_key=${API_KEY}&language=fr-FR`);
-    if (!response.ok) {
-      throw new Error("Erreur lors de la récupération des détails du film");
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-}
-
-export async function getWatchProviders(movieId, type = "movie") {
-  try {
-    console.count('appel')
-    const response = await fetch(`${BASE_URL}/${type}/${movieId}/watch/providers?api_key=${API_KEY}`);
-    if (!response.ok) {
-      throw new Error("Erreur lors de la récupération des plateformes");
-    }
-    const data = await response.json();
-    return data.results || {};
-  } catch (error) {
-    console.error(error);
-    return {};
-  }
-}
-
-export async function getMovieTrailer(movieId, type = "movie") {
-  try {
-    console.count('appel')
-    const response = await fetch(`${BASE_URL}/${type}/${movieId}/videos?api_key=${API_KEY}&language=fr-FR`);
-    if (!response.ok) {
-      throw new Error("Erreur lors de la récupération des vidéos");
-    }
-    const data = await response.json();
-    return data.results.filter(video => 
-      video.type === 'Trailer' && 
-      video.site === 'YouTube'
-    );
-  } catch (error) {
-    console.error(error);
-    return {};
-  }
-};

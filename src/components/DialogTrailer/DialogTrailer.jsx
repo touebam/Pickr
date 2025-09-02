@@ -18,8 +18,8 @@ function DialogTrailer({ movie, details, handleClose, open }) {
         <DialogTitle>Bandes annonces pour <b>{movie.title}</b></DialogTitle>
         <DialogContent>
             <div className='trailer-list'>
-                {details?.trailer && details.trailer.length > 0 ? 
-                    details.trailer.map((trailer) => (
+                {details?.trailers && details.trailers.length > 0 ? 
+                    details.trailers.map((trailer) => (
                         <a
                         key={trailer.id}
                         className='trailer-link'
