@@ -9,6 +9,9 @@
     align-items: baseline;
     gap: var(--space-2);
 }
+.movie-form .form-container-header h3 {
+    margin-top: 0;
+}
 .movie-form .form-container-header select {
     height: fit-content;
 }
@@ -253,9 +256,12 @@ h3 {
     width: fit-content;
     padding: var(--space-1);
     border-radius: var(--radius-md);
-    margin-top: var(--space-3);
+    margin-top: var(--space-2);
     width: 100% !important;
     box-sizing: border-box;
+}
+.MuiTabs-root:last-of-type {
+    margin-bottom: var(--space-1);
 }
 
 .MuiTabs-root button,
@@ -278,6 +284,9 @@ h3 {
     z-index: 0;
 }
 
+.form-tabs {
+    margin-bottom: var(--space-4);
+}
 .form-tabs button.Mui-selected {
     color: var(--color-primary-100) !important;
 }
