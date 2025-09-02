@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import MovieForm from '../MovieForm/MovieForm';
 import MovieList from '../MovieList/MovieList';
-import { getTVGenres, getMovieGenres, getMovieTrailer, getMovieDetails, getWatchProviders, getProviders, discoverMovies, getTrends } from '../../api/tmdb';
+import { getMovieTrailer, getMovieDetails, getWatchProviders, getProviders, discoverMovies, getTrends } from '../../api/tmdb';
 import './AppLayout.css';
 import HeroSection from '../HeroSection/HeroSection';
 import { Snackbar, Alert } from '@mui/material';

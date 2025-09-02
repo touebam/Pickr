@@ -4,46 +4,31 @@ import { transformTMDBData } from '../utils/dataTransform';
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = import.meta.env.VITE_TMDB_BASE_URL;
 
-export async function getMovieGenres() {
-  try {
-    console.count('appel')
-    const response = await fetch(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}&language=fr-FR`);
-    if (!response.ok) {
-      throw new Error("Erreur lors de la récupération des genres (movie)");
-    }
-    const data = await response.json();
-    return data.genres; 
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-}
-
-export async function getTVGenres() {
-  try {
-    console.count('appel')
-    const response = await fetch(`${BASE_URL}/genre/tv/list?api_key=${API_KEY}&language=fr-FR`);
-    if (!response.ok) {
-      throw new Error("Erreur lors de la récupération des genres (tv)");
-    }
-    const data = await response.json();
-    return data.genres; 
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-}
-
 export async function getTrends() {
   try {
-    console.count('appel')
-    const response = await fetch(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}&language=fr-FR`);
-    if (!response.ok) {
-      throw new Error("Erreur lors de la récupération des tendances");
+    const cachedTrends = localStorage.getItem("trendsData");
+    const lastUpdate = parseInt(localStorage.getItem("trendsLastUpdate"), 10);
+    
+    const now = new Date().getTime();
+    const nbDays = 4;
+    const maxAge = nbDays * 24 * 60 * 60 * 1000; 
+
+    if (cachedTrends && lastUpdate && now - lastUpdate < maxAge) {
+      return JSON.parse(cachedTrends);
+    } else {
+      console.count('appel')
+      const response = await fetch(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}&language=fr-FR`);
+      if (!response.ok) {
+        throw new Error("Erreur lors de la récupération des tendances");
+      }
+      const data = await response.json();
+      const transformedResults = transformTMDBData(data.results);
+      
+      localStorage.setItem("trendsData", JSON.stringify(transformedResults));
+      localStorage.setItem("trendsLastUpdate", now.toString());
+
+      return transformedResults; 
     }
-    const data = await response.json();
-    const transformedResults = transformTMDBData(data.results);
-    return transformedResults; 
   } catch (error) {
     console.error(error);
     return [];
