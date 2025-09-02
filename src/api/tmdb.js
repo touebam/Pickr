@@ -6,6 +6,7 @@ const BASE_URL = import.meta.env.VITE_TMDB_BASE_URL;
 
 export async function getMovieGenres() {
   try {
+    console.count('appel')
     const response = await fetch(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}&language=fr-FR`);
     if (!response.ok) {
       throw new Error("Erreur lors de la récupération des genres (movie)");
@@ -17,8 +18,10 @@ export async function getMovieGenres() {
     return [];
   }
 }
+
 export async function getTVGenres() {
   try {
+    console.count('appel')
     const response = await fetch(`${BASE_URL}/genre/tv/list?api_key=${API_KEY}&language=fr-FR`);
     if (!response.ok) {
       throw new Error("Erreur lors de la récupération des genres (tv)");
@@ -33,6 +36,7 @@ export async function getTVGenres() {
 
 export async function getTrends() {
   try {
+    console.count('appel')
     const response = await fetch(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}&language=fr-FR`);
     if (!response.ok) {
       throw new Error("Erreur lors de la récupération des tendances");
@@ -83,6 +87,7 @@ export async function discoverMovies(searchCriteria, page = 1) {
       baseParams.append("with_watch_providers", searchCriteria.providers.join("|"));
     }
 
+    console.count('appel')
     const res = await fetch(`${BASE_URL}/discover/${searchCriteria.type}?${baseParams}`);
     if (!res.ok) throw new Error(`Erreur API : ${res.status}`);
     const data = await res.json();
@@ -99,6 +104,7 @@ export async function discoverMovies(searchCriteria, page = 1) {
 
 export async function getSimilarMovies(movieId, type = "movie") {
   try {
+    console.count('appel')
     const response = await fetch(
       `${BASE_URL}/${type}/${movieId}/similar?api_key=${API_KEY}&language=fr-FR`
     );
@@ -131,12 +137,14 @@ export async function searchMovies(searchQuery, type = "movie") {
       query: searchQuery
     });
 
+    console.count('appel')
     // Recherche par titre
     const movieRes = await fetch(`${BASE_URL}/search/${type}?${params}`);
     if (!movieRes.ok) throw new Error(`Erreur API (movie search) : ${movieRes.status}`);
     const movieData = await movieRes.json();
     const filteredMovieData = filterMovies(movieData.results);
 
+    console.count('appel')
     // Recherche des acteurs/réalisateurs
     const personRes = await fetch(`${BASE_URL}/search/person?${params}`);
     if (!personRes.ok) throw new Error(`Erreur API (person search) : ${personRes.status}`);
@@ -151,6 +159,7 @@ export async function searchMovies(searchQuery, type = "movie") {
         'vote_count.gte': 10,
       });
 
+    console.count('appel')
       const peopleMoviesRes = await fetch(`${BASE_URL}/discover/${type}?${peopleParams}`);
       if (peopleMoviesRes.ok) {
         const peopleMoviesData = await peopleMoviesRes.json();
@@ -195,6 +204,7 @@ export async function getProviders() {
   ];
 
   try {
+    console.count('appel')
     const response = await fetch(`${BASE_URL}/watch/providers/movie?api_key=${API_KEY}&language=fr-FR`);
     if (!response.ok) {
       throw new Error("Erreur lors de la récupération des plateformes de streaming");
@@ -215,6 +225,7 @@ export async function getProviders() {
 
 export async function getMovieDetails(movieId, type = "movie") {
   try {
+    console.count('appel')
     const response = await fetch(`${BASE_URL}/${type}/${movieId}?api_key=${API_KEY}&language=fr-FR`);
     if (!response.ok) {
       throw new Error("Erreur lors de la récupération des détails du film");
@@ -229,6 +240,7 @@ export async function getMovieDetails(movieId, type = "movie") {
 
 export async function getWatchProviders(movieId, type = "movie") {
   try {
+    console.count('appel')
     const response = await fetch(`${BASE_URL}/${type}/${movieId}/watch/providers?api_key=${API_KEY}`);
     if (!response.ok) {
       throw new Error("Erreur lors de la récupération des plateformes");
@@ -243,6 +255,7 @@ export async function getWatchProviders(movieId, type = "movie") {
 
 export async function getMovieTrailer(movieId, type = "movie") {
   try {
+    console.count('appel')
     const response = await fetch(`${BASE_URL}/${type}/${movieId}/videos?api_key=${API_KEY}&language=fr-FR`);
     if (!response.ok) {
       throw new Error("Erreur lors de la récupération des vidéos");

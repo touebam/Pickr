@@ -16,7 +16,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 59px;
+  width: 60px;
   aspect-ratio: 1;
   border-radius: var(--radius-md);
   border: 1px solid var(--color-gray-600);

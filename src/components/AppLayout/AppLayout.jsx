@@ -5,6 +5,9 @@ import { getTVGenres, getMovieGenres, getMovieTrailer, getMovieDetails, getWatch
 import './AppLayout.css';
 import HeroSection from '../HeroSection/HeroSection';
 import { Snackbar, Alert } from '@mui/material';
+import movieGenresData from "../../data/movieGenres.js";
+import tvGenresData from "../../data/tvGenres.js";
+import providersData from "../../data/providers.js";
 
 export default function AppLayout() {
   const [movies, setMovies] = useState([]);
@@ -32,11 +35,7 @@ export default function AppLayout() {
 
   useEffect(() => {
     async function fetchData() {
-      const movieGenresData = await getMovieGenres();
-      const tvGenresData = await getTVGenres();
-      setGenres({movie:movieGenresData, tv:tvGenresData});
-
-      const providersData = await getProviders();
+      setGenres({ movie: movieGenresData, tv: tvGenresData });
       setProviders(providersData);
 
       const trendsData = await getTrends();
