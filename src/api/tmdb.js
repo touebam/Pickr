@@ -3,6 +3,7 @@ import { transformTMDBData } from '../utils/dataTransform';
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = import.meta.env.VITE_TMDB_BASE_URL;
+const MAX_CACHE_AGE = 4 * 24 * 60 * 60 * 1000;
 
 export async function getTrends() {
   try {
@@ -10,10 +11,8 @@ export async function getTrends() {
     const lastUpdate = parseInt(localStorage.getItem("trendsLastUpdate"), 10);
     
     const now = new Date().getTime();
-    const nbDays = 4;
-    const maxAge = nbDays * 24 * 60 * 60 * 1000; 
 
-    if (cachedTrends && lastUpdate && now - lastUpdate < maxAge) {
+    if (cachedTrends && lastUpdate && now - lastUpdate < MAX_CACHE_AGE) {
       return JSON.parse(cachedTrends);
     } else {
       console.count('appel')
@@ -35,16 +34,31 @@ export async function getTrends() {
   }
 }
 
+function getDiscoverKey({ genres, duration, rating, providers, releaseYear, type }, page) {
+  const genresKey = genres.sort().join("-");
+  const durationKey = `${duration[0]}-${duration[1]}`;
+  const ratingKey = `${rating[0]}-${rating[1]}`;
+  const providersKey = providers.sort().join("-");
+  const yearKey = `${releaseYear[0]}-${releaseYear[1]}`;
+
+  return `discover_${genresKey}_${type == "movie" ? durationKey : ''}_${ratingKey}_${providersKey}_${yearKey}_${page}`;
+}
+
 export async function discoverMovies(searchCriteria, page = 1) {
   try {
-    // Fonction pour mélanger un tableau
-    const shuffleArray = (array) => {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+    const key = getDiscoverKey(searchCriteria, page);
+    const cachedRaw = localStorage.getItem(key);
+
+    const now = new Date().getTime();
+    
+    if (cachedRaw) {
+      const cachedObj = JSON.parse(cachedRaw);
+
+      if (cachedObj.lastUpdate && now - cachedObj.lastUpdate < MAX_CACHE_AGE) {
+        return Utils.shuffleArray(cachedObj.results);
       }
-      return array;
-    };
+    }
+
     // Génération des paramètres 
     const baseParams = new URLSearchParams({
       api_key: API_KEY,
@@ -78,15 +92,39 @@ export async function discoverMovies(searchCriteria, page = 1) {
     const data = await res.json();
     
     const transformedResults = transformTMDBData(data.results, searchCriteria.type);
-    const shuffledResults = shuffleArray(transformedResults);
-    return shuffledResults;
 
+    localStorage.setItem(key, JSON.stringify({
+      results: transformedResults,
+      lastUpdate: now.toString()
+    }));
+
+    return Utils.shuffleArray(transformedResults);
+  
   } catch (error) {
     console.error("Erreur lors de la recherche:", error);
     return [];
   }
 }
 
+export function cleanOldCache() {
+  const now = Date.now();
+
+  Object.keys(localStorage).forEach(key => {
+    if (key.startsWith("movie") || key.startsWith("tv_") || key.startsWith("discover_") || key.startsWith("search_")) {
+      try {
+        const cachedObj = JSON.parse(localStorage.getItem(key));
+
+        if (cachedObj?.lastUpdate && now - cachedObj.lastUpdate > MAX_CACHE_AGE) {
+          localStorage.removeItem(key);
+          console.log(`Cache supprimé : ${key}`);
+        }
+      } catch (e) {
+        localStorage.removeItem(key);
+        console.warn(`Cache invalide supprimé : ${key}`);
+      }
+    }
+  });
+}
 /*
 export async function getSimilarMovies(movieId, type = "movie") {
   try {

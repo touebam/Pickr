@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import MovieForm from '../MovieForm/MovieForm';
 import MovieList from '../MovieList/MovieList';
-import { getMovieDatas, discoverMovies, getTrends } from '../../api/tmdb';
+import { cleanOldCache, getMovieDatas, discoverMovies, getTrends } from '../../api/tmdb';
 import './AppLayout.css';
 import HeroSection from '../HeroSection/HeroSection';
 import { Snackbar, Alert } from '@mui/material';
@@ -35,6 +35,8 @@ export default function AppLayout() {
 
   useEffect(() => {
     async function fetchData() {
+      cleanOldCache();
+      
       setGenres({ movie: movieGenresData, tv: tvGenresData });
       setProviders(providersData);
 

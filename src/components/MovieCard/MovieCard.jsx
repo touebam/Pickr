@@ -198,24 +198,31 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
           )}
           <div className="providers-list">
             <span className="detail-title">Streaming :</span>{" "}
-            <span className="detail-content">{details?.providers?.FR?.flatrate ? (
-              details.providers.FR.flatrate.map((provider) => (
-                <a
-                  key={provider.provider_id}
-                  href={`https://www.google.com/search?q=${encodeURIComponent(movie.title + " " + provider.provider_name)}`}
-                  target='_blank'
-                >
-                  <img
-                    className="provider-icon"
-                    src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-                    alt={provider.provider_name}
-                    title={provider.provider_name}
-                  />
-                </a>
-              ))
+            <span className="detail-content">
+            {details?.providers?.FR ? (
+              <>
+                {["flatrate", "ads", "free"].map((type) =>
+                  details.providers.FR[type]?.map((provider) => (
+                    <a
+                      key={`${type}-${provider.provider_id}`}
+                      href={`https://www.google.com/search?q=${encodeURIComponent(movie.title + " " + provider.provider_name)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        className="provider-icon"
+                        src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                        alt={provider.provider_name}
+                        title={`${provider.provider_name} (${type})`}
+                      />
+                    </a>
+                  ))
+                )}
+              </>
             ) : (
               <>Non disponible en France</>
-            )}</span>
+            )}
+          </span>
             <div className='provider-button-container'>
               <Button
                 endIcon={<EastIcon />}

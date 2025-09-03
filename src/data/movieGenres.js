@@ -79,4 +79,3 @@ const MOVIEGENRES = [
 ];
 
 export default MOVIEGENRES;
-  

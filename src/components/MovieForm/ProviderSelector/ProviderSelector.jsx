@@ -1,8 +1,14 @@
-import React from 'react';
 import './ProviderSelector.css';
+import { useState } from "react";
+import { Add, Remove } from '@mui/icons-material';
 
 const ProviderSelector = ({ providers, selectedProviders, onProviderChange }) => {
+  const [extended, setExtended] = useState(false);
   const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/original';
+
+  const toggleExtended = () => {
+    setExtended(prev => !prev);
+  };
 
   const toggleProvider = (providerId) => {
     const newSelectedProviders = selectedProviders.includes(providerId) 
@@ -12,13 +18,10 @@ const ProviderSelector = ({ providers, selectedProviders, onProviderChange }) =>
     onProviderChange(newSelectedProviders);
   };
 
-  // Trier par display_priority
-  const sortedProviders = [...providers].sort((a, b) => a.display_priority - b.display_priority);
-
   return (
-    <div className="platform-grid">
-      {sortedProviders.map((provider) => (
-        <label key={provider.provider_id} className="platform-label">
+    <div className={`platform-grid ${extended ? "extended" : ""}`}>
+      {providers.map((provider) => (
+        <label key={provider.provider_id} className={"platform-label" + (provider.displayed ? " displayed":'')} >
           <input
             type="checkbox"
             checked={selectedProviders.includes(provider.provider_id)}
@@ -41,6 +44,15 @@ const ProviderSelector = ({ providers, selectedProviders, onProviderChange }) =>
           </div>
         </label>
       ))}
+      <label
+        className="platform-label displayed"
+        title={extended ? "Réduire" : "Afficher plus"}
+        onClick={toggleExtended}
+      >
+        <div className='platform-button'>
+          {extended ? <Remove /> : <Add />}
+        </div>
+      </label>
     </div>
   );
 };

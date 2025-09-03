@@ -1,11 +1,17 @@
 .platform-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
   gap: var(--space-1);
 }
-
+.platform-grid.extended .platform-label {
+  display: block;
+}
 .platform-label {
   cursor: pointer;
+}
+
+.platform-label:not(.displayed) {
+  display: none;
 }
 
 .platform-checkbox {

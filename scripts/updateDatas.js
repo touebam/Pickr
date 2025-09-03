@@ -29,32 +29,31 @@ async function getGenreData(type = "movie") {
 
 async function getProviderData() {
   const wantedProviders = [
-    "Apple TV",
+    "Apple TV+",
     "Netflix",
     "Amazon Prime Video",
-    "YouTube",
+    "Paramount Plus",
     "Crunchyroll",
     "Disney plus",
     "Canal+",
     "Molotov TV"
   ];
 
-  const response = await fetch(`${BASE_URL}/watch/providers/movie?api_key=${API_KEY}&language=fr-FR`);
+  const response = await fetch(`${BASE_URL}/watch/providers/movie?api_key=${API_KEY}&language=fr-FR&watch_region=FR`);
   const data = await response.json();
+  
   if (!data.results) {
     console.error("Impossible de récupérer les plateformes de streaming depuis TMDB");
     return [];
   }
 
-  const matchedProviders = data.results.filter(provider =>
-    wantedProviders.some(wp => provider.provider_name.toLowerCase().includes(wp.toLowerCase()))
-  );
-  const uniqueProviders = Utils.filterClosestProviders(matchedProviders, wantedProviders);
-  
-  return uniqueProviders.map(({ provider_id, provider_name, logo_path }) => ({
+  return data.results.map(({ provider_id, provider_name, logo_path }) => ({
     provider_id,
     provider_name,
-    logo_path
+    logo_path,
+    displayed: wantedProviders.some(
+      wp => provider_name.toLowerCase() === wp.toLowerCase()
+    )
   }));
 }
 
