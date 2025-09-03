@@ -148,6 +148,19 @@ export async function getSimilarMovies(movieId, type = "movie") {
 
 export async function searchMovies(searchQuery, type = "movie") {
   try {
+    const key = `${type}_${searchQuery.toLowerCase()}`;
+    const cachedRaw = localStorage.getItem(key);
+    
+    const now = new Date().getTime();
+    
+    if (cachedRaw) {
+      const cachedObj = JSON.parse(cachedRaw);
+
+      if (cachedObj.lastUpdate && now - cachedObj.lastUpdate < MAX_CACHE_AGE) {
+        return cachedObj.results;
+      }
+    }
+
     // Retirer les films trop méconnus 
     function filterMovies(movies) {
       return movies.filter(m =>
@@ -193,7 +206,7 @@ export async function searchMovies(searchQuery, type = "movie") {
 
     // Tri des films par similarité titre/recherche 
     const scoredMovieData = filteredMovieData.map(movie => {
-      const similarity = Utils.textSimilarity(movie.title, searchQuery);
+      const similarity = Utils.textSimilarity(type === "movie" ? movie.title : movie.name, searchQuery);
       return { movie, score: similarity };
     });
     const sortedByTitle = scoredMovieData
@@ -207,6 +220,7 @@ export async function searchMovies(searchQuery, type = "movie") {
 
     const finalMovies = [...sortedByTitle, ...uniquePersonMovies];
     const transformedResults = transformTMDBData(finalMovies, type);
+    localStorage.setItem(key, JSON.stringify(transformedResults));
     return transformedResults;
 
   } catch (error) {

@@ -5,9 +5,10 @@ import IconButton from '@mui/material/IconButton';
 import GenreSelector from './GenreSelector/GenreSelector';
 import ProviderSelector from './ProviderSelector/ProviderSelector';
 import { Refresh, Search, Menu, Shuffle } from '@mui/icons-material';
-import { Button, Tabs, Tab, TextField } from '@mui/material';
+import { Button, Tabs, Tab, TextField, Tooltip } from '@mui/material';
 import { discoverMovies, searchMovies } from '../../api/tmdb';
 import logo from '../../assets/logo/logo.png';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 const currentYear = new Date().getFullYear();
 
@@ -74,8 +75,9 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
     onSearch(movies, searchCriteria);
   };
 
-  async function handleSearchx() {
-    const movies = await searchMovies(searchQuery);
+  async function handleSearch() {
+    const type = activeType === 0 ? "movie" : "tv";
+    const movies = await searchMovies(searchQuery, type);
     onSearch(movies);
   };
 
@@ -171,8 +173,17 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
               valueLabelDisplay="on"
             />
           </div>
-          
-          <h3>Plateformes :</h3>
+          <div className='form-container-header'>
+            <h3>Plateformes :</h3>
+            <Tooltip 
+              title="Les informations de disponibilité des plateformes peuvent ne pas être exactes ou à jour"
+              arrow
+            >
+              <IconButton className="info-button" >
+                <InfoOutlinedIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          </div>
           <ProviderSelector 
             providers={providers}
             selectedProviders={selectedProviders}
@@ -227,7 +238,7 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
           <Button 
             variant="contained" 
             endIcon={<Search />}
-            onClick={handleSearchx}
+            onClick={handleSearch}
           >
             Rechercher
           </Button>
