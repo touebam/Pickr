@@ -178,6 +178,11 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
             <Tooltip 
               title="Les informations de disponibilité des plateformes peuvent ne pas être exactes ou à jour"
               arrow
+              slotProps={{
+                popper: {
+                  className: "tooltip-info",
+                },
+              }}
             >
               <IconButton className="info-button" >
                 <InfoOutlinedIcon fontSize="small" />

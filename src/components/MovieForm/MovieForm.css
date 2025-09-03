@@ -13,6 +13,9 @@
 .movie-form .form-container-header:first-child h3 {
     margin-top: 0;
 }
+.movie-form .form-container-header:not(:first-child) {
+    align-items: center; 
+}
 .movie-form .form-container-header select {
     height: fit-content;
 }

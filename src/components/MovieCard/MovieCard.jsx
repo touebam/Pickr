@@ -4,7 +4,7 @@ import DialogProviders from "../DialogProviders/DialogProviders";
 import Rating from '@mui/material/Rating';
 import EastIcon from '@mui/icons-material/East';
 import { countryNames } from './countryNames';
-import { Button, IconButton } from "@mui/material"; 
+import { Button, IconButton, Tooltip } from "@mui/material"; 
 import { LiveTv, FavoriteBorder, Send, Search } from '@mui/icons-material';
 import DialogTrailer from '../DialogTrailer/DialogTrailer';
 //import { getSimilarMovies } from '../../api/tmdb';
@@ -121,13 +121,28 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
             </div>
           )}
           <div className='card-buttons'>
-            <IconButton 
-              className="card-button"
+            <Tooltip 
               title='Voir la bande annonce'
-              onClick={handleTrailerClick}
+              slotProps={{
+                popper: {
+                  modifiers: [
+                    {
+                      name: 'offset',
+                      options: {
+                        offset: [0, -10],
+                      },
+                    },
+                  ],
+                },
+              }}
             >
-              <LiveTv />
-            </IconButton>
+              <IconButton 
+                className="card-button"
+                onClick={handleTrailerClick}
+              >
+                <LiveTv />
+              </IconButton>
+            </Tooltip>
             {/*<IconButton 
               className="card-button"
               title={`${movie.type === "movie" ? "Films" : "Séries"} similaires`}
@@ -203,19 +218,34 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
               <>
                 {["flatrate", "ads", "free"].map((type) =>
                   details.providers.FR[type]?.map((provider) => (
-                    <a
-                      key={`${type}-${provider.provider_id}`}
-                      href={`https://www.google.com/search?q=${encodeURIComponent(movie.title + " " + provider.provider_name)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <Tooltip 
+                      title={provider.provider_name}
+                      slotProps={{
+                        popper: {
+                          modifiers: [
+                            {
+                              name: 'offset',
+                              options: {
+                                offset: [0, -10],
+                              },
+                            },
+                          ],
+                        },
+                      }}
                     >
-                      <img
-                        className="provider-icon"
-                        src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-                        alt={provider.provider_name}
-                        title={`${provider.provider_name} (${type})`}
-                      />
-                    </a>
+                      <a
+                        key={`${type}-${provider.provider_id}`}
+                        href={`https://www.google.com/search?q=${encodeURIComponent(movie.title + " " + provider.provider_name)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          className="provider-icon"
+                          src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                          alt={provider.provider_name}
+                        />
+                      </a>
+                    </Tooltip>
                   ))
                 )}
               </>
