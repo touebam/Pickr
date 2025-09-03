@@ -1,10 +1,10 @@
 import './MovieCard.css';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import DialogProviders from "../DialogProviders/DialogProviders";
 import Rating from '@mui/material/Rating';
 import EastIcon from '@mui/icons-material/East';
 import { countryNames } from './countryNames';
-import { Button, IconButton, Tooltip } from "@mui/material"; 
+import { Button, IconButton, Tooltip, Skeleton } from "@mui/material"; 
 import { LiveTv, FavoriteBorder, Send, Search } from '@mui/icons-material';
 import DialogTrailer from '../DialogTrailer/DialogTrailer';
 //import { getSimilarMovies } from '../../api/tmdb';
@@ -16,6 +16,7 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
   const [openDialogProvider, setOpenDialogProvider] = useState(false);
   const [openDialogTrailer, setOpenDialogTrailer] = useState(false);
   const [filteredProviders, setFilteredProviders] = useState([]);
+  const [loaded, setLoaded] = useState(false);
 
   const isMobile = (window.innerWidth <= 850);
 
@@ -64,10 +65,20 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
       .join(", ");
   };
 
+  const hoverDelay = 500;
+  const hoverTimer = useRef(null);
+  
   const handleMouseEnter = () => {
-    loadDetails();
+    hoverTimer.current = setTimeout(() => {
+      loadDetails();
+    }, hoverDelay);
   };
-
+  const handleMouseLeave = () => {
+    if (hoverTimer.current) {
+      clearTimeout(hoverTimer.current);
+      hoverTimer.current = null;
+    }
+  };
   // Charger les détails au hover
   const loadDetails = async () => {
     if (!details) {
@@ -97,19 +108,33 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
       className={`movie-card ${isMobile ? "mobile" : ""} ${isActive ? "active" : ""}`}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <div className="movie-poster">
           {movie.poster_path ? (
             <div className="images-container">
+              {!loaded && (
+                <Skeleton
+                  variant="rectangular"
+                  width="100%"
+                  height="100%"
+                  animation="wave"
+                  sx={{ bgcolor: "var(--color-gray-800)", borderRadius: "var(--radius-md)" }}
+                />
+              )}
+
               <img
                 src={`${imageBaseUrl}${movie.poster_path}`}
                 alt={movie.title}
                 className="poster-image"
+                style={{ display: loaded ? "block" : "none" }}
+                onLoad={() => setLoaded(true)}
               />
               <img
                 src={`${imageBaseUrl}${movie.poster_path}`}
                 alt={movie.title}
                 className="poster-image blured"
+                style={{ display: loaded ? "block" : "none" }}
               />
             </div>
           ) : (
@@ -213,28 +238,42 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
           )}
           <div className="providers-list">
             <span className="detail-title">Streaming :</span>{" "}
-            <span className="detail-content">
-            {details?.providers?.FR ? (
+            <div className="detail-content">
+            {!details?.providers ? (
+                Array.from({ length: 3 }).map((_, i) => (
+                  <Skeleton
+                    key={i}
+                    width={50}
+                    height={50}
+                    animation="wave"
+                    sx={{
+                      bgcolor: "var(--color-gray-700)",
+                      borderRadius: "var(--radius-md)",
+                      transform: "none !important",
+                      minHeight: '40px',
+                      minWidth: '40px',
+                    }}
+                  />
+                ))
+            ) : (details.providers.FR && ["flatrate", "ads", "free"].some(type => details.providers.FR[type]?.length > 0)) ? (
               <>
                 {["flatrate", "ads", "free"].map((type) =>
                   details.providers.FR[type]?.map((provider) => (
-                    <Tooltip 
+                    <Tooltip
                       title={provider.provider_name}
+                      key={`${type}-${provider.provider_id}`}
                       slotProps={{
                         popper: {
                           modifiers: [
                             {
                               name: 'offset',
-                              options: {
-                                offset: [0, -10],
-                              },
+                              options: { offset: [0, -10] },
                             },
                           ],
                         },
                       }}
                     >
                       <a
-                        key={`${type}-${provider.provider_id}`}
                         href={`https://www.google.com/search?q=${encodeURIComponent(movie.title + " " + provider.provider_name)}`}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -252,7 +291,7 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
             ) : (
               <>Non disponible en France</>
             )}
-          </span>
+          </div>
             <div className='provider-button-container'>
               <Button
                 endIcon={<EastIcon />}

@@ -17,8 +17,8 @@ const DEFAULT_VALUES = {
   selectedGenres: {movie: [], tv: []},
   selectedProviders: [],
   duration: [60, 180],
-  rating: [7, 10],
-  releaseYear: [2000, currentYear],
+  rating: [5, 10],
+  releaseYear: [1990, currentYear],
   searchQuery: ''
 };
 

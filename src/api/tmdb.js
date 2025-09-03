@@ -255,11 +255,12 @@ export async function getMovieDatas(movieId, type = "movie") {
     const providers = {};
 
     Object.entries(providersRaw).forEach(([countryCode, countryData]) => {
-      const { flatrate, free } = countryData;
-      if ((flatrate && flatrate.length) || (free && free.length)) {
+      const { flatrate, free, ads } = countryData;
+      if ((flatrate && flatrate.length) || (free && free.length) || (ads && ads.length)) {
         providers[countryCode] = {};
         if (flatrate && flatrate.length) providers[countryCode].flatrate = flatrate;
         if (free && free.length) providers[countryCode].free = free;
+        if (ads && ads.length) providers[countryCode].ads = ads;
       }
     });
 

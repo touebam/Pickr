@@ -115,6 +115,10 @@
   overflow: auto;
 }
 
+
+.detail-content > a {
+  height: 50px;
+}
 .provider-icon {
   width: 50px;
   border-radius: var(--radius-md);
