@@ -1,0 +1,86 @@
+{
+  "hero": {
+    "title": "Pickr",
+    "slogan": "<0>Pickr</0>, plus la peine de chercher.",
+    "copyright": "© {{year}} Morgan Toueba. Tous droits réservés.",
+    "disclaimer": "Les affiches et données proviennent de l'API TMDb.",
+    "alert": {
+        "noResult": "Pas de résultats pour cette recherche",
+        "endOfList": "Vous avez atteint la fin de la liste"
+    }
+  },
+  "form": {
+    "title": "Pickr",
+    "alt": {
+        "logoPickr": "Logo Pickr"
+    },
+    "tabs": {
+      "movie": "Films",
+      "series": "Séries",
+      "discovery": "Découverte",
+      "search": "Recherche"
+    },
+    "fields": {
+      "genres": "Genres :",
+      "duration": "Durée :",
+      "rating": "Note :",
+      "platforms": "Plateformes :",
+      "releaseYear": "Année de sortie :",
+      "search": "Recherche :"
+    },
+    "extras": {
+      "allGenres": "Tous les genres sélectionnés",
+      "oneGenre": "Au moins un genre sélectionné",
+      "disclaimer": "Les informations de disponibilité des plateformes peuvent ne pas être exactes ou à jour",
+      "searchPlaceholder": "Rechercher un film, acteur, réalisateur...",
+      "more": "Afficher plus",
+      "less": "Réduire"
+    },
+    "buttons": {
+      "reset": "Réinitialiser",
+      "discover": "Découvrir",
+      "search": "Rechercher"
+    }
+  },
+  "movie": {
+    "titles": {
+      "genres": "Genres :",
+      "description": "Description :",
+      "duration": "Durée :",
+      "date": "Date :",
+      "streaming": "Streaming :"
+    },
+    "data": {
+      "duration": "Non renseignée",
+      "streaming": "Non disponible en France"
+    },
+    "buttons": {
+      "trailer": "Voir la bande annonce",
+      "availability": "Autres disponibilités"
+    }
+  },
+  "providerDialog": {
+    "title": "Autres disponibilités pour {{title}}",
+    "subtitle": "{{count}} pays disponibles",
+    "info": {
+      "free": "Pays avec accès gratuit",
+      "flatrate": "Pays avec abonnement"
+    },
+    "table": {
+      "column1": "Pays",
+      "column2": "Gratuit",
+      "column3": "Abonnement",
+      "empty": "Aucun"
+    },
+    "button": {
+      "close": "fermer"
+    }
+  },
+  "trailerDialog": {
+    "title": "Bandes annonces pour ",
+    "empty": "Ce film ne possède pas de bandes annonces",
+    "button": {
+      "close": "fermer"
+    }
+  }
+}

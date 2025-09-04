@@ -1,0 +1,81 @@
+{
+  "hero": {
+    "slogan": "<0>Pickr</0>, no need to search anymore.",
+    "copyright": "© {{year}} Morgan Toueba. All rights reserved.",
+    "disclaimer": "Posters and data come from the TMDb API."
+  },
+  "form": {
+    "title": "Pickr",
+    "alt": {
+      "logoPickr": "Pickr Logo"
+    },
+    "tabs": {
+      "movie": "Movies",
+      "series": "Series",
+      "discovery": "Discovery",
+      "search": "Search"
+    },
+    "fields": {
+      "genres": "Genres :",
+      "duration": "Duration :",
+      "rating": "Rating :",
+      "platforms": "Platforms :",
+      "releaseYear": "Release Year :",
+      "search": "Search :"
+    },
+    "extras": {
+      "allGenres": "All selected genres",
+      "oneGenre": "At least one genre selected",
+      "disclaimer": "Platform availability information may not be accurate or up-to-date",
+      "searchPlaceholder": "Search for a movie, actor, director...",
+      "more": "Show more",
+      "less": "Show less"
+    },
+    "buttons": {
+      "reset": "Reset",
+      "discover": "Discover",
+      "search": "Search"
+    }
+  },
+  "movie": {
+    "titles": {
+      "genres": "Genres :",
+      "description": "Description :",
+      "duration": "Duration :",
+      "date": "Date :",
+      "streaming": "Streaming :"
+    },
+    "data": {
+      "duration": "Not available",
+      "streaming": "Not available in France"
+    },
+    "buttons": {
+      "trailer": "Watch trailer",
+      "availability": "Other availability"
+    }
+  },
+  "providerDialog": {
+    "title": "Other availability for ",
+    "subtitle": "{{count}} available countries",
+    "info": {
+      "free": "Countries with free access",
+      "flatrate": "Countries with subscription"
+    },
+    "table": {
+      "column1": "Country",
+      "column2": "Free",
+      "column3": "Subscription",
+      "empty": "None"
+    },
+    "button": {
+      "close": "Close"
+    }
+  },
+  "trailerDialog": {
+    "title": "Trailers for ",
+    "empty": "This movie has no trailers",
+    "button": {
+      "close": "Close"
+    }
+  }
+}

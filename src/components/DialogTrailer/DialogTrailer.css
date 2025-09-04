@@ -12,6 +12,7 @@
     transition: var(--transition-fast);
     padding: var(--space-1) var(--space-2);
     display: flex;
+    align-items: center;
     gap: var(--space-5);
     justify-content: space-between;
 }

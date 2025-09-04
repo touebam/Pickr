@@ -8,24 +8,42 @@ const BASE_URL = process.env.VITE_TMDB_BASE_URL;
 
 async function updateGenres() {
   const movieData = await getGenreData('movie');
-  writeFile("movieGenres", movieData);
+  writeJSONFile("movieGenres", movieData);
 
   const tvData = await getGenreData('tv');
-  writeFile("tvGenres", tvData);
+  writeJSONFile("tvGenres", tvData);
   
   const providerData = await getProviderData('tv');
-  writeFile("providers", providerData);
+  writeJSFile("providers", providerData);
 }
 
 async function getGenreData(type = "movie") {
-  const response = await fetch(`${BASE_URL}/genre/${type}/list?api_key=${API_KEY}&language=fr-FR`);
-  const data = await response.json();
-  if (!data.genres) {
-    console.error("Impossible de récupérer les genres depuis TMDB");
-    return [];
+  try {
+    const responseFr = await fetch(
+      `${BASE_URL}/genre/${type}/list?api_key=${API_KEY}&language=fr-FR`
+    );
+    const dataFr = await responseFr.json();
+
+    const responseEn = await fetch(
+      `${BASE_URL}/genre/${type}/list?api_key=${API_KEY}&language=en-US`
+    );
+    const dataEn = await responseEn.json();
+
+    if (!dataFr.genres || !dataEn.genres) {
+      console.error("Impossible de récupérer les genres depuis TMDB");
+      return { fr: [], en: [] };
+    }
+
+    return {
+      fr: {"genres": dataFr.genres},
+      en: {"genres": dataEn.genres},
+    };
+  } catch (error) {
+    console.error("Erreur lors de la récupération des genres :", error);
+    return { fr: [], en: [] };
   }
-  return data.genres;
 }
+
 
 async function getProviderData() {
   const wantedProviders = [
@@ -57,7 +75,28 @@ async function getProviderData() {
   }));
 }
 
-function writeFile(filename, data) {
+
+function writeJSONFile(filename, data) {
+  try {
+    fs.writeFileSync(
+      `src/i18n/locales/fr/${filename}.json`,
+      JSON.stringify(data.fr, null, 2),
+      "utf-8"
+    );
+    console.log(`${filename} mis à jour dans src/i18n/locales/fr/${filename}.json`);
+
+    fs.writeFileSync(
+      `src/i18n/locales/en/${filename}.json`,
+      JSON.stringify(data.en, null, 2),
+      "utf-8"
+    );
+    console.log(`${filename} mis à jour dans src/i18n/locales/en/${filename}.json`);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+function writeJSFile(filename, data) {
   const content = `// Ce fichier est généré automatiquement, ne pas modifier
 const ${filename.toUpperCase()} = ${JSON.stringify(data, null, 2)};
 

@@ -1,8 +1,11 @@
 import './DialogProviders.css';
 import { Tooltip, Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import "flag-icons/css/flag-icons.min.css";
+import { useTranslation, Trans } from "react-i18next";
 
 function DialogProviders({ movie, filteredProviders, handleClose, open }) {
+    const { t } = useTranslation("common");
+    const count = filteredProviders.length;
     return (
     <Dialog 
         className="movie-dialog" 
@@ -16,10 +19,10 @@ function DialogProviders({ movie, filteredProviders, handleClose, open }) {
             }
         }}
     >
-        <DialogTitle>Autres disponibilités pour <b>{movie.title}</b></DialogTitle>
+        <DialogTitle>{t("providerDialog.title")}<b>{movie.title}</b></DialogTitle>
         <DialogContent>
             <div className="providers-header">
-                <div className="providers-subtitle">{filteredProviders.length} pays disponibles</div>
+                <div className="providers-subtitle">{t("providerDialog.subtitle", {count})}</div>
                 
                 {filteredProviders.length>0 &&
                     <div className="providers-stats">
@@ -27,13 +30,13 @@ function DialogProviders({ movie, filteredProviders, handleClose, open }) {
                             <span className="stat-number free-stat">
                                 {filteredProviders.filter(p => p.free?.length > 0).length}
                             </span>
-                            <span className="stat-label">Pays avec accès gratuit</span>
+                            <span className="stat-label">{t("providerDialog.info.free")}</span>
                         </div>
                         <div className="stat">
                             <span className="stat-number flatrate-stat">
                                 {filteredProviders.filter(p => p.flatrate?.length > 0).length}
                             </span>
-                            <span className="stat-label">Pays avec abonnement</span>
+                            <span className="stat-label">{t("providerDialog.info.flatrate")}</span>
                         </div>
                     </div>
                 }
@@ -44,9 +47,9 @@ function DialogProviders({ movie, filteredProviders, handleClose, open }) {
                     <table className="providers-table">
                         <thead>
                         <tr>
-                            <th className="country-header">Pays</th>
-                            <th className="providers-header-cell free-header">Gratuit</th>
-                            <th className="providers-header-cell flatrate-header">Abonnement</th>
+                            <th className="country-header">{t("providerDialog.table.column1")}</th>
+                            <th className="providers-header-cell free-header">{t("providerDialog.table.column2")}</th>
+                            <th className="providers-header-cell flatrate-header">{t("providerDialog.table.column3")}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -95,7 +98,7 @@ function DialogProviders({ movie, filteredProviders, handleClose, open }) {
                                     ))}
                                 </div>
                                 ) : (
-                                <span className="no-providers">Aucun</span>
+                                <span className="no-providers">{t("providerDialog.table.empty")}</span>
                                 )}
                             </td>
 
@@ -135,7 +138,7 @@ function DialogProviders({ movie, filteredProviders, handleClose, open }) {
                                     ))}
                                 </div>
                                 ) : (
-                                <span className="no-providers">Aucun</span>
+                                <span className="no-providers">{t("providerDialog.table.empty")}</span>
                                 )}
                             </td>
                             </tr>
@@ -146,7 +149,7 @@ function DialogProviders({ movie, filteredProviders, handleClose, open }) {
             </div>
         </DialogContent>
         <DialogActions>
-            <Button onClick={handleClose}>Fermer</Button>
+            <Button onClick={handleClose}>{t("providerDialog.button.close")}</Button>
         </DialogActions>
     </Dialog>
     );

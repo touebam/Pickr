@@ -1,7 +1,9 @@
 import './DialogTrailer.css';
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import { useTranslation, Trans } from "react-i18next";
 
 function DialogTrailer({ movie, details, handleClose, open }) {
+    const { t } = useTranslation("common");
     return (
     <Dialog 
         className="movie-dialog" 
@@ -15,7 +17,7 @@ function DialogTrailer({ movie, details, handleClose, open }) {
             }
         }}
     >
-        <DialogTitle>Bandes annonces pour <b>{movie.title}</b></DialogTitle>
+        <DialogTitle>{t("trailerDialog.title")}<b>{movie.title}</b></DialogTitle>
         <DialogContent>
             <div className='trailer-list'>
                 {details?.trailers && details.trailers.length > 0 ? 
@@ -42,12 +44,12 @@ function DialogTrailer({ movie, details, handleClose, open }) {
                         </a>
                     ))
                     :
-                    <div className="providers-subtitle">Ce film ne possède pas de bandes annonces</div>
+                    <div className="providers-subtitle">{t("trailerDialog.empty")}</div>
                 }
             </div>
         </DialogContent>
         <DialogActions>
-            <Button onClick={handleClose}>Fermer</Button>
+            <Button onClick={handleClose}>{t("trailerDialog.button.close")}</Button>
         </DialogActions>
     </Dialog>
     );

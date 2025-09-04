@@ -190,7 +190,7 @@
   position: absolute !important;
   width: fit-content;
   height: fit-content;
-  z-index: 2;
+  z-index: 4;
   padding: var(--space-1);
   top: var(--space-3);
   right: var(--space-4);

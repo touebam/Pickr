@@ -5,9 +5,8 @@ import { cleanOldCache, getMovieDatas, discoverMovies, getTrends } from '../../a
 import './AppLayout.css';
 import HeroSection from '../HeroSection/HeroSection';
 import { Snackbar, Alert } from '@mui/material';
-import movieGenresData from "../../data/movieGenres.js";
-import tvGenresData from "../../data/tvGenres.js";
 import providersData from "../../data/providers.js";
+import { useTranslation, Trans } from "react-i18next";
 
 export default function AppLayout() {
   const [movies, setMovies] = useState([]);
@@ -23,6 +22,9 @@ export default function AppLayout() {
   const [openEndOfListToast, setOpenEndOfListToast] = useState(false);
   const [scrollEnd, setScrollEnd] = useState(false);
   const [activeType, setActiveType] = useState(0);
+  const { t } = useTranslation("common");
+  const { t: tMovieGenre } = useTranslation("movieGenres");
+  const { t: tTVGenre } = useTranslation("tvGenres");
 
   // Fermer le toast
   const handleCloseToast = (event, reason) => {
@@ -37,7 +39,11 @@ export default function AppLayout() {
     async function fetchData() {
       cleanOldCache();
       
-      setGenres({ movie: movieGenresData, tv: tvGenresData });
+      setGenres(
+      { 
+          movie: tMovieGenre("genres", { returnObjects: true }), 
+          tv: tTVGenre("genres", { returnObjects: true }) 
+      });
       setProviders(providersData);
 
       const trendsData = await getTrends();
@@ -111,13 +117,13 @@ export default function AppLayout() {
   return (
     <div className="app-layout">
         <div className="app-layout__left">
-            <MovieForm 
-              genres={genres} 
-              providers={providers}
-              onSearch={(moviesList, criteria) => handleSearch(moviesList, criteria)}
-              activeType={activeType}
-              setActiveType={setActiveType}
-              />
+          <MovieForm 
+            genres={genres} 
+            providers={providers}
+            onSearch={(moviesList, criteria) => handleSearch(moviesList, criteria)}
+            activeType={activeType}
+            setActiveType={setActiveType}
+            />
         </div>
         <div className="app-layout__right">
           {movies?.length>0 ? 
@@ -143,7 +149,7 @@ export default function AppLayout() {
             severity="info" 
             sx={{ width: '100%' }}
           >
-            Pas de résultats pour cette recherche
+            {t("hero.alert.noResult")}
           </Alert>
         </Snackbar>
         <Snackbar
@@ -157,7 +163,7 @@ export default function AppLayout() {
             severity="info" 
             sx={{ width: '100%' }}
           >
-            Vous avez atteint la fin de la liste
+            {t("hero.alert.endOfList")}
           </Alert>
         </Snackbar>
     </div>

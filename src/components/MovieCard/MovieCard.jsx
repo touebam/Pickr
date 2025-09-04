@@ -3,11 +3,11 @@ import { useState, useEffect, useRef } from "react";
 import DialogProviders from "../DialogProviders/DialogProviders";
 import Rating from '@mui/material/Rating';
 import EastIcon from '@mui/icons-material/East';
-import { countryNames } from './countryNames';
 import { Button, IconButton, Tooltip, Skeleton } from "@mui/material"; 
 import { LiveTv, FavoriteBorder, Send, Search } from '@mui/icons-material';
 import DialogTrailer from '../DialogTrailer/DialogTrailer';
 //import { getSimilarMovies } from '../../api/tmdb';
+import { useTranslation, Trans } from "react-i18next";
 
 function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
@@ -17,6 +17,8 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
   const [openDialogTrailer, setOpenDialogTrailer] = useState(false);
   const [filteredProviders, setFilteredProviders] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  const { t } = useTranslation("common");
+  const { t: tCountry } = useTranslation("countries");
 
   const isMobile = (window.innerWidth <= 850);
 
@@ -28,7 +30,7 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
           data.flatrate?.length > 0 || data.ads?.length > 0
         )
         .map(([country, data]) => ({
-          country: countryNames[country] || country,
+          country: tCountry(country) || country,
           countryCode: country,
           free: (data.free || []).concat(data.ads || []),
           flatrate: data.flatrate || []
@@ -147,7 +149,7 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
           )}
           <div className='card-buttons'>
             <Tooltip 
-              title='Voir la bande annonce'
+              title={t("movie.buttons.trailer")}
               slotProps={{
                 popper: {
                   modifiers: [
@@ -204,19 +206,19 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
           {movie.genre_ids.length>0 && 
           (
             <div>
-              <span className="detail-title">Genres :</span> 
+              <span className="detail-title">{t("movie.titles.genres")}</span> 
               <span className="detail-content">{getGenreNames(movie.genre_ids, allGenres)}</span>
             </div>
           )}
           {(details && details.overview) ? 
             <div className='overview-container'>
-              <span className="detail-title">Description :</span> 
+              <span className="detail-title">{t("movie.titles.description")}</span> 
               <span className="detail-content">{details.overview /* description en français */}</span>
             </div>
            : 
             (movie.overview) ?
             <div className='overview-container'>
-              <span className="detail-title">Description :</span> 
+              <span className="detail-title">{t("movie.titles.description")}</span> 
               <span className="detail-content">{movie.overview /* description en anglais */}</span>
             </div>
             :
@@ -225,19 +227,31 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
           {movie.release_date && 
           (
             <div>
-              <span className="detail-title">Date :</span> 
+              <span className="detail-title">{t("movie.titles.date")}</span> 
               <span className="detail-content">{new Date(movie.release_date).getFullYear()}</span>
             </div>
           )}
-          {details && details.runtime>0 &&
-          (
+          {details?.type !== "tv" && (
             <div>
-              <span className="detail-title">Durée :</span> 
-              <span className="detail-content">{formatDuration(details.runtime)}</span>
+              <span className="detail-title">{t("movie.titles.duration")}</span>
+              <span className="detail-content">
+                {!details?.details ? (
+                  <Skeleton
+                    width={50}
+                    height={20}
+                    animation="wave"
+                    sx={{ bgcolor: "var(--color-gray-700)", borderRadius: "var(--radius-md)" }}
+                  />
+                ) : details.details.runtime > 0 ? (
+                  formatDuration(details.details.runtime)
+                ) : (
+                  t("movie.data.duration")
+                )}
+              </span>
             </div>
           )}
           <div className="providers-list">
-            <span className="detail-title">Streaming :</span>{" "}
+            <span className="detail-title">{t("movie.titles.streaming")}</span>{" "}
             <div className="detail-content">
             {!details?.providers ? (
                 Array.from({ length: 3 }).map((_, i) => (
@@ -289,7 +303,7 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
                 )}
               </>
             ) : (
-              <>Non disponible en France</>
+              <>{t("movie.data.streaming")}</>
             )}
           </div>
             <div className='provider-button-container'>
@@ -298,7 +312,7 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
                 variant="contained" 
                 onClick={() => handleOpen("provider")}
               >
-                Autres disponibilités
+                {t("movie.buttons.availability")}
               </Button>
             </div>
 

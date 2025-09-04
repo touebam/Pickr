@@ -2,9 +2,11 @@ import './ProviderSelector.css';
 import { useState } from "react";
 import { Tooltip } from '@mui/material';
 import { Add, Remove } from '@mui/icons-material';
+import { useTranslation, Trans } from "react-i18next";
 
 const ProviderSelector = ({ providers, selectedProviders, onProviderChange }) => {
   const [extended, setExtended] = useState(false);
+  const { t } = useTranslation("common");
   const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/original';
 
   const toggleExtended = () => {
@@ -62,7 +64,7 @@ const ProviderSelector = ({ providers, selectedProviders, onProviderChange }) =>
         </Tooltip>
       ))}
       <Tooltip 
-        title={extended ? "Réduire" : "Afficher plus"}
+        title={extended ? t("form.extras.less") : t("form.extras.more")}
         slotProps={{
           popper: {
             modifiers: [

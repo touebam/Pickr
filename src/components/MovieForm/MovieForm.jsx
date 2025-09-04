@@ -9,6 +9,7 @@ import { Button, Tabs, Tab, TextField, Tooltip } from '@mui/material';
 import { discoverMovies, searchMovies } from '../../api/tmdb';
 import logo from '../../assets/logo/logo.png';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { useTranslation, Trans } from "react-i18next";
 
 const currentYear = new Date().getFullYear();
 
@@ -31,6 +32,7 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
   const [searchQuery, setSearchQuery] = useState(DEFAULT_VALUES.searchQuery);
   const [isOpen, setIsOpen] = useState(window.innerWidth > 850);
   const [activeTab, setActiveTab] = useState(0);
+  const { t } = useTranslation("common");
 
   // Fonction pour changer de type
   const handleTypeChange = (event, newValue) => {
@@ -105,8 +107,8 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
     <div className={`movie-form ${isOpen ? "open" : ""}`}>
       <div className="form-header">
         <div className="app-logo">
-          <img src={logo} alt="Logo Pickr"/>
-          <h1>Pickr</h1>
+          <img src={logo} alt={t("form.alt.logoPickr")}/>
+          <h1>{t("form.title")}</h1>
         </div>
         <IconButton 
           className="menu-button" 
@@ -123,27 +125,27 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
         value={activeType} 
         onChange={handleTypeChange}
       >
-        <Tab label="Films" />
-        <Tab label="Séries" />
+        <Tab label={t("form.tabs.movie")} />
+        <Tab label={t("form.tabs.series")} />
       </Tabs>
       <Tabs 
         className='form-tabs'
         value={activeTab} 
         onChange={handleTabChange}
       >
-        <Tab label="Découverte" />
-        <Tab label="Recherche" />
+        <Tab label={t("form.tabs.discovery")} />
+        <Tab label={t("form.tabs.search")} />
       </Tabs>
       
       {activeTab === 0 ? (
         <div className="form-container discover">
           <div className='form-container-header'>
-            <h3>Genres :</h3>
+            <h3>{t("form.fields.genres")}</h3>
             <select 
               className="genre-operator-dropdown" 
             >
-              <option value=",">Tous les genres sélectionnés</option>
-              <option value="|">Au moins un genre sélectionné</option>
+              <option value=",">{t("form.extras.allGenres")}</option>
+              <option value="|">{t("form.extras.oneGenre")}</option>
             </select>
           </div>
           <GenreSelector 
@@ -153,7 +155,7 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
           />
           
           <div className="slider-container duree">
-            <h3>Durée :</h3>
+            <h3>{t("form.fields.duration")}</h3>
             <Slider
               value={duration}
               onChange={(event, newValue) => setDuration(newValue)}
@@ -164,7 +166,7 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
           </div>
           
           <div className="slider-container note">
-            <h3>Note :</h3>
+            <h3>{t("form.fields.rating")}</h3>
             <Slider
               value={rating}
               onChange={(event, newValue) => setRating(newValue)}
@@ -174,9 +176,9 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
             />
           </div>
           <div className='form-container-header'>
-            <h3>Plateformes :</h3>
+            <h3>{t("form.fields.platforms")}</h3>
             <Tooltip 
-              title="Les informations de disponibilité des plateformes peuvent ne pas être exactes ou à jour"
+              title={t("form.extras.disclaimer")}
               arrow
               slotProps={{
                 popper: {
@@ -196,7 +198,7 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
           />
           
           <div className="slider-container">
-            <h3>Année de sortie :</h3>
+            <h3>{t("form.fields.releaseYear")}</h3>
             <Slider
               className='date'
               aria-label="Restricted values"
@@ -210,16 +212,15 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
         </div>
       ) : (
         <div className="form-container search">
-          <h3>Recherche :</h3>
+          <h3>{t("form.fields.search")}</h3>
           <TextField
             fullWidth
             variant="outlined"
-            placeholder="Rechercher un film, acteur, réalisateur..."
+            placeholder={t("form.extras.searchPlaceholder")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="search-textfield"
           />
-          
         </div>
       )}
 
@@ -229,7 +230,7 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
           startIcon={<Refresh />}
           onClick={handleReset}
         >
-          Réinitialiser
+          {t("form.buttons.reset")}
         </Button>
         {activeTab === 0 ? (
           <Button 
@@ -237,7 +238,7 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
             endIcon={<Shuffle />}
             onClick={handleDiscover}
           >
-            Découvrir
+            {t("form.buttons.discover")}
           </Button>
         ) : (
           <Button 
@@ -245,7 +246,7 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
             endIcon={<Search />}
             onClick={handleSearch}
           >
-            Rechercher
+            {t("form.buttons.search")}
           </Button>
         )}
       </div>
