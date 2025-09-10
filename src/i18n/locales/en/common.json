@@ -51,6 +51,7 @@
     },
     "buttons": {
       "trailer": "Watch trailer",
+      "block": "Remove that movie",
       "availability": "Other availability"
     }
   },

@@ -5,14 +5,14 @@
     "copyright": "© {{year}} Morgan Toueba. Tous droits réservés.",
     "disclaimer": "Les affiches et données proviennent de l'API TMDb.",
     "alert": {
-        "noResult": "Pas de résultats pour cette recherche",
-        "endOfList": "Vous avez atteint la fin de la liste"
+      "noResult": "Pas de résultats pour cette recherche",
+      "endOfList": "Vous avez atteint la fin de la liste"
     }
   },
   "form": {
     "title": "Pickr",
     "alt": {
-        "logoPickr": "Logo Pickr"
+      "logoPickr": "Logo Pickr"
     },
     "tabs": {
       "movie": "Films",
@@ -56,6 +56,7 @@
     },
     "buttons": {
       "trailer": "Voir la bande annonce",
+      "block": "Retirer ce film",
       "availability": "Autres disponibilités"
     }
   },

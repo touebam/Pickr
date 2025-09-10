@@ -4,7 +4,7 @@ import DialogProviders from "../DialogProviders/DialogProviders";
 import Rating from '@mui/material/Rating';
 import EastIcon from '@mui/icons-material/East';
 import { Button, IconButton, Tooltip, Skeleton } from "@mui/material"; 
-import { LiveTv, FavoriteBorder, Send, Search } from '@mui/icons-material';
+import { LiveTv, Block, FavoriteBorder, Send, Search } from '@mui/icons-material';
 import DialogTrailer from '../DialogTrailer/DialogTrailer';
 //import { getSimilarMovies } from '../../api/tmdb';
 import { useTranslation, Trans } from "react-i18next";
@@ -101,13 +101,27 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
     const movies = await getSimilarMovies(movie.id, movie.type);
     onSearch(movies, movie.id);
   }*/
-
   const handleTrailerClick = (event) => {
     handleOpen('trailer') ;
   };
+  
+  let blockedMovies = localStorage.getItem("blockedMovies");
+  blockedMovies = blockedMovies ? JSON.parse(blockedMovies) : [];
+  console.log(blockedMovies)
+  const handleBlockClick = (event) => {
+    if (blockedMovies.includes(movie.id)) {
+      blockedMovies = blockedMovies.filter((id) => id !== movie.id);
+    } else {
+      blockedMovies.push(movie.id);
+    }
+
+    localStorage.setItem("blockedMovies", JSON.stringify(blockedMovies));
+  };
+
+  const isBlocked = blockedMovies.includes(movie.id);
   return (
     <div 
-      className={`movie-card ${isMobile ? "mobile" : ""} ${isActive ? "active" : ""}`}
+      className={`movie-card ${isMobile ? "mobile" : ""} ${isActive ? "active" : ""} ${isBlocked ? "blocked" : ""}`}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -168,6 +182,28 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
                 onClick={handleTrailerClick}
               >
                 <LiveTv />
+              </IconButton>
+            </Tooltip>
+            <Tooltip 
+              title={t("movie.buttons.block")}
+              slotProps={{
+                popper: {
+                  modifiers: [
+                    {
+                      name: 'offset',
+                      options: {
+                        offset: [0, -10],
+                      },
+                    },
+                  ],
+                },
+              }}
+            >
+              <IconButton 
+                className="card-button"
+                onClick={handleBlockClick}
+              >
+                <Block />
               </IconButton>
             </Tooltip>
             {/*<IconButton 
