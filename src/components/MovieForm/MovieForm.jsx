@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Slider from '@mui/material/Slider';
 import IconButton from '@mui/material/IconButton';
 import GenreSelector from './GenreSelector/GenreSelector';
+import CountrySelector from './CountrySelector/CountrySelector';
 import ProviderSelector from './ProviderSelector/ProviderSelector';
 import { Refresh, Search, Menu, Shuffle } from '@mui/icons-material';
 import { Button, Tabs, Tab, TextField, Tooltip } from '@mui/material';
@@ -20,7 +21,8 @@ const DEFAULT_VALUES = {
   duration: [60, 180],
   rating: [5, 10],
   releaseYear: [1990, currentYear],
-  searchQuery: ''
+  searchQuery: '',
+  selectedCountry: 'FR'
 };
 
 export default function MovieForm({ genres, providers, onSearch, activeType, setActiveType }) {
@@ -34,6 +36,9 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
   const [activeTab, setActiveTab] = useState(0);
   const { t } = useTranslation("common");
 
+  const handleCountryChange = (event) => {
+    console.log(event);
+  }
   // Fonction pour changer de type
   const handleTypeChange = (event, newValue) => {
     setActiveType(newValue);
@@ -207,6 +212,14 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
               min={1950}
               max={currentYear}
               valueLabelDisplay="on"
+            />
+          </div>
+          
+          <div className="slider-container country">
+            <h3>{t("form.fields.watchCountry")}</h3>
+            <CountrySelector
+              value={DEFAULT_VALUES.selectedCountry}
+              onChange={handleCountryChange}
             />
           </div>
         </div>

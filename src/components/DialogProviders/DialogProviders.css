@@ -214,7 +214,7 @@
   .country-code:after {
     content:'' ;
   }
-  .country-name {
+  .movie-dialog .country-name {
     display:none ;
   }
 }

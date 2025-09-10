@@ -41,8 +41,8 @@ export default function AppLayout() {
       
       setGenres(
       { 
-          movie: tMovieGenre("genres", { returnObjects: true }), 
-          tv: tTVGenre("genres", { returnObjects: true }) 
+        movie: tMovieGenre("genres", { returnObjects: true }), 
+        tv: tTVGenre("genres", { returnObjects: true }) 
       });
       setProviders(providersData);
 

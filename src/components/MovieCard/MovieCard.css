@@ -9,7 +9,7 @@
   max-width: 470px;
   background: var(--color-gray-900);
   border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-lg);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
 }

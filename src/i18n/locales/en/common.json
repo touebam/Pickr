@@ -16,12 +16,13 @@
       "search": "Search"
     },
     "fields": {
-      "genres": "Genres :",
-      "duration": "Duration :",
-      "rating": "Rating :",
-      "platforms": "Platforms :",
-      "releaseYear": "Release Year :",
-      "search": "Search :"
+      "genres": "Genres:",
+      "duration": "Duration:",
+      "rating": "Rating:",
+      "platforms": "Platforms:",
+      "releaseYear": "Release Year:",
+      "search": "Search:",
+      "watchCountry": "Country:"
     },
     "extras": {
       "allGenres": "All selected genres",
@@ -39,11 +40,11 @@
   },
   "movie": {
     "titles": {
-      "genres": "Genres :",
-      "description": "Description :",
-      "duration": "Duration :",
-      "date": "Date :",
-      "streaming": "Streaming :"
+      "genres": "Genres:",
+      "description": "Description:",
+      "duration": "Duration:",
+      "date": "Date:",
+      "streaming": "Streaming:"
     },
     "data": {
       "duration": "Not available",

@@ -107,7 +107,6 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
   
   let blockedMovies = localStorage.getItem("blockedMovies");
   blockedMovies = blockedMovies ? JSON.parse(blockedMovies) : [];
-  console.log(blockedMovies)
   const handleBlockClick = (event) => {
     if (blockedMovies.includes(movie.id)) {
       blockedMovies = blockedMovies.filter((id) => id !== movie.id);

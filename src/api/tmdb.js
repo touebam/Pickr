@@ -1,6 +1,13 @@
 import * as Utils from "../utils/utils.js";
 import { transformTMDBData } from '../utils/dataTransform';
+import i18n from "../i18n";
 
+const languageMap = {
+  fr: "fr-FR",
+  en: "en-US",
+};
+
+const TMDB_LANG = languageMap[i18n.language] || "en-US";
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = import.meta.env.VITE_TMDB_BASE_URL;
 const MAX_CACHE_AGE = 4 * 24 * 60 * 60 * 1000;
@@ -16,7 +23,7 @@ export async function getTrends() {
       return JSON.parse(cachedTrends);
     } else {
       console.count('appel')
-      const response = await fetch(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}&language=fr-FR`);
+      const response = await fetch(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}&language=${TMDB_LANG}`);
       if (!response.ok) {
         throw new Error("Erreur lors de la récupération des tendances");
       }
@@ -40,8 +47,8 @@ function getDiscoverKey({ genres, duration, rating, providers, releaseYear, type
   const ratingKey = `${rating[0]}-${rating[1]}`;
   const providersKey = providers.sort().join("-");
   const yearKey = `${releaseYear[0]}-${releaseYear[1]}`;
-
-  return `discover_${genresKey}_${type == "movie" ? durationKey : ''}_${ratingKey}_${providersKey}_${yearKey}_${page}`;
+  
+  return `discover_${TMDB_LANG}_${genresKey}_${type == "movie" ? durationKey : ''}_${ratingKey}_${providersKey}_${yearKey}_${page}`;
 }
 
 export async function discoverMovies(searchCriteria, page = 1) {
@@ -58,11 +65,10 @@ export async function discoverMovies(searchCriteria, page = 1) {
         return Utils.shuffleArray(cachedObj.results);
       }
     }
-
     // Génération des paramètres 
     const baseParams = new URLSearchParams({
       api_key: API_KEY,
-      language: "fr-FR",
+      language: TMDB_LANG, 
       watch_region: "FR",
       "vote_average.gte": searchCriteria.rating[0],
       "vote_average.lte": searchCriteria.rating[1],
@@ -130,7 +136,7 @@ export async function getSimilarMovies(movieId, type = "movie") {
   try {
     console.count('appel')
     const response = await fetch(
-      `${BASE_URL}/${type}/${movieId}/similar?api_key=${API_KEY}&language=fr-FR`
+      `${BASE_URL}/${type}/${movieId}/similar?api_key=${API_KEY}&language=${TMDB_LANG}`
     );
 
     if (!response.ok) {
@@ -148,7 +154,7 @@ export async function getSimilarMovies(movieId, type = "movie") {
 
 export async function searchMovies(searchQuery, type = "movie") {
   try {
-    const key = `${type}_${searchQuery.toLowerCase()}`;
+    const key = `${type}_${TMDB_LANG}_${searchQuery.toLowerCase()}`;
     const cachedRaw = localStorage.getItem(key);
     
     const now = new Date().getTime();
@@ -170,7 +176,7 @@ export async function searchMovies(searchQuery, type = "movie") {
 
     const params = new URLSearchParams({
       api_key: API_KEY,
-      language: 'fr-FR',
+      language: TMDB_LANG,
       query: searchQuery
     });
 
@@ -191,7 +197,7 @@ export async function searchMovies(searchQuery, type = "movie") {
     if (personData.results?.length > 0) {
       const peopleParams = new URLSearchParams({
         api_key: API_KEY,
-        language: 'fr-FR',
+        language: TMDB_LANG,
         with_people: personData.results.map(p => p.id).join('|'),
         'vote_count.gte': 10,
       });
@@ -230,7 +236,7 @@ export async function searchMovies(searchQuery, type = "movie") {
 }
 
 export async function getMovieDatas(movieId, type = "movie") {
-  const storageKey = `${type}_${movieId}`;
+  const storageKey = `${type}_${TMDB_LANG}_${movieId}`;
   const cachedData = localStorage.getItem(storageKey);
 
   if (cachedData) {
@@ -240,7 +246,7 @@ export async function getMovieDatas(movieId, type = "movie") {
   try {
     console.count("appel");
     // Détails
-    const detailsResp = await fetch(`${BASE_URL}/${type}/${movieId}?api_key=${API_KEY}&language=fr-FR`);
+    const detailsResp = await fetch(`${BASE_URL}/${type}/${movieId}?api_key=${API_KEY}&language=${TMDB_LANG}`);
     const detailsData = detailsResp.ok ? await detailsResp.json() : {};
     const details = {
       runtime: detailsData.runtime,
@@ -266,7 +272,7 @@ export async function getMovieDatas(movieId, type = "movie") {
 
     console.count("appel");
     // Trailers
-    const trailerResp = await fetch(`${BASE_URL}/${type}/${movieId}/videos?api_key=${API_KEY}&language=fr-FR`);
+    const trailerResp = await fetch(`${BASE_URL}/${type}/${movieId}/videos?api_key=${API_KEY}&language=${TMDB_LANG}`);
     const trailerRaw = trailerResp.ok ? (await trailerResp.json()).results : [];
     const trailers = trailerRaw
       .filter(video => video.type === "Trailer" && video.site === "YouTube")

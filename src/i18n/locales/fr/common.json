@@ -26,7 +26,8 @@
       "rating": "Note :",
       "platforms": "Plateformes :",
       "releaseYear": "Année de sortie :",
-      "search": "Recherche :"
+      "search": "Recherche :",
+      "watchCountry": "Pays :"
     },
     "extras": {
       "allGenres": "Tous les genres sélectionnés",

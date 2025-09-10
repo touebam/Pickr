@@ -26,6 +26,9 @@
 .slider-container.duree {
     margin-top: var(--space-5);
 }
+.slider-container.country {
+    gap: var(--space-4);
+}
 h3 {
     text-wrap: nowrap;
 }

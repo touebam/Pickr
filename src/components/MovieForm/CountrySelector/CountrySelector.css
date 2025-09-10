@@ -1,0 +1,57 @@
+.MuiInputBase-root {
+    width: 100%;
+    outline: none !important;
+}
+.MuiInputBase-root .MuiSvgIcon-root {
+    color: var(--color-gray-50);
+}
+
+.MuiOutlinedInput-notchedOutline {
+    border: none !important;
+}
+
+#country-select {
+    width: 100%;
+    background-color: var(--color-gray-700);
+    color: var(--color-gray-50);
+    padding: var(--space-2) var(--space-2);
+    padding-right: var(--space-6);
+}
+
+.country-selector-menu {
+  max-height: 300px !important;
+  background-color: var(--color-gray-700) !important;
+  min-width: 0 !important;
+}
+
+.country-selector-content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  color: var(--color-gray-100);
+  overflow: hidden;
+}
+
+.country-selector-flag {
+  font-size: 1.2em;
+  min-width: 20px;
+}
+
+.country-selector-text {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.country-code {
+  color: var(--color-gray-400) !important;
+  font-size: var(--text-sm);
+}
+
+@media screen and (max-width: 850px) {
+    .country-selector-menu {
+        width: 100%;
+    }
+}
