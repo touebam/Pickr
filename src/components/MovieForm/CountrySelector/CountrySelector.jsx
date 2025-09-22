@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { 
-  FormControl, 
-  InputLabel, 
   Select, 
   MenuItem, 
   Box, 
@@ -30,9 +28,11 @@ const CountrySelector = ({ value, onChange }) => {
 
   const countries = useMemo(() => {
     return Object.entries(countriesData)
-      .map(([code, name]) => ({ code, name }))
-      .sort((a, b) => a.name.localeCompare(b.name));
+      .map(([code, obj]) => ({ code, obj }))
+      .sort((a, b) => a.obj.name.localeCompare(b.obj.name));
   }, [countriesData]);
+
+  console.log(countries)
   
   return (
       <Select
@@ -51,10 +51,10 @@ const CountrySelector = ({ value, onChange }) => {
             <Box className="country-selector-content">
               <span 
                 className={`country-selector-flag fi fi-${country.code.toLowerCase()}`} 
-                title={country.name}
+                title={country.obj.name}
               />
               <Typography variant="body2" className="country-selector-text">
-                <span className="country-name">{country.name}</span>
+                <span className="country-name">{country.obj.name}</span>
                 <span className="country-code">{country.code}</span>
               </Typography>
             </Box>

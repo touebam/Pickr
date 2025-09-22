@@ -48,7 +48,7 @@
     },
     "data": {
       "duration": "Not available",
-      "streaming": "Not available in France"
+      "streaming": "Not available {{prep}} {{countryName}}"
     },
     "buttons": {
       "trailer": "Watch trailer",

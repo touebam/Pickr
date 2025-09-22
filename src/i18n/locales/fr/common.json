@@ -53,7 +53,7 @@
     },
     "data": {
       "duration": "Non renseignée",
-      "streaming": "Non disponible en France"
+      "streaming": "Film non disponible {{prep}} {{countryName}}"
     },
     "buttons": {
       "trailer": "Voir la bande annonce",

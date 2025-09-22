@@ -2,7 +2,7 @@ import './MovieList.css';
 import MovieCard from "../MovieCard/MovieCard";
 import { useEffect, useRef } from "react";
 
-function MovieList({ movies, genres, fetchDetailsWithCache, onEndReached, onSearch }) {
+function MovieList({ movies, genres, fetchDetailsWithCache, onEndReached, onSearch, countryCode }) {
   const sentinelRef = useRef(null);
 
   useEffect(() => {
@@ -33,9 +33,10 @@ function MovieList({ movies, genres, fetchDetailsWithCache, onEndReached, onSear
             allGenres={genres}
             fetchDetailsWithCache={fetchDetailsWithCache}
             onSearch={onSearch}
+            countryCode={countryCode}
         />
       ))}
-      <div ref={sentinelRef} style={{ height: "1px" }}></div>
+      <div id='sentinelRef' ref={sentinelRef} style={{ height: "1px" }}></div>
     </div>
   );
 };

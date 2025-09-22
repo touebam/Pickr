@@ -1,314 +1,312 @@
 .movie-form {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .movie-form .form-container-header {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-2);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
 }
 .movie-form .form-container-header:first-child h3 {
-    margin-top: 0;
+  margin-top: 0;
 }
 .movie-form .form-container-header:not(:first-child) {
-    align-items: center; 
+  align-items: center;
 }
 .movie-form .form-container-header select {
-    height: fit-content;
+  height: fit-content;
 }
 .slider-container {
-    display:flex ;
+  display: flex;
 }
 :root:has(.type-tabs .Mui-selected:last-child) .slider-container.note,
 .slider-container.duree {
-    margin-top: var(--space-5);
+  margin-top: var(--space-5);
 }
 .slider-container.country {
-    gap: var(--space-4);
+  gap: var(--space-4);
 }
 h3 {
-    text-wrap: nowrap;
+  text-wrap: nowrap;
 }
 
 .info-button {
-    color: var(--color-primary) !important;
-    padding: 0 !important;
+  color: var(--color-primary) !important;
+  padding: 0 !important;
 }
 .form-buttons .MuiButtonBase-root:first-child {
-    border-color: var(--color-primary);
-    color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 .form-buttons .MuiButtonBase-root:first-child:hover {
-    border-color: var(--color-primary-200);
-    color: var(--color-primary-200);
+  border-color: var(--color-primary-200);
+  color: var(--color-primary-200);
 }
 
 .form-buttons .MuiButtonBase-root:last-child {
-    background-color: var(--color-primary) !important;
+  background-color: var(--color-primary) !important;
 }
 .form-buttons .MuiButtonBase-root:last-child:hover {
-    background-color: var(--color-primary-500) !important;
+  background-color: var(--color-primary-500) !important;
 }
 
-
 .MuiSlider-root {
-    --margin-hori: 20px;
-    margin: var(--space-4) var(--margin-hori);
-    width: calc(100% - 2 * var(--margin-hori)) !important;
-    margin-bottom: 0;
-    color: var(--color-primary) !important;
+  --margin-hori: 20px;
+  margin: var(--space-4) var(--margin-hori);
+  width: calc(100% - 2 * var(--margin-hori)) !important;
+  margin-bottom: 0;
+  color: var(--color-primary) !important;
 }
 
 .MuiSlider-valueLabelOpen {
-    line-height: 1.2 !important;
-    font-size: var(--text-xs) !important;
-    background-image: unset !important;
-    background-position: unset !important;
-    background-size: unset !important;
-    background-repeat: unset !important;
-    background-attachment: unset !important;
-    background-origin: unset !important;
-    background-clip: unset !important;
-    padding: 0px !important;
-    width: 28px !important;
-    height: 28px !important;
-    border-radius: 50% 50% 50% 0px !important;
-    background-color: var(--color-primary) !important;
-    transform-origin: left bottom !important;
-    transform: translate(50%, -75%) rotate(-45deg) !important;
-    cursor: grab;
+  line-height: 1.2 !important;
+  font-size: var(--text-xs) !important;
+  background-image: unset !important;
+  background-position: unset !important;
+  background-size: unset !important;
+  background-repeat: unset !important;
+  background-attachment: unset !important;
+  background-origin: unset !important;
+  background-clip: unset !important;
+  padding: 0px !important;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% 50% 50% 0px !important;
+  background-color: var(--color-primary) !important;
+  transform-origin: left bottom !important;
+  transform: translate(50%, -75%) rotate(-45deg) !important;
+  cursor: grab;
 }
 .MuiSlider-valueLabelOpen:hover {
-    background-color: var(--color-primary-500) !important;
+  background-color: var(--color-primary-500) !important;
 }
 .MuiSlider-thumb:focus-within,
 .MuiSlider-thumb:has(:hover) {
-    z-index: 9;
+  z-index: 9;
 }
 
 .date .MuiSlider-valueLabelOpen {
-    width: 32px !important;
-    height: 32px !important;
+  width: 32px !important;
+  height: 32px !important;
 }
 
 .MuiSlider-valueLabelOpen .MuiSlider-valueLabelCircle {
-    transform: rotate(45deg) !important;
+  transform: rotate(45deg) !important;
 }
 .MuiSlider-valueLabelOpen::before {
-    display: none !important;
+  display: none !important;
 }
 
 .form-container {
-    flex-grow: 1;
-    height: 10px;
-    overflow: hidden auto;
-    margin-bottom: var(--space-2);
-    padding: 0 var(--space-2);
+  flex-grow: 1;
+  height: 10px;
+  overflow: hidden auto;
+  margin-bottom: var(--space-2);
+  padding: 0 var(--space-2);
 }
 
 .form-container h3 {
-    margin: var(--space-4) 0;
+  margin: var(--space-4) 0;
 }
 
 .form-buttons {
-    display:flex ;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .form-header {
-    display: flex;
-    gap: var(--space-4);
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  justify-content: space-between;
 }
 
 .form-header .MuiButton-icon {
-    margin: 0 !important;
+  margin: 0 !important;
 }
 
 .menu-button {
-    border-radius: var(--radius-md) !important;
-    outline: none !important;
-    transition: all var(--transition-fast) !important;
+  border-radius: var(--radius-md) !important;
+  outline: none !important;
+  transition: all var(--transition-fast) !important;
 }
 .menu-button:hover {
-    background: var(--color-gray-700) !important;
+  background: var(--color-gray-700) !important;
 }
 
 .menu-button svg {
-    color: var(--color-gray-500);
+  color: var(--color-gray-500);
 }
 
 .app-logo {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding-left: var(--space-1);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-left: var(--space-1);
 }
 
 .app-logo img {
-    width: 50px;
+  width: 50px;
 }
 
 .app-logo h1 {
-    font-size: var(--text-3xl);
-    margin: var(--space-2) 0;
+  font-size: var(--text-3xl);
+  margin: var(--space-2) 0;
 }
 
-.movie-form:not(.open) .form-tabs, 
+.movie-form:not(.open) .form-tabs,
 .movie-form:not(.open) .type-tabs,
-.movie-form:not(.open) .form-buttons, 
+.movie-form:not(.open) .form-buttons,
 .movie-form:not(.open) .form-container {
-    display: none;
+  display: none;
 }
 
 @media screen and (max-width: 850px) {
-    .movie-form.open {
-        height: fit-content;
-        max-height: 90vh;
-    }
-    .movie-form.open .form-container {
-        height: fit-content;
-    }
-    .movie-form {
-        height: fit-content;
-    }
-    .form-header img {
-        width: 35px;
-    }
-    .form-header h1 {
-        font-size: var(--text-2xl);
-    }
+  .movie-form.open {
+    height: fit-content;
+    max-height: 90vh;
+  }
+  .movie-form.open .form-container {
+    height: fit-content;
+  }
+  .movie-form {
+    height: fit-content;
+  }
+  .form-header img {
+    width: 35px;
+  }
+  .form-header h1 {
+    font-size: var(--text-2xl);
+  }
 }
 
 .MuiTabs-root {
-    margin-top: var(--space-1);
-    flex-shrink: 0;
+  margin-top: var(--space-1);
+  flex-shrink: 0;
 }
 
 .MuiTabs-root .Mui-selected {
-    color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
 }
 .MuiTabs-root .MuiTabs-indicator {
-    background-color: var(--color-primary) !important;
+  background-color: var(--color-primary) !important;
 }
 .MuiTabs-root button {
-    color: var(--color-gray-50);
-    outline: none;
-    border-radius: var(--radius-md);
-    padding: var(--space-1) var(--space-3);
+  color: var(--color-gray-50);
+  outline: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-1) var(--space-3);
 }
 .MuiTabs-root .MuiTabs-list {
-    justify-content: center;
-    gap: var(--space-1);
-    height: 100% !important;
+  justify-content: center;
+  gap: var(--space-1);
+  height: 100% !important;
 }
 
 .genre-operator-dropdown {
-    background-color: var(--color-gray-700);
-    border: none;
-    border-radius: var(--radius-md);
-    color: var(--color-gray-50);
-    padding: var(--space-2) var(--space-3);
-    font-size: var(--text-sm);
-    cursor: pointer;
-    min-width: 200px;
-    transition: all var(--transition-fast);
-    width: 100%;
-    outline: none;
+  background-color: var(--color-gray-700);
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--color-gray-50);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  min-width: 200px;
+  transition: all var(--transition-fast);
+  width: 100%;
+  outline: none;
 
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-    background-position: right 8px center;
-    background-repeat: no-repeat;
-    background-size: 1rem;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 8px center;
+  background-repeat: no-repeat;
+  background-size: 1rem;
 }
 
 .genre-operator-dropdown:hover {
-    background-color: var(--color-gray-600);
+  background-color: var(--color-gray-600);
 }
 
 .genre-operator-dropdown option {
-    background-color: var(--color-gray-700);
-    color: var(--color-gray-50);
-    padding: var(--space-2);
+  background-color: var(--color-gray-700);
+  color: var(--color-gray-50);
+  padding: var(--space-2);
 }
 
 .search-textfield .MuiOutlinedInput-root {
-    color: var(--color-gray-50);
+  color: var(--color-gray-50);
+  border: 1px solid var(--color-gray-500);
 }
 
 .search-textfield .MuiOutlinedInput-root fieldset {
-    border-color: var(--color-gray-600);
-    transition: all var(--transition-fast);
+  border-color: var(--color-gray-600);
+  transition: all var(--transition-fast);
 }
 
 .search-textfield .MuiOutlinedInput-root:hover fieldset {
-    border-color: var(--color-gray-500);
+  border-color: var(--color-gray-500);
 }
 
 .search-textfield .MuiOutlinedInput-root.Mui-focused fieldset {
-    border-color: var(--color-primary);
+  border-color: var(--color-primary);
 }
 
 .MuiTabs-root,
 .MuiTabs-root .MuiTabs-scroller {
-    min-height: auto !important;
+  min-height: auto !important;
 }
 
 .MuiTabs-root {
-    background-color: var(--color-gray-700);
-    width: fit-content;
-    padding: var(--space-1);
-    border-radius: var(--radius-md);
-    margin-top: var(--space-2);
-    width: 100% !important;
-    box-sizing: border-box;
+  background-color: var(--color-gray-700);
+  padding: var(--space-1);
+  border-radius: var(--radius-md);
+  margin-top: var(--space-2);
+  width: 100% !important;
+  box-sizing: border-box;
 }
 .MuiTabs-root:last-of-type {
-    margin-bottom: var(--space-1);
+  margin-bottom: var(--space-1);
 }
 
 .MuiTabs-root button,
 .MuiTabs-root button.Mui-selected {
-    z-index: 1;
-    padding: var(--space-2) var(--space-1) !important;
-    width: 10px;
-    flex-grow: 1;
-    min-height: auto;
+  z-index: 1;
+  padding: var(--space-2) var(--space-1) !important;
+  width: 10px;
+  flex-grow: 1;
+  min-height: auto;
 }
 
 .MuiTabs-root button.Mui-selected {
-    color: var(--color-gray-100) !important;
+  color: var(--color-gray-100) !important;
 }
 
 .MuiTabs-root .MuiTabs-indicator {
-    background-color: var(--color-primary) !important;
-    height: 100%;
-    border-radius: var(--radius-md);
-    z-index: 0;
+  background-color: var(--color-primary) !important;
+  height: 100%;
+  border-radius: var(--radius-md);
+  z-index: 0;
 }
 
 .form-tabs {
-    margin-bottom: var(--space-4);
+  margin-bottom: var(--space-4);
 }
 .form-tabs button.Mui-selected {
-    color: var(--color-primary-100) !important;
+  color: var(--color-primary-100) !important;
 }
 .form-tabs .MuiTabs-indicator {
-    background-color: var(--color-gray-600) !important;
+  background-color: var(--color-gray-600) !important;
 }
-
 
 :root:has(.type-tabs .Mui-selected:last-child) .genre-container {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
 }
 :root:has(.type-tabs .Mui-selected:last-child) .slider-container.duree {
-    display: none;
+  display: none;
 }

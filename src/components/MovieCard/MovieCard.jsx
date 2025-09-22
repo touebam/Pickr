@@ -9,7 +9,7 @@ import DialogTrailer from '../DialogTrailer/DialogTrailer';
 //import { getSimilarMovies } from '../../api/tmdb';
 import { useTranslation, Trans } from "react-i18next";
 
-function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
+function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch, countryCode }) {
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
   const [details, setDetails] = useState(null);
   const [isActive, setIsActive] = useState(false);
@@ -21,7 +21,14 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
   const { t: tCountry } = useTranslation("countries");
 
   const isMobile = (window.innerWidth <= 850);
+  
+  if (!countryCode)
+    countryCode = 'FR';
 
+  const country = tCountry(countryCode, { returnObjects: true });
+  const countryName = country.name;
+  const prepCountry = country.prep;
+  
   const handleOpen = (type = "provider") => {
     if (type === "provider")
     {
@@ -87,7 +94,7 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
       const data = await fetchDetailsWithCache(movie.id);
       setDetails(data);
     }
-  } 
+  };
 
   const handleClick = (event) => {
     if (event.target.closest('.movie-card'))
@@ -338,7 +345,10 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch }) {
                 )}
               </>
             ) : (
-              <>{t("movie.data.streaming")}</>
+              <>{t("movie.data.streaming", { 
+                prep: country?.prep || 'en', 
+                countryName: country?.name || 'Pays inconnu' 
+              })}</>
             )}
           </div>
             <div className='provider-button-container'>

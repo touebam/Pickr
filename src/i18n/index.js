@@ -32,13 +32,14 @@ i18n
     },
     fallbackLng: "en",
     supportedLngs: ["fr", "en"],
+    load: "languageOnly",
     ns: ["common", "countries", "movieGenres", "tvGenres"],
     defaultNS: "common",
     interpolation: {
       escapeValue: false,
     },
     detection: {
-      order: ["querystring", "navigator", "htmlTag"],
+      order: ["navigator", "querystring"],
     },
   });
 

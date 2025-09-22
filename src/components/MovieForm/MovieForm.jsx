@@ -14,6 +14,9 @@ import { useTranslation, Trans } from "react-i18next";
 
 const currentYear = new Date().getFullYear();
 
+const navigatorLanguage = navigator.language;
+const country = navigatorLanguage ? navigatorLanguage.substring(navigatorLanguage.indexOf('-')+1) : 'FR';
+
 // Valeurs par défaut
 const DEFAULT_VALUES = {
   selectedGenres: {movie: [], tv: []},
@@ -22,12 +25,13 @@ const DEFAULT_VALUES = {
   rating: [5, 10],
   releaseYear: [1990, currentYear],
   searchQuery: '',
-  selectedCountry: 'FR'
+  selectedCountry: country
 };
 
 export default function MovieForm({ genres, providers, onSearch, activeType, setActiveType }) {
   const [selectedGenres, setSelectedGenres] = useState(DEFAULT_VALUES.selectedGenres);
   const [selectedProviders, setSelectedProviders] = useState(DEFAULT_VALUES.selectedProviders);
+  const [selectedCountry, setSelectedCountry] = useState(country);
   const [duration, setDuration] = useState(DEFAULT_VALUES.duration);
   const [rating, setRating] = useState(DEFAULT_VALUES.rating);
   const [releaseYear, setReleaseYear] = useState(DEFAULT_VALUES.releaseYear);
@@ -36,9 +40,10 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
   const [activeTab, setActiveTab] = useState(0);
   const { t } = useTranslation("common");
 
-  const handleCountryChange = (event) => {
-    console.log(event);
-  }
+  const handleCountryChange = (value) => {
+    setSelectedCountry(value) ;
+  };
+
   // Fonction pour changer de type
   const handleTypeChange = (event, newValue) => {
     setActiveType(newValue);
@@ -57,6 +62,7 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
     setRating(DEFAULT_VALUES.rating);
     setReleaseYear(DEFAULT_VALUES.releaseYear);
     setSearchQuery(DEFAULT_VALUES.searchQuery);
+    setSelectedCountry(DEFAULT_VALUES.selectedCountry);
   };
 
   const handleGenreChange = (newGenres) => {
@@ -75,7 +81,8 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
       rating,
       releaseYear,
       genreOperator: genreOperatorValue,
-      type: activeType === 0 ? "movie" : "tv"
+      type: activeType === 0 ? "movie" : "tv",
+      country: selectedCountry
     };
 
     const movies = await discoverMovies(searchCriteria);
@@ -218,7 +225,7 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
           <div className="slider-container country">
             <h3>{t("form.fields.watchCountry")}</h3>
             <CountrySelector
-              value={DEFAULT_VALUES.selectedCountry}
+              value={selectedCountry}
               onChange={handleCountryChange}
             />
           </div>

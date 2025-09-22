@@ -14,6 +14,7 @@ export default function AppLayout() {
   const [trends, setTrends] = useState([]);
   const [providers, setProviders] = useState([]);
   const [movieDetailsCache, setMovieDetailsCache] = useState({});
+  const [selectedCountry, setSelectedCountry] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchCriteria, setSearchCriteria] = useState(null);
   const [movieId, setMovieId] = useState(null);
@@ -65,6 +66,8 @@ export default function AppLayout() {
 
   // Recherche initiale lancée depuis MovieForm
   async function handleSearch(moviesList, criteria) {
+    console.log("recherche", criteria.country)
+    setSelectedCountry(criteria.country);
     if (moviesList.length == 0)
       setOpenNoResultsToast(true);
     movieIds.current.clear();
@@ -133,6 +136,7 @@ export default function AppLayout() {
               fetchDetailsWithCache={fetchDetailsWithCache}
               onEndReached={handleEndReached}
               onSearch={(moviesList, movieId) => handleSearch(moviesList, movieId)}
+              countryCode={selectedCountry}
             />
           :
             <HeroSection trends={trends} />

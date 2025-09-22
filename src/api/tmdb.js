@@ -16,24 +16,24 @@ export async function getTrends() {
   try {
     const cachedTrends = localStorage.getItem("trendsData");
     const lastUpdate = parseInt(localStorage.getItem("trendsLastUpdate"), 10);
-    
+
     const now = new Date().getTime();
 
     if (cachedTrends && lastUpdate && now - lastUpdate < MAX_CACHE_AGE) {
       return JSON.parse(cachedTrends);
     } else {
-      console.count('appel')
+      console.count('appel');
       const response = await fetch(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}&language=${TMDB_LANG}`);
       if (!response.ok) {
         throw new Error("Erreur lors de la récupération des tendances");
       }
       const data = await response.json();
       const transformedResults = transformTMDBData(data.results);
-      
+
       localStorage.setItem("trendsData", JSON.stringify(transformedResults));
       localStorage.setItem("trendsLastUpdate", now.toString());
 
-      return transformedResults; 
+      return transformedResults;
     }
   } catch (error) {
     console.error(error);
@@ -47,7 +47,7 @@ function getDiscoverKey({ genres, duration, rating, providers, releaseYear, type
   const ratingKey = `${rating[0]}-${rating[1]}`;
   const providersKey = providers.sort().join("-");
   const yearKey = `${releaseYear[0]}-${releaseYear[1]}`;
-  
+
   return `discover_${TMDB_LANG}_${genresKey}_${type == "movie" ? durationKey : ''}_${ratingKey}_${providersKey}_${yearKey}_${page}`;
 }
 
@@ -57,7 +57,7 @@ export async function discoverMovies(searchCriteria, page = 1) {
     const cachedRaw = localStorage.getItem(key);
 
     const now = new Date().getTime();
-    
+
     if (cachedRaw) {
       const cachedObj = JSON.parse(cachedRaw);
 
@@ -68,7 +68,7 @@ export async function discoverMovies(searchCriteria, page = 1) {
     // Génération des paramètres 
     const baseParams = new URLSearchParams({
       api_key: API_KEY,
-      language: TMDB_LANG, 
+      language: TMDB_LANG,
       watch_region: "FR",
       "vote_average.gte": searchCriteria.rating[0],
       "vote_average.lte": searchCriteria.rating[1],
@@ -84,7 +84,7 @@ export async function discoverMovies(searchCriteria, page = 1) {
       baseParams.append("first_air_date.gte", `${searchCriteria.releaseYear[0]}-01-01`);
       baseParams.append("first_air_date.lte", `${searchCriteria.releaseYear[1]}-12-31`);
     }
-    
+
     if (searchCriteria.genres.length > 0) {
       baseParams.append("with_genres", searchCriteria.genres.join(searchCriteria.genreOperator));
     }
@@ -92,11 +92,11 @@ export async function discoverMovies(searchCriteria, page = 1) {
       baseParams.append("with_watch_providers", searchCriteria.providers.join("|"));
     }
 
-    console.count('appel')
+    console.count('appel');
     const res = await fetch(`${BASE_URL}/discover/${searchCriteria.type}?${baseParams}`);
     if (!res.ok) throw new Error(`Erreur API : ${res.status}`);
     const data = await res.json();
-    
+
     const transformedResults = transformTMDBData(data.results, searchCriteria.type);
 
     localStorage.setItem(key, JSON.stringify({
@@ -105,7 +105,7 @@ export async function discoverMovies(searchCriteria, page = 1) {
     }));
 
     return Utils.shuffleArray(transformedResults);
-  
+
   } catch (error) {
     console.error("Erreur lors de la recherche:", error);
     return [];
@@ -126,7 +126,7 @@ export function cleanOldCache() {
         }
       } catch (e) {
         localStorage.removeItem(key);
-        console.warn(`Cache invalide supprimé : ${key}`);
+        console.error(`Cache invalide supprimé : ${key}`);
       }
     }
   });
@@ -156,9 +156,9 @@ export async function searchMovies(searchQuery, type = "movie") {
   try {
     const key = `${type}_${TMDB_LANG}_${searchQuery.toLowerCase()}`;
     const cachedRaw = localStorage.getItem(key);
-    
+
     const now = new Date().getTime();
-    
+
     if (cachedRaw) {
       const cachedObj = JSON.parse(cachedRaw);
 
@@ -180,14 +180,14 @@ export async function searchMovies(searchQuery, type = "movie") {
       query: searchQuery
     });
 
-    console.count('appel')
+    console.count('appel');
     // Recherche par titre
     const movieRes = await fetch(`${BASE_URL}/search/${type}?${params}`);
     if (!movieRes.ok) throw new Error(`Erreur API (movie search) : ${movieRes.status}`);
     const movieData = await movieRes.json();
     const filteredMovieData = filterMovies(movieData.results);
 
-    console.count('appel')
+    console.count('appel');
     // Recherche des acteurs/réalisateurs
     const personRes = await fetch(`${BASE_URL}/search/person?${params}`);
     if (!personRes.ok) throw new Error(`Erreur API (person search) : ${personRes.status}`);
@@ -202,7 +202,7 @@ export async function searchMovies(searchQuery, type = "movie") {
         'vote_count.gte': 10,
       });
 
-    console.count('appel')
+      console.count('appel');
       const peopleMoviesRes = await fetch(`${BASE_URL}/discover/${type}?${peopleParams}`);
       if (peopleMoviesRes.ok) {
         const peopleMoviesData = await peopleMoviesRes.json();
