@@ -44,7 +44,7 @@
         position: absolute;
         z-index: 9;
         right: 0;
-        top: 0;
+        top: var(--space-1);
         background: var(--color-gray-900);
     }
     .app-layout__left:has(.open),
@@ -55,6 +55,6 @@
         padding: var(--space-2) var(--space-1);
     }
     .app-layout__right:has(.movie-list) {
-        margin-top: 65px;
+        margin-top: 67px;
     }
 }

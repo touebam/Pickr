@@ -62,7 +62,7 @@
     }
   },
   "providerDialog": {
-    "title": "Autres disponibilités pour {{title}}",
+    "title": "Autres disponibilités pour ",
     "subtitle": "{{count}} pays disponibles",
     "info": {
       "free": "Pays avec accès gratuit",
