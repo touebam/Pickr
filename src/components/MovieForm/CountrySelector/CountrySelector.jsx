@@ -32,8 +32,6 @@ const CountrySelector = ({ value, onChange }) => {
       .sort((a, b) => a.obj.name.localeCompare(b.obj.name));
   }, [countriesData]);
 
-  console.log(countries)
-  
   return (
       <Select
         id="country-select"

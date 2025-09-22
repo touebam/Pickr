@@ -66,8 +66,7 @@ export default function AppLayout() {
 
   // Recherche initiale lancée depuis MovieForm
   async function handleSearch(moviesList, criteria) {
-    console.log("recherche", criteria.country)
-    setSelectedCountry(criteria.country);
+    setSelectedCountry(criteria?.country ? criteria.country : "FR");
     if (moviesList.length == 0)
       setOpenNoResultsToast(true);
     movieIds.current.clear();

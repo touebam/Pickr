@@ -24,7 +24,6 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch, countryC
   
   if (!countryCode)
     countryCode = 'FR';
-
   const country = tCountry(countryCode, { returnObjects: true });
   const countryName = country.name;
   const prepCountry = country.prep;

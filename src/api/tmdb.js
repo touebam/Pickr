@@ -41,14 +41,14 @@ export async function getTrends() {
   }
 }
 
-function getDiscoverKey({ genres, duration, rating, providers, releaseYear, type }, page) {
+function getDiscoverKey({ genres, duration, rating, providers, releaseYear, type, country }, page) {
   const genresKey = genres.sort().join("-");
   const durationKey = `${duration[0]}-${duration[1]}`;
   const ratingKey = `${rating[0]}-${rating[1]}`;
   const providersKey = providers.sort().join("-");
   const yearKey = `${releaseYear[0]}-${releaseYear[1]}`;
 
-  return `discover_${TMDB_LANG}_${genresKey}_${type == "movie" ? durationKey : ''}_${ratingKey}_${providersKey}_${yearKey}_${page}`;
+  return `discover_${country}_${TMDB_LANG}_${genresKey}_${type == "movie" ? durationKey : ''}_${ratingKey}_${providersKey}_${yearKey}_${page}`;
 }
 
 export async function discoverMovies(searchCriteria, page = 1) {
@@ -69,7 +69,7 @@ export async function discoverMovies(searchCriteria, page = 1) {
     const baseParams = new URLSearchParams({
       api_key: API_KEY,
       language: TMDB_LANG,
-      watch_region: "FR",
+      watch_region: searchCriteria.country,
       "vote_average.gte": searchCriteria.rating[0],
       "vote_average.lte": searchCriteria.rating[1],
       sort_by: "popularity.desc",
@@ -167,11 +167,21 @@ export async function searchMovies(searchQuery, type = "movie") {
       }
     }
 
-    // Retirer les films trop méconnus 
+    // Retirer les films trop méconnus, mais garder ceux pas encore sortis
     function filterMovies(movies) {
-      return movies.filter(m =>
-        m.vote_count >= 10
-      );
+      const today = new Date();
+      return movies.filter(m => {
+        const releaseDate = new Date(m.release_date || m.first_air_date || today);
+        const isUpcoming = releaseDate > today;
+
+        // Si déjà sorti -> besoin d'au moins 10 votes
+        if (!isUpcoming) {
+          return m.vote_count >= 10;
+        }
+
+        // Si pas encore sorti -> on garde toujours
+        return true;
+      });
     }
 
     const params = new URLSearchParams({
@@ -226,7 +236,15 @@ export async function searchMovies(searchQuery, type = "movie") {
 
     const finalMovies = [...sortedByTitle, ...uniquePersonMovies];
     const transformedResults = transformTMDBData(finalMovies, type);
-    localStorage.setItem(key, JSON.stringify(transformedResults));
+
+    localStorage.setItem(
+      key,
+      JSON.stringify({
+        results: transformedResults,
+        lastUpdate: Date.now()
+      })
+    );
+
     return transformedResults;
 
   } catch (error) {
@@ -234,6 +252,7 @@ export async function searchMovies(searchQuery, type = "movie") {
     return [];
   }
 }
+
 
 export async function getMovieDatas(movieId, type = "movie") {
   const storageKey = `${type}_${TMDB_LANG}_${movieId}`;
