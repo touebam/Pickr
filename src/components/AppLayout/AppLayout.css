@@ -36,14 +36,13 @@
         flex-direction: column;
     }
     .app-layout__left  {
-        flex-grow: 0;
-        flex-basis: auto;
         padding: var(--space-1) !important;
-        margin: var(--space-2);
+        margin: var(--space-1);
         border-radius: var(--radius-md);
         position: absolute;
         z-index: 9;
-        right: 6px;
+        left: 0;
+        right: 0;
         top: 0;
         background: var(--color-gray-900);
     }
@@ -52,5 +51,6 @@
     }
     .app-layout__right  {
         padding: var(--space-2) var(--space-1);
+        margin-top: 65px;
     }
 }

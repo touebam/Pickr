@@ -10,7 +10,6 @@
     .movie-list {
         grid-template-columns: auto;
         gap: var(--space-3);
-        margin-top: 35px;
     }
     .movie-card {
         max-width: 95% !important;
