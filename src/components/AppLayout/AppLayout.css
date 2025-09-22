@@ -35,22 +35,26 @@
     .app-layout {
         flex-direction: column;
     }
-    .app-layout__left  {
-        padding: var(--space-1) !important;
+    .app-layout__left {
+        flex-grow: 0;
+        flex-basis: auto;
+        padding: var(--space-1) var(--space-2) !important;
         margin: var(--space-1);
         border-radius: var(--radius-md);
         position: absolute;
         z-index: 9;
-        left: 0;
         right: 0;
         top: 0;
         background: var(--color-gray-900);
     }
-    .app-layout__left:has(.open) {
-        left: 6px;
+    .app-layout__left:has(.open),
+    .app-layout__left:has(+ .app-layout__right .movie-list) {
+        left: 0;
     }
-    .app-layout__right  {
+    .app-layout__right {
         padding: var(--space-2) var(--space-1);
+    }
+    .app-layout__right:has(.movie-list) {
         margin-top: 65px;
     }
 }
