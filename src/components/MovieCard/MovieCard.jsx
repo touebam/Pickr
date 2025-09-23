@@ -31,12 +31,13 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch, countryC
   const handleOpen = (type = "provider") => {
     if (type === "provider")
     {
+      console.log(details)
       const filtered = Object.entries(details.providers)
         .filter(([country, data]) =>
           data.flatrate?.length > 0 || data.ads?.length > 0
         )
         .map(([country, data]) => ({
-          country: tCountry(country) || country,
+          country: tCountry(country, { returnObjects: true }).name || country,
           countryCode: country,
           free: (data.free || []).concat(data.ads || []),
           flatrate: data.flatrate || []

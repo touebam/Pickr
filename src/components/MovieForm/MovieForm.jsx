@@ -15,7 +15,7 @@ import { useTranslation, Trans } from "react-i18next";
 const currentYear = new Date().getFullYear();
 
 const navigatorLanguage = navigator.language;
-const country = navigatorLanguage ? navigatorLanguage.substring(navigatorLanguage.indexOf('-')+1) : 'FR';
+const country = navigatorLanguage ? navigatorLanguage.substring(navigatorLanguage.indexOf('-')+1).toUpperCase() : 'FR';
 
 // Valeurs par défaut
 const DEFAULT_VALUES = {
