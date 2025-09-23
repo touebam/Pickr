@@ -7,7 +7,6 @@ function DialogProviders({ movie, filteredProviders, handleClose, open }) {
     const { t } = useTranslation("common");
     const count = filteredProviders.length;
 
-    console.log(filteredProviders)
     return (
     <Dialog 
         className="movie-dialog" 
