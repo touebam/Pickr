@@ -58,7 +58,8 @@ export default function AppLayout() {
     if (movieDetailsCache[movieId]) {
       return movieDetailsCache[movieId];
     }
-    const type = searchCriteria.type;
+    
+    const type = (typeof searchCriteria == 'object') ? searchCriteria.type : searchCriteria;
     const movieData = await getMovieDatas(movieId, type);
     setMovieDetailsCache(prev => ({ ...prev, [movieId]: movieData }));
     return movieData;

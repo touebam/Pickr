@@ -2,12 +2,7 @@ import * as Utils from "../utils/utils.js";
 import { transformTMDBData } from '../utils/dataTransform';
 import i18n from "../i18n";
 
-const languageMap = {
-  fr: "fr-FR",
-  en: "en-US",
-};
-
-const TMDB_LANG = languageMap[i18n.language] || "en-US";
+const TMDB_LANG = i18n.language || "en-US";
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = import.meta.env.VITE_TMDB_BASE_URL;
 const MAX_CACHE_AGE = 4 * 24 * 60 * 60 * 1000;

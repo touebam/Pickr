@@ -41,7 +41,7 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
   const { t } = useTranslation("common");
 
   const handleCountryChange = (value) => {
-    setSelectedCountry(value) ;
+    setSelectedCountry(value);
   };
 
   // Fonction pour changer de type
@@ -92,7 +92,7 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
   async function handleSearch() {
     const type = activeType === 0 ? "movie" : "tv";
     const movies = await searchMovies(searchQuery, type);
-    onSearch(movies);
+    onSearch(movies, type);
   };
 
   const toggleMovieForm = () => {
@@ -239,8 +239,14 @@ export default function MovieForm({ genres, providers, onSearch, activeType, set
             placeholder={t("form.extras.searchPlaceholder")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch();
+              }
+            }}
             className="search-textfield"
           />
+
         </div>
       )}
 
