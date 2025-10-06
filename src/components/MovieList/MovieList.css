@@ -6,6 +6,14 @@
     height: fit-content;
 }
 
+.open-favorite-button {
+    position: absolute !important;
+    bottom: var(--space-3);
+    right: var(--space-5);
+    z-index: 999;
+    box-shadow: var(--shadow-xl) !important;
+}
+
 @media screen and (max-width: 650px) {
     .movie-list {
         grid-template-columns: auto;
@@ -13,5 +21,9 @@
     }
     .movie-card {
         max-width: 95% !important;
+    }
+
+    .open-favorite-button {
+        right: var(--space-4);
     }
 }

@@ -1,8 +1,16 @@
 {
   "hero": {
+    "title": "Pickr",
     "slogan": "<0>Pickr</0>, no need to search anymore.",
     "copyright": "© {{year}} Morgan Toueba. All rights reserved.",
-    "disclaimer": "Posters and data come from the TMDb API."
+    "disclaimer": "Posters and data come from the TMDb API.",
+    "alert": {
+      "noResult": "No results found for this search",
+      "endOfList": "You have reached the end of the list"
+    }
+  },
+  "list": {
+    "favorite": "Check your favorites"
   },
   "form": {
     "title": "Pickr",
@@ -52,8 +60,10 @@
     },
     "buttons": {
       "trailer": "Watch trailer",
-      "block": "Remove that movie",
-      "availability": "Other availability"
+      "block": "Hide that movie",
+      "availability": "Other availability",
+      "add": "Add to the list",
+      "remove": "Remove from the list"
     }
   },
   "providerDialog": {
@@ -76,6 +86,12 @@
   "trailerDialog": {
     "title": "Trailers for ",
     "empty": "This movie has no trailers",
+    "button": {
+      "close": "Close"
+    }
+  },
+  "favoriteDialog": {
+    "title": "Your favorites:",
     "button": {
       "close": "Close"
     }

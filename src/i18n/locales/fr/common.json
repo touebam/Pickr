@@ -9,6 +9,9 @@
       "endOfList": "Vous avez atteint la fin de la liste"
     }
   },
+  "list": {
+    "favorite": "Consulter vos favoris"
+  },
   "form": {
     "title": "Pickr",
     "alt": {
@@ -57,8 +60,10 @@
     },
     "buttons": {
       "trailer": "Voir la bande annonce",
-      "block": "Retirer ce film",
-      "availability": "Autres disponibilités"
+      "block": "Cacher ce film",
+      "availability": "Autres disponibilités",
+      "add": "Ajouter à la liste",
+      "remove": "Retirer de la liste"
     }
   },
   "providerDialog": {
@@ -81,6 +86,12 @@
   "trailerDialog": {
     "title": "Bandes annonces pour ",
     "empty": "Ce film ne possède pas de bandes annonces",
+    "button": {
+      "close": "fermer"
+    }
+  },
+  "favoriteDialog": {
+    "title": "Vos favoris :",
     "button": {
       "close": "fermer"
     }

@@ -4,12 +4,12 @@ import DialogProviders from "../DialogProviders/DialogProviders";
 import Rating from '@mui/material/Rating';
 import EastIcon from '@mui/icons-material/East';
 import { Button, IconButton, Tooltip, Skeleton } from "@mui/material"; 
-import { LiveTv, Block, FavoriteBorder, Send, Search } from '@mui/icons-material';
+import { LiveTv, Block, Favorite, FavoriteBorder, Send, Search, FormatListBulletedAdd } from '@mui/icons-material';
 import DialogTrailer from '../DialogTrailer/DialogTrailer';
 //import { getSimilarMovies } from '../../api/tmdb';
 import { useTranslation, Trans } from "react-i18next";
 
-function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch, countryCode }) {
+function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch, countryCode, onToggleFavorite, isFavorite }) {
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
   const [details, setDetails] = useState(null);
   const [isActive, setIsActive] = useState(false);
@@ -22,29 +22,32 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch, countryC
 
   const isMobile = (window.innerWidth <= 850);
   
+
   if (!countryCode)
     countryCode = 'FR';
   const country = tCountry(countryCode, { returnObjects: true });
   
   const handleOpen = (type = "provider") => {
-    if (type === "provider")
-    {
-      const filtered = Object.entries(details.providers)
-        .filter(([country, data]) =>
-          data.flatrate?.length > 0 || data.ads?.length > 0
-        )
-        .map(([country, data]) => ({
-          country: tCountry(country, { returnObjects: true }).name || country,
-          countryCode: country,
-          free: (data.free || []).concat(data.ads || []),
-          flatrate: data.flatrate || []
-        }));
-      
-      setFilteredProviders(filtered);
-      setOpenDialogProvider(true);
+    switch (type) {
+      case "provider":
+        const filtered = Object.entries(details.providers)
+          .filter(([country, data]) =>
+            data.flatrate?.length > 0 || data.ads?.length > 0
+          )
+          .map(([country, data]) => ({
+            country: tCountry(country, { returnObjects: true }).name || country,
+            countryCode: country,
+            free: (data.free || []).concat(data.ads || []),
+            flatrate: data.flatrate || []
+          }));
+        
+        setFilteredProviders(filtered);
+        setOpenDialogProvider(true);
+      break;
+      default:
+        setOpenDialogTrailer(true);
+      break;
     }
-    else
-      setOpenDialogTrailer(true);
   };
 
   const handleClose = () => {
@@ -106,7 +109,7 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch, countryC
     onSearch(movies, movie.id);
   }*/
   const handleTrailerClick = (event) => {
-    handleOpen('trailer') ;
+    handleOpen('trailer');
   };
   
   let blockedMovies = localStorage.getItem("blockedMovies");
@@ -209,6 +212,54 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch, countryC
                 <Block />
               </IconButton>
             </Tooltip>
+            {isFavorite ? 
+              <Tooltip 
+                title={t("movie.buttons.remove")}
+                slotProps={{
+                  popper: {
+                    modifiers: [
+                      {
+                        name: 'offset',
+                        options: {
+                          offset: [0, -10],
+                        },
+                      },
+                    ],
+                  },
+                }}
+              >
+                <IconButton 
+                  className="card-button"
+                  onClick={() => onToggleFavorite(movie)}
+                >
+                  <Favorite />
+                </IconButton>
+              </Tooltip>
+              :
+              <Tooltip 
+                title={t("movie.buttons.add")}
+                slotProps={{
+                  popper: {
+                    modifiers: [
+                      {
+                        name: 'offset',
+                        options: {
+                          offset: [0, -10],
+                        },
+                      },
+                    ],
+                  },
+                }}
+              >
+                <IconButton 
+                  className="card-button"
+                  disabled={!details}
+                  onClick={() => onToggleFavorite(movie, details)}
+                >
+                  <FavoriteBorder />
+                </IconButton>
+              </Tooltip>
+            }
             {/*<IconButton 
               className="card-button"
               title={`${movie.type === "movie" ? "Films" : "Séries"} similaires`}
@@ -249,6 +300,13 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch, countryC
               <span className="detail-content">{getGenreNames(movie.genre_ids, allGenres)}</span>
             </div>
           )}
+          {movie.release_date && 
+          (
+            <div>
+              <span className="detail-title">{t("movie.titles.date")}</span> 
+              <span className="detail-content">{new Date(movie.release_date).getFullYear()}</span>
+            </div>
+          )}
           {(details && details.overview) ? 
             <div className='overview-container'>
               <span className="detail-title">{t("movie.titles.description")}</span> 
@@ -263,13 +321,6 @@ function MovieCard({ movie, allGenres, fetchDetailsWithCache, onSearch, countryC
             :
             <></>
           }
-          {movie.release_date && 
-          (
-            <div>
-              <span className="detail-title">{t("movie.titles.date")}</span> 
-              <span className="detail-content">{new Date(movie.release_date).getFullYear()}</span>
-            </div>
-          )}
           {details?.type !== "tv" && (
             <div>
               <span className="detail-title">{t("movie.titles.duration")}</span>
