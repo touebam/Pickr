@@ -79,10 +79,6 @@
 @media screen and (max-width: 850px) {
     .favorite-card .card-button {
         opacity: .8;
-        top: auto;
-        left: auto;
-        bottom: var(--space-2);
-        right: var(--space-2);
         transition: all var(--transition-fast) !important;
     }
 }
